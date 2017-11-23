@@ -12,6 +12,7 @@ for (let i = 0; i < 46; i += 1) {
     title: `一个任务名称 ${i}`,
     owner: '曲丽丽',
     description: '这是一段描述',
+    category: `分类 ${i}`,
     callNo: Math.floor(Math.random() * 1000),
     status: Math.floor(Math.random() * 10) % 4,
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
@@ -29,7 +30,7 @@ export function getRule(req, res, u) {
   const params = getUrlParams(url);
 
   let dataSource = [...tableListDataSource];
-
+  // 排序
   if (params.sorter) {
     const s = params.sorter.split('_');
     dataSource = dataSource.sort((prev, next) => {
@@ -39,7 +40,7 @@ export function getRule(req, res, u) {
       return prev[s[0]] - next[s[0]];
     });
   }
-
+  // 状态查询
   if (params.status) {
     const status = params.status.split(',');
     let filterDataSource = [];
@@ -50,9 +51,14 @@ export function getRule(req, res, u) {
     });
     dataSource = filterDataSource;
   }
-
+  // 编码查询
   if (params.no) {
     dataSource = dataSource.filter(data => data.no.indexOf(params.no) > -1);
+  }
+
+  // 分类查询
+  if (params.category) {
+    dataSource = dataSource.filter(data => data.category.indexOf(params.category) > -1);
   }
 
   let pageSize = 10;
@@ -100,6 +106,7 @@ export function postRule(req, res, u, b) {
         title: `一个任务名称 ${i}`,
         owner: '曲丽丽',
         description,
+        category: `分类 ${i}`,
         callNo: Math.floor(Math.random() * 1000),
         status: Math.floor(Math.random() * 10) % 2,
         updatedAt: new Date(),
