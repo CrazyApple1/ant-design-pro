@@ -4,7 +4,7 @@ import { Table, Alert, Badge, Divider } from 'antd';
 import styles from './List.less';
 
 const statusMap = ['default', 'processing', 'success', 'error'];
-class StandardTable extends PureComponent {
+class List extends PureComponent {
   state = {
     selectedRowKeys: [],
     totalCallNo: 0,
@@ -47,35 +47,40 @@ class StandardTable extends PureComponent {
     const columns = [
       {
         title: '商品名称',
-        dataIndex: 'no',
+        dataIndex: 'name',
         sorter: true,
       },
       {
-        title: '商品分类',
+        title: '分类',
         dataIndex: 'category',
+        render: val => (
+          <div style={{ textAlign: 'center' }}>
+            {val} 
+          </div>
+        ),
       },
       {
-        title: '商品编码',
-        dataIndex: 'description',
+        title: '编码',
+        dataIndex: 'code',
         sorter: true,
       },
       {
         title: '单位',
-        dataIndex: 'callNo',
+        dataIndex: 'unit',
         sorter: true,
         render: val => (
           <div style={{ textAlign: 'center' }}>
-            {val} 万
+            {val} 
           </div>
         ),
       },
       {
         title: '装箱规格',
-        dataIndex: 'status',
+        dataIndex: 'spec',
       },
       {
-        title: '商品条码',
-        dataIndex: 'updatedAt',
+        title: '条码',
+        dataIndex: 'qrcode',
         sorter: true,        
       },
       {
@@ -132,4 +137,4 @@ class StandardTable extends PureComponent {
   }
 }
 
-export default StandardTable;
+export default List;

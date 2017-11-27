@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Tree, Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
+import { Tree, Row, Col, Card, Form, Input, Icon, Button, Modal, message } from 'antd';
 import GoodsList from './List';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 
 import styles from './Goods.less';
 
 const FormItem = Form.Item;
-const { Option } = Select;
 const TreeNode = Tree.TreeNode;
 
+// 将对象转为，分割的字符串
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 //连接组件和store
@@ -26,15 +26,15 @@ export default class Goods extends PureComponent {
     selectedRows: [],
     formValues: {},
   };
-
+  // 组件加载完成后加载数据
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
       type: 'goods/fetch',
     });
   }
-
-  handleStandardTableChange = (pagination, filtersArg, sorter) => {
+  // 表格动作触发事件
+  handleListChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
     const { formValues } = this.state;
 
@@ -61,12 +61,10 @@ export default class Goods extends PureComponent {
   }
   // 树节点选择
   onSelect = (selectedKeys, info) => {
-    
     const { dispatch } = this.props;
     const values = {
       category : selectedKeys[0]
     }
-    console.log(values);
     dispatch({
       type: 'goods/fetch',
       payload: values,
@@ -89,7 +87,8 @@ export default class Goods extends PureComponent {
     });
   }
 
-  handleMenuClick = (e) => {
+  // 删除事件
+  handleRemoveClick = (e) => {
     const { dispatch } = this.props;
     const { selectedRows } = this.state;
 
@@ -113,7 +112,7 @@ export default class Goods extends PureComponent {
         break;
     }
   }
-
+  // 行选事件
   handleSelectRows = (rows) => {
     this.setState({
       selectedRows: rows,
@@ -137,26 +136,27 @@ export default class Goods extends PureComponent {
       this.setState({
         formValues: values,
       });
-      console.info(values);
+
       dispatch({
         type: 'goods/fetch',
         payload: values,
       });
     });
   }
+
   // 新增窗口
   handleModalVisible = (flag) => {
     this.setState({
       modalVisible: !!flag,
     });
   }
-
+  // 新增窗口内容变化
   handleAddInput = (e) => {
     this.setState({
       addInputValue: e.target.value,
     });
   }
-  // 新增事件
+  // 新增窗口保存按钮事件
   handleAdd = () => {
     this.props.dispatch({
       type: 'goods/add',
@@ -179,14 +179,14 @@ export default class Goods extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="商品名称">
-              {getFieldDecorator('no')(
+              {getFieldDecorator('name')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="商品编码">
-              {getFieldDecorator('status')(
+              {getFieldDecorator('code')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
@@ -212,28 +212,22 @@ export default class Goods extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="商品名称">
-              {getFieldDecorator('no')(
-                <Input placeholder="请输入" />
+              {getFieldDecorator('name')(
+                <Input placeholder="请输入名称" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="商品编码">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
+              {getFieldDecorator('code')(
+                <Input placeholder="请输入编码" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="商品条码">
-              {getFieldDecorator('status3')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
+              {getFieldDecorator('qrcode')(
+                <Input placeholder="请输入条码" />
               )}
             </FormItem>
           </Col>
@@ -257,7 +251,7 @@ export default class Goods extends PureComponent {
 
   // 渲染界面
   render() {
-    const { goods: { loading: ruleLoading, data } } = this.props;
+    const { goods: { loading: loading, data } } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
     return (
@@ -303,17 +297,17 @@ export default class Goods extends PureComponent {
               {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button>删除商品</Button>
+                    <Button onClick={this.handleRemoveClick}  selectedKeys={[]}>删除商品</Button>
                  </span>
                 )
               }
             </div>
             <GoodsList
               selectedRows={selectedRows}
-              loading={ruleLoading}
+              loading={loading}
               data={data}
               onSelectRow={this.handleSelectRows}
-              onChange={this.handleStandardTableChange}
+              onChange={this.handleListChange}
             />
           </div>
         </Card>
