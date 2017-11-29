@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Tree, Row, Col, Card, Form, Input, Icon, Button, Modal, message } from 'antd';
 import GoodsList from './List';
+import Detail from './Detail';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 
 import styles from './Goods.less';
@@ -22,10 +23,12 @@ export default class Goods extends PureComponent {
   state = {
     addInputValue: '',
     modalVisible: false,
+    modalType: 'create',
     expandForm: false,
     selectedRows: [],
     formValues: {},
   };
+
   // 组件加载完成后加载数据
   componentDidMount() {
     const { dispatch } = this.props;
@@ -33,6 +36,7 @@ export default class Goods extends PureComponent {
       type: 'goods/fetch',
     });
   }
+  
   // 表格动作触发事件
   handleListChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
@@ -145,7 +149,7 @@ export default class Goods extends PureComponent {
   }
 
   // 新增窗口
-  handleModalVisible = (flag) => {
+  handleModalVisible = (flag, action) => {
     this.setState({
       modalVisible: !!flag,
     });
@@ -252,7 +256,27 @@ export default class Goods extends PureComponent {
   // 渲染界面
   render() {
     const { goods: { loading: loading, data } } = this.props;
-    const { selectedRows, modalVisible, addInputValue } = this.state;
+    const { selectedRows, modalVisible, addInputValue, modalType } = this.state;
+    
+    const modalProps = {
+      item: modalType,
+      visible: modalVisible,
+      maskClosable: false,
+      // confirmLoading: loading.effects['goods/update'],
+      title:  '添加商品',
+      wrapClassName: 'vertical-center-modal',
+      onOk (data) {
+        dispatch({
+          type: `goods/create`,
+          payload: data,
+        })
+      },
+      onCancel () {
+        dispatch({
+          type: 'goods/hideModal',
+        })
+      },
+    }
 
     return (
       <PageHeaderLayout title="商品基本信息查询">
@@ -293,7 +317,7 @@ export default class Goods extends PureComponent {
               {this.renderForm()}
             </div>
             <div className={styles.goodsInfoListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>新增商品</Button>
+              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增商品</Button>
               {
                 selectedRows.length > 0 && (
                   <span>
@@ -314,7 +338,8 @@ export default class Goods extends PureComponent {
         </Col>
         </Row>
         {/* 新增窗口 */}
-        <Modal
+        {modalVisible && <Detail {...modalProps} />}
+        {/* <Modal
           title="新建规则"
           visible={modalVisible}
           onOk={this.handleAdd}
@@ -327,7 +352,7 @@ export default class Goods extends PureComponent {
           >
             <Input placeholder="请输入" onChange={this.handleAddInput} value={addInputValue} />
           </FormItem>
-        </Modal>
+        </Modal> */}
       </PageHeaderLayout>
     );
   }
