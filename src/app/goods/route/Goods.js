@@ -112,8 +112,7 @@ export default class Goods extends PureComponent {
           },
         });
         break;
-      default:
-        break;
+      default:break;
     }
   }
   // 行选事件
@@ -154,12 +153,7 @@ export default class Goods extends PureComponent {
       modalVisible: !!flag,
     });
   }
-  // 新增窗口内容变化
-  handleAddInput = (e) => {
-    this.setState({
-      addInputValue: e.target.value,
-    });
-  }
+  
   // 新增窗口保存按钮事件
   handleAdd = () => {
     this.props.dispatch({
@@ -270,11 +264,15 @@ export default class Goods extends PureComponent {
           type: `goods/create`,
           payload: data,
         })
+        message.success('添加成功');
+        this.setState({
+          modalVisible: false,
+        });
       },
       onCancel () {
-        dispatch({
-          type: 'goods/hideModal',
-        })
+        this.setState({
+          modalVisible: false,
+        });
       },
     }
 
@@ -339,20 +337,7 @@ export default class Goods extends PureComponent {
         </Row>
         {/* 新增窗口 */}
         {modalVisible && <Detail {...modalProps} />}
-        {/* <Modal
-          title="新建规则"
-          visible={modalVisible}
-          onOk={this.handleAdd}
-          onCancel={() => this.handleModalVisible()}
-        >
-          <FormItem
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 15 }}
-            label="描述"
-          >
-            <Input placeholder="请输入" onChange={this.handleAddInput} value={addInputValue} />
-          </FormItem>
-        </Modal> */}
+
       </PageHeaderLayout>
     );
   }

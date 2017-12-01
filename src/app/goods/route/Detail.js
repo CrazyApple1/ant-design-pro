@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Radio, Modal } from 'antd'
+import { Form, Input, InputNumber, Modal, Select } from 'antd'
+const Option = Select.Option;
 
 const FormItem = Form.Item
 
+// 表单项样式
 const formItemLayout = {
-  labelCol: {
-    span: 6,
-  },
-  wrapperCol: {
-    span: 14,
-  },
+  labelCol: {span: 6},
+  wrapperCol: {span: 14}
 }
 
+// 表单配置项
 const detail = ({
   item = {},
   onOk,
@@ -32,11 +31,10 @@ const detail = ({
         ...getFieldsValue(),
         key: item.key,
       }
-      data.address = data.address.join(' ')
       onOk(data)
     })
   }
-
+ // 窗口配置项
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
@@ -45,64 +43,72 @@ const detail = ({
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
-        <FormItem label="Name" hasFeedback {...formItemLayout}>
+        <FormItem label="名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
             initialValue: item.name,
-            rules: [
-              {
+            rules: [{
                 required: true,
-              },
-            ],
+                message: '请输入商品名称',
+            }],
           })(<Input />)}
         </FormItem>
-        <FormItem label="NickName" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('nickName', {
-            initialValue: item.nickName,
-            rules: [
-              {
+        <FormItem label="分类" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('category', {
+            initialValue: 'toy',
+            rules: [{
                 required: true,
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="Gender" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('isMale', {
-            initialValue: item.isMale,
-            rules: [
-              {
-                required: true,
-                type: 'boolean',
-              },
-            ],
+                message: '请选择商品分类',
+            }],
           })(
-            <Radio.Group>
-              <Radio value>Male</Radio>
-              <Radio value={false}>Female</Radio>
-            </Radio.Group>
+            <Select hasFeedback {...formItemLayout}>
+              <Option value="toy">玩具</Option>
+              <Option value="omament">饰品</Option>
+              <Option value="Yiminghe">工艺品</Option>
+            </Select>
           )}
         </FormItem>
-        <FormItem label="Age" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('age', {
-            initialValue: item.age,
-            rules: [
-              {
-                required: true,
+        <FormItem label="编码" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('code', {
+            initialValue: item.isMale,
+            rules: [{
                 type: 'number',
-              },
-            ],
-          })(<InputNumber min={18} max={100} />)}
+                message: '请输入正确的编码(仅限数字)',
+            }],
+          })(
+            <Input/>
+          )}
         </FormItem>
-        <FormItem label="Phone" hasFeedback {...formItemLayout}>
-          {getFieldDecorator('phone', {
-            initialValue: item.phone,
-            rules: [
-              {
+        <FormItem label="单位" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('unit', {
+            rules: [{
+                initialValue: '0001',
                 required: true,
-                pattern: /^1[34578]\d{9}$/,
-                message: 'The input is not valid phone!',
-              },
-            ],
-          })(<Input />)}
+            }],
+          })(
+            <Select hasFeedback {...formItemLayout}>
+              <Option value="0001">件</Option>
+              <Option value="0002">只</Option>
+              <Option value="0003">套</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem label="装箱规格" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('spec', {
+            initialValue: item.phone,
+            rules: [{
+                type: 'number',
+                message: '请输入正确的装箱规格(仅限数字)',
+            }],
+          })(<InputNumber/>)}
+        </FormItem>
+        <FormItem label="条码" hasFeedback {...formItemLayout}>
+          {getFieldDecorator('qrcode', {
+            initialValue: item.phone,
+            rules: [{
+                type: 'number',
+                message: '请输入正确的条码(仅限数字)',
+            }],
+          })(<Input/>)}
         </FormItem>
       </Form>
     </Modal>
