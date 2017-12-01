@@ -4,6 +4,11 @@ export default {
   namespace: 'goods',
 
   state: {
+    modalVisible: false,
+    modalType: 'create',
+    expandForm: false,
+    selectedRows: [],
+    formValues: {},
     data: {
       list: [],
       pagination: {},

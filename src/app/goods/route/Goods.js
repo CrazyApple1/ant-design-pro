@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Tree, Row, Col, Card, Form, Input, Icon, Button, Modal, message } from 'antd';
+import { Tree, Row, Col, Card, Form, Input, Icon, Button, message } from 'antd';
 import GoodsList from './List';
 import Detail from './Detail';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
@@ -13,34 +13,24 @@ const TreeNode = Tree.TreeNode;
 // 将对象转为，分割的字符串
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
-//连接组件和store
+// 连接组件和store
 // 把state.rule绑定给组件的 rule
-@connect(state => ({
-  goods: state.goods,
-}))
+  @connect(state => ({
+    goods: state.goods,
+  }))
 @Form.create()
 export default class Goods extends PureComponent {
-  state = {
-    addInputValue: '',
-    modalVisible: false,
-    modalType: 'create',
-    expandForm: false,
-    selectedRows: [],
-    formValues: {},
-  };
-
   // 组件加载完成后加载数据
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'goods/fetch',
-    });
-  }
-  
+    componentDidMount() {
+      const { dispatch } = this.props;
+      dispatch({
+        type: 'goods/fetch',
+      });
+    }
+
   // 表格动作触发事件
   handleListChange = (pagination, filtersArg, sorter) => {
-    const { dispatch } = this.props;
-    const { formValues } = this.state;
+    const { dispatch, formValues } = this.props;
 
     const filters = Object.keys(filtersArg).reduce((obj, key) => {
       const newObj = { ...obj };
@@ -67,13 +57,13 @@ export default class Goods extends PureComponent {
   onSelect = (selectedKeys, info) => {
     const { dispatch } = this.props;
     const values = {
-      category : selectedKeys[0]
-    }
+      category: selectedKeys[0],
+    };
     dispatch({
       type: 'goods/fetch',
       payload: values,
     });
-  }
+  };
   // 重置事件
   handleFormReset = () => {
     const { form, dispatch } = this.props;
@@ -82,19 +72,18 @@ export default class Goods extends PureComponent {
       type: 'goods/fetch',
       payload: {},
     });
-  }
+  };
 
   // 折叠查询条件
   toggleForm = () => {
     this.setState({
       expandForm: !this.state.expandForm,
     });
-  }
+  };
 
   // 删除事件
   handleRemoveClick = (e) => {
-    const { dispatch } = this.props;
-    const { selectedRows } = this.state;
+    const { dispatch, selectedRows } = this.props;
 
     if (!selectedRows) return;
 
@@ -112,15 +101,15 @@ export default class Goods extends PureComponent {
           },
         });
         break;
-      default:break;
+      default: break;
     }
-  }
+  };
   // 行选事件
   handleSelectRows = (rows) => {
     this.setState({
       selectedRows: rows,
     });
-  }
+  };
 
   // 搜索事件
   handleSearch = (e) => {
@@ -145,15 +134,15 @@ export default class Goods extends PureComponent {
         payload: values,
       });
     });
-  }
+  };
 
   // 新增窗口
   handleModalVisible = (flag, action) => {
     this.setState({
       modalVisible: !!flag,
     });
-  }
-  
+  };
+
   // 新增窗口保存按钮事件
   handleAdd = () => {
     this.props.dispatch({
@@ -167,7 +156,7 @@ export default class Goods extends PureComponent {
     this.setState({
       modalVisible: false,
     });
-  }
+  };
 
   // 简单搜索条件
   renderSimpleForm() {
@@ -244,96 +233,96 @@ export default class Goods extends PureComponent {
   }
   // 是否展开
   renderForm() {
-    return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
+    return this.props.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
   }
 
   // 渲染界面
   render() {
-    const { goods: { loading: loading, data } } = this.props;
-    const { selectedRows, modalVisible, addInputValue, modalType } = this.state;
-    
+    const { dispatch, goods: { loading, data, selectedRows, modalVisible, modalType } } = this.props;
+
     const modalProps = {
       item: modalType,
       visible: modalVisible,
       maskClosable: false,
       // confirmLoading: loading.effects['goods/update'],
-      title:  '添加商品',
+      title: '添加商品',
       wrapClassName: 'vertical-center-modal',
-      onOk (data) {
+      onOk(data) {
         dispatch({
-          type: `goods/create`,
+          type: 'goods/create',
           payload: data,
-        })
+        });
         message.success('添加成功');
         this.setState({
           modalVisible: false,
         });
       },
-      onCancel () {
+      onCancel() {
         this.setState({
           modalVisible: false,
         });
       },
-    }
+    };
 
     return (
       <PageHeaderLayout title="商品基本信息查询">
-      <Row gutter={24}>
-      {/* 左侧树 */}
-      <Col xl={6} lg={24} md={24} sm={24} xs={24}>
-        <Card bordered={false}>
-          <div className={styles.goodsInfoCategory}>
-            <Icon type="tags" />
+        <Row gutter={24}>
+          {/* 左侧树 */}
+          <Col xl={6} lg={24} md={24} sm={24} xs={24}>
+            <Card bordered={false}>
+              <div className={styles.goodsInfoCategory}>
+                <Icon type="tags" />
             选择商品分类
-          </div>
-          <Tree
-            showLine
-            defaultExpandedKeys={['021']}
-            onSelect={this.onSelect}>
-            <TreeNode title="parent 1" key="0">
-              <TreeNode title="parent 1-0" key="01">
-                <TreeNode title="leaf" key="012" />
-                <TreeNode title="leaf" key="013" />
-                <TreeNode title="leaf" key="014" />
-              </TreeNode>
-              <TreeNode title="parent 1-1" key="02">
-                <TreeNode title="leaf" key="021" />
-              </TreeNode>
-              <TreeNode title="parent 1-2" key="03">
-                <TreeNode title="leaf" key="031" />
-                <TreeNode title="leaf" key="032" />
-              </TreeNode>
-            </TreeNode>
-          </Tree>
-        </Card>
-      </Col>
-      {/* 右侧列表 */}
-      <Col xl={18} lg={24} md={24} sm={24} xs={24}>
-        <Card bordered={false}>
-          <div className={styles.goodsInfoList}>
-            <div className={styles.goodsInfoListForm}>
-              {this.renderForm()}
-            </div>
-            <div className={styles.goodsInfoListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增商品</Button>
-              {
-                selectedRows.length > 0 && (
+              </div>
+              <Tree
+                showLine
+                defaultExpandedKeys={['021']}
+                onSelect={this.onSelect}
+              >
+                <TreeNode title="parent 1" key="0">
+                  <TreeNode title="parent 1-0" key="01">
+                    <TreeNode title="leaf" key="012" />
+                    <TreeNode title="leaf" key="013" />
+                    <TreeNode title="leaf" key="014" />
+                  </TreeNode>
+                  <TreeNode title="parent 1-1" key="02">
+                    <TreeNode title="leaf" key="021" />
+                  </TreeNode>
+                  <TreeNode title="parent 1-2" key="03">
+                    <TreeNode title="leaf" key="031" />
+                    <TreeNode title="leaf" key="032" />
+                  </TreeNode>
+                </TreeNode>
+              </Tree>
+            </Card>
+          </Col>
+          {/* 右侧列表 */}
+          <Col xl={18} lg={24} md={24} sm={24} xs={24}>
+            <Card bordered={false}>
+              <div className={styles.goodsInfoList}>
+                <div className={styles.goodsInfoListForm}>
+                  {this.renderForm()}
+                </div>
+                <div className={styles.goodsInfoListOperator}>
+                  <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增商品</Button>
+                  {
+                  selectedRows.length > 0 && (
                   <span>
-                    <Button onClick={this.handleRemoveClick}  selectedKeys={[]}>删除商品</Button>
-                 </span>
-                )
+                    <Button onClick={this.handleRemoveClick} selectedKeys={[]}>删除商品</Button>
+                  </span>
+                  )
               }
-            </div>
-            <GoodsList
-              selectedRows={selectedRows}
-              loading={loading}
-              data={data}
-              onSelectRow={this.handleSelectRows}
-              onChange={this.handleListChange}
-            />
-          </div>
-        </Card>
-        </Col>
+                </div>
+                <GoodsList
+                  selectedRows={selectedRows}
+                  loading={loading}
+                  data={data}
+                  onSelectRow={this.handleSelectRows}
+                  onChange={this.handleListChange}
+                />
+              </div>
+            </Card>
+          </Col>
         </Row>
         {/* 新增窗口 */}
         {modalVisible && <Detail {...modalProps} />}
@@ -341,4 +330,4 @@ export default class Goods extends PureComponent {
       </PageHeaderLayout>
     );
   }
-}
+  }
