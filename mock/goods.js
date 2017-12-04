@@ -7,11 +7,11 @@ for (let i = 0; i < 46; i += 1) {
     key: i,
     name: '商品名称',
     category: `分类 ${i}`,
-    code: [i % 2],
-    unit: `只`,
+    code: `SP ${i}`,
+    unit: '只',
     spec: `${i}只`,
     qrcode: `qrcode-${i}`,
-    description: `这是一段描述`,
+    description: '这是一段描述',
     status: Math.floor(Math.random() * 10) % 4,
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
     createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
@@ -49,7 +49,6 @@ export function getGoods(req, res, u) {
   if (params.code) {
     dataSource = dataSource.filter(data => data.code.indexOf(params.code) > -1);
   }
-
   // 分类查询
   if (params.category) {
     dataSource = dataSource.filter(data => data.category.indexOf(params.category) > -1);
@@ -83,7 +82,7 @@ export function postGoods(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, key, description } = body;
+  const { method, key } = body;
 
   switch (method) {
     /* eslint no-case-declarations:0 */
@@ -95,12 +94,12 @@ export function postGoods(req, res, u, b) {
       tableListDataSource.unshift({
         key: i,
         name: '商品名称',
-        category: `00${i%2}`,
+        category: `00${i % 2}`,
         code: `SP ${i}`,
-        unit: `只`,
+        unit: '只',
         spec: `${i}只`,
         qrcode: `qrcode-${i}`,
-        description: `这是一段描述`,
+        description: '这是一段描述',
         status: Math.floor(Math.random() * 10) % 2,
         updatedAt: new Date(),
         createdAt: new Date(),
