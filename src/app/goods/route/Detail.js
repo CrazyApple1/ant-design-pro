@@ -1,15 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Form, Input, InputNumber, Modal, Select } from 'antd'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Form, Input, InputNumber, Modal, Select } from 'antd';
+
 const Option = Select.Option;
 
-const FormItem = Form.Item
+const FormItem = Form.Item;
 
 // 表单项样式
 const formItemLayout = {
-  labelCol: {span: 6},
-  wrapperCol: {span: 14}
-}
+  labelCol: { span: 6 },
+  wrapperCol: { span: 14 },
+};
 
 // 表单配置项
 const detail = ({
@@ -25,20 +26,20 @@ const detail = ({
   const handleOk = () => {
     validateFields((errors) => {
       if (errors) {
-        return
+        return;
       }
       const data = {
         ...getFieldsValue(),
         key: item.key,
-      }
-      onOk(data)
-    })
-  }
- // 窗口配置项
+      };
+      onOk(data);
+    });
+  };
+  // 窗口配置项
   const modalOpts = {
     ...modalProps,
     onOk: handleOk,
-  }
+  };
 
   return (
     <Modal {...modalOpts}>
@@ -60,7 +61,7 @@ const detail = ({
                 message: '请选择商品分类',
             }],
           })(
-            <Select hasFeedback {...formItemLayout}>
+            <Select defaultValue="toy" hasFeedback {...formItemLayout}>
               <Option value="toy">玩具</Option>
               <Option value="omament">饰品</Option>
               <Option value="Yiminghe">工艺品</Option>
@@ -75,7 +76,7 @@ const detail = ({
                 message: '请输入正确的编码(仅限数字)',
             }],
           })(
-            <Input/>
+            <Input />
           )}
         </FormItem>
         <FormItem label="单位" hasFeedback {...formItemLayout}>
@@ -85,7 +86,7 @@ const detail = ({
                 required: true,
             }],
           })(
-            <Select hasFeedback {...formItemLayout}>
+            <Select defaultValue="0001" hasFeedback {...formItemLayout}>
               <Option value="0001">件</Option>
               <Option value="0002">只</Option>
               <Option value="0003">套</Option>
@@ -99,7 +100,7 @@ const detail = ({
                 type: 'number',
                 message: '请输入正确的装箱规格(仅限数字)',
             }],
-          })(<InputNumber/>)}
+          })(<InputNumber />)}
         </FormItem>
         <FormItem label="条码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('qrcode', {
@@ -108,18 +109,18 @@ const detail = ({
                 type: 'number',
                 message: '请输入正确的条码(仅限数字)',
             }],
-          })(<Input/>)}
+          })(<Input />)}
         </FormItem>
       </Form>
     </Modal>
-  )
-}
+  );
+};
 
 detail.propTypes = {
   form: PropTypes.object.isRequired,
   type: PropTypes.string,
   item: PropTypes.object,
   onOk: PropTypes.func,
-}
+};
 
-export default Form.create()(detail)
+export default Form.create()(detail);

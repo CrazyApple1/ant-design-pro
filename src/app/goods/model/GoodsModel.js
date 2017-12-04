@@ -72,6 +72,12 @@ export default {
   },
 
   reducers: {
+    showModal(state, { payload }) {
+      return { ...state, ...payload, modalVisible: true };
+    },
+    hideModal(state) {
+      return { ...state, modalVisible: false };
+    },
     save(state, action) {
       return {
         ...state,

@@ -55,7 +55,7 @@ class List extends PureComponent {
         dataIndex: 'category',
         render: val => (
           <div style={{ textAlign: 'center' }}>
-            {val} 
+            {val}
           </div>
         ),
       },
@@ -70,7 +70,7 @@ class List extends PureComponent {
         sorter: true,
         render: val => (
           <div style={{ textAlign: 'center' }}>
-            {val} 
+            {val}
           </div>
         ),
       },
@@ -81,7 +81,7 @@ class List extends PureComponent {
       {
         title: '条码',
         dataIndex: 'qrcode',
-        sorter: true,        
+        sorter: true,
       },
       {
         title: '操作',

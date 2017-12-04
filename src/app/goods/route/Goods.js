@@ -52,7 +52,7 @@ export default class Goods extends PureComponent {
       type: 'goods/fetch',
       payload: params,
     });
-  }
+  };
   // 树节点选择
   onSelect = (selectedKeys, info) => {
     const { dispatch } = this.props;
@@ -73,14 +73,6 @@ export default class Goods extends PureComponent {
       payload: {},
     });
   };
-
-  // 折叠查询条件
-  toggleForm = () => {
-    this.setState({
-      expandForm: !this.state.expandForm,
-    });
-  };
-
   // 删除事件
   handleRemoveClick = (e) => {
     const { dispatch, selectedRows } = this.props;
@@ -125,10 +117,6 @@ export default class Goods extends PureComponent {
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
 
-      this.setState({
-        formValues: values,
-      });
-
       dispatch({
         type: 'goods/fetch',
         payload: values,
@@ -137,27 +125,34 @@ export default class Goods extends PureComponent {
   };
 
   // 新增窗口
-  handleModalVisible = (flag, action) => {
-    this.setState({
-      modalVisible: !!flag,
+  handleModalVisible = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'goods/showModal',
     });
   };
-
-  // 新增窗口保存按钮事件
-  handleAdd = () => {
-    this.props.dispatch({
-      type: 'goods/add',
-      payload: {
-        description: this.state.addInputValue,
-      },
-    });
-
-    message.success('添加成功');
-    this.setState({
-      modalVisible: false,
-    });
-  };
-
+  // 左侧树
+  renderCategoryTree() {
+    return (
+      <Card bordered={false}>
+        <div className={styles.goodsInfoCategory}>
+          <Icon type="tags" />选择商品分类
+        </div>
+        <Tree showLine defaultExpandedKeys={['021']} onSelect={this.onSelect}>
+          <TreeNode title="parent 1" key="0">
+            <TreeNode title="parent 1-0" key="01">
+              <TreeNode title="leaf" key="012" />
+              <TreeNode title="leaf" key="014" />
+            </TreeNode>
+          </TreeNode>
+          <TreeNode title="parent 1-2" key="03">
+            <TreeNode title="leaf" key="031" />
+            <TreeNode title="leaf" key="032" />
+          </TreeNode>
+        </Tree>
+      </Card>
+    );
+  }
   // 简单搜索条件
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
@@ -182,63 +177,16 @@ export default class Goods extends PureComponent {
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">查询</Button>
               <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-              <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                展开 <Icon type="down" />
-              </a>
             </span>
           </Col>
         </Row>
       </Form>
     );
   }
-  // 高级查询条件
-  renderAdvancedForm() {
-    const { getFieldDecorator } = this.props.form;
-    return (
-      <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="商品名称">
-              {getFieldDecorator('name')(
-                <Input placeholder="请输入名称" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="商品编码">
-              {getFieldDecorator('code')(
-                <Input placeholder="请输入编码" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="商品条码">
-              {getFieldDecorator('qrcode')(
-                <Input placeholder="请输入条码" />
-              )}
-            </FormItem>
-          </Col>
-        </Row>
-        <div style={{ overflow: 'hidden' }}>
-          <span style={{ float: 'right', marginBottom: 24 }}>
-            <Button type="primary" htmlType="submit">查询</Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-            <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-              收起 <Icon type="up" />
-            </a>
-          </span>
-        </div>
-      </Form>
-    );
-  }
-  // 是否展开
-  renderForm() {
-    return this.props.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
-  }
-
   // 渲染界面
   render() {
-    const { dispatch, goods: { loading, data, selectedRows, modalVisible, modalType } } = this.props;
+    const { dispatch } = this.props;
+    const { loading, data, selectedRows, modalVisible, modalType } = this.props.goods;
 
     const modalProps = {
       item: modalType,
@@ -247,19 +195,16 @@ export default class Goods extends PureComponent {
       // confirmLoading: loading.effects['goods/update'],
       title: '添加商品',
       wrapClassName: 'vertical-center-modal',
-      onOk(data) {
+      onOk(detailData) {
         dispatch({
           type: 'goods/create',
-          payload: data,
+          payload: detailData,
         });
         message.success('添加成功');
-        this.setState({
-          modalVisible: false,
-        });
       },
       onCancel() {
-        this.setState({
-          modalVisible: false,
+        dispatch({
+          type: 'goods/hideModal',
         });
       },
     };
@@ -269,39 +214,14 @@ export default class Goods extends PureComponent {
         <Row gutter={24}>
           {/* 左侧树 */}
           <Col xl={6} lg={24} md={24} sm={24} xs={24}>
-            <Card bordered={false}>
-              <div className={styles.goodsInfoCategory}>
-                <Icon type="tags" />
-            选择商品分类
-              </div>
-              <Tree
-                showLine
-                defaultExpandedKeys={['021']}
-                onSelect={this.onSelect}
-              >
-                <TreeNode title="parent 1" key="0">
-                  <TreeNode title="parent 1-0" key="01">
-                    <TreeNode title="leaf" key="012" />
-                    <TreeNode title="leaf" key="013" />
-                    <TreeNode title="leaf" key="014" />
-                  </TreeNode>
-                  <TreeNode title="parent 1-1" key="02">
-                    <TreeNode title="leaf" key="021" />
-                  </TreeNode>
-                  <TreeNode title="parent 1-2" key="03">
-                    <TreeNode title="leaf" key="031" />
-                    <TreeNode title="leaf" key="032" />
-                  </TreeNode>
-                </TreeNode>
-              </Tree>
-            </Card>
+            { this.renderCategoryTree() }
           </Col>
           {/* 右侧列表 */}
           <Col xl={18} lg={24} md={24} sm={24} xs={24}>
             <Card bordered={false}>
               <div className={styles.goodsInfoList}>
                 <div className={styles.goodsInfoListForm}>
-                  {this.renderForm()}
+                  { this.renderSimpleForm() }
                 </div>
                 <div className={styles.goodsInfoListOperator}>
                   <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增商品</Button>
@@ -326,7 +246,6 @@ export default class Goods extends PureComponent {
         </Row>
         {/* 新增窗口 */}
         {modalVisible && <Detail {...modalProps} />}
-
       </PageHeaderLayout>
     );
   }
