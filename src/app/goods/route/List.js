@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
-import moment from 'moment';
-import { Table, Alert, Badge, Divider } from 'antd';
+import { Table, Alert, Divider } from 'antd';
 import styles from './List.less';
 
-const statusMap = ['default', 'processing', 'success', 'error'];
 class List extends PureComponent {
   state = {
     selectedRowKeys: [],
@@ -30,15 +28,15 @@ class List extends PureComponent {
     }
 
     this.setState({ selectedRowKeys, totalCallNo });
-  }
+  };
 
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
-  }
+  };
 
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], []);
-  }
+  };
 
   render() {
     const { selectedRowKeys, totalCallNo } = this.state;

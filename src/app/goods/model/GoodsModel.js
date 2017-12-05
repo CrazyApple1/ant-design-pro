@@ -1,7 +1,6 @@
 import { queryGoods, removeGoods, addGoods } from '../service/GoodsService';
 import { pageModel } from '../../../common/BaseModel'
 import modelExtend from 'dva-model-extend'
-
 export default modelExtend(pageModel, {
   namespace: 'goods',
 

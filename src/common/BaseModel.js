@@ -15,13 +15,15 @@ const pageModel = modelExtend(model, {
 
   state: {
     loading: true,
-    list: [],
-    pagination: {
-      showSizeChanger: true,
-      showQuickJumper: true,
-      showTotal: total => `共 ${total} 条`,
-      current: 1,
-      total: 0,
+    data: {
+      list: [],
+      pagination: {
+        showSizeChanger: true,
+        showQuickJumper: true,
+        showTotal: total => `共 ${total} 条`,
+        current: 1,
+        total: 0,
+      },
     },
   },
 
