@@ -1,6 +1,8 @@
 import { queryGoods, removeGoods, addGoods } from '../service/GoodsService';
+import { pageModel } from '../../../common/BaseModel'
+import modelExtend from 'dva-model-extend'
 
-export default {
+export default modelExtend(pageModel, {
   namespace: 'goods',
 
   state: {
@@ -9,11 +11,6 @@ export default {
     expandForm: false,
     selectedRows: [],
     formValues: {},
-    data: {
-      list: [],
-      pagination: {},
-    },
-    loading: true,
   },
 
   effects: {
@@ -84,11 +81,5 @@ export default {
         data: action.payload,
       };
     },
-    changeLoading(state, action) {
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    },
   },
-};
+});
