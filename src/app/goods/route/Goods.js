@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Tree, Row, Col, Card, Form, Input, Icon, Button, message } from 'antd';
+import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import GoodsList from './List';
 import Detail from './Detail';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
@@ -54,7 +54,7 @@ export default class Goods extends PureComponent {
     });
   };
   // 树节点选择
-  onSelect = (selectedKeys, info) => {
+  onSelect = (selectedKeys) => {
     const { dispatch } = this.props;
     const values = {
       category: selectedKeys[0],
@@ -74,35 +74,31 @@ export default class Goods extends PureComponent {
     });
   };
   // 删除事件
-  handleRemoveClick = (e) => {
-    const { dispatch, selectedRows } = this.props;
-
+  handleRemoveClick = () => {
+    const { dispatch, goods :{ selectedRows } } = this.props;
     if (!selectedRows) return;
 
-    switch (e.key) {
-      case 'remove':
+    dispatch({
+      type: 'goods/remove',
+      payload: {
+        key: selectedRows.map(row => row.key).join(','),
+      },
+      callback: () => {
         dispatch({
-          type: 'goods/remove',
-          payload: {
-            no: selectedRows.map(row => row.no).join(','),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
+          type: 'goods/updateState',
+          payload: { selectedRows: [],}
         });
-        break;
-      default: break;
-    }
+      },
+    });
   };
   // 行选事件
   handleSelectRows = (rows) => {
-    this.setState({
-      selectedRows: rows,
+    const { dispatch, goods :{ selectedRows } } = this.props;
+    dispatch({
+      type: 'goods/updateState',
+      payload: { selectedRows: rows,}
     });
   };
-
   // 搜索事件
   handleSearch = (e) => {
     e.preventDefault();
@@ -228,7 +224,9 @@ export default class Goods extends PureComponent {
                   {
                   selectedRows.length > 0 && (
                   <span>
-                    <Button onClick={this.handleRemoveClick} selectedKeys={[]}>删除商品</Button>
+                      <Popconfirm title={'确定要删除所选商品吗?'} placement="top" onConfirm={this.handleRemoveClick}>
+                        <Button>删除商品</Button>
+                      </Popconfirm>
                   </span>
                   )
               }
