@@ -14,10 +14,10 @@ const TreeNode = Tree.TreeNode;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 // 连接组件和store
-// 把state.rule绑定给组件的 rule
-  @connect(state => ({
-    goods: state.goods,
-  }))
+// 把state.goods定给组件的goods
+@connect(state => ({
+  goods: state.goods,
+}))
 @Form.create()
 export default class Goods extends PureComponent {
   // 组件加载完成后加载数据
@@ -27,32 +27,6 @@ export default class Goods extends PureComponent {
         type: 'goods/fetch',
       });
     }
-
-  // 表格动作触发事件
-  handleListChange = (pagination, filtersArg, sorter) => {
-    const { dispatch, formValues } = this.props;
-
-    const filters = Object.keys(filtersArg).reduce((obj, key) => {
-      const newObj = { ...obj };
-      newObj[key] = getValue(filtersArg[key]);
-      return newObj;
-    }, {});
-
-    const params = {
-      currentPage: pagination.current,
-      pageSize: pagination.pageSize,
-      ...formValues,
-      ...filters,
-    };
-    if (sorter.field) {
-      params.sorter = `${sorter.field}_${sorter.order}`;
-    }
-
-    dispatch({
-      type: 'goods/fetch',
-      payload: params,
-    });
-  };
   // 树节点选择
   onSelect = (selectedKeys) => {
     const { dispatch } = this.props;
@@ -91,14 +65,7 @@ export default class Goods extends PureComponent {
       },
     });
   };
-  // 行选事件
-  handleSelectRows = (rows) => {
-    const { dispatch, goods :{ selectedRows } } = this.props;
-    dispatch({
-      type: 'goods/updateState',
-      payload: { selectedRows: rows,}
-    });
-  };
+
   // 搜索事件
   handleSearch = (e) => {
     e.preventDefault();
@@ -184,6 +151,13 @@ export default class Goods extends PureComponent {
     const { dispatch } = this.props;
     const { loading, data, selectedRows, modalVisible, modalType } = this.props.goods;
 
+    const listPops = {
+      dispatch,
+      loading,
+      data,
+      selectedRows,
+    };
+
     const modalProps = {
       item: modalType,
       visible: modalVisible,
@@ -193,7 +167,7 @@ export default class Goods extends PureComponent {
       wrapClassName: 'vertical-center-modal',
       onOk(detailData) {
         dispatch({
-          type: 'goods/create',
+          type: 'goods/add',
           payload: detailData,
         });
         message.success('添加成功');
@@ -231,13 +205,7 @@ export default class Goods extends PureComponent {
                   )
               }
                 </div>
-                <GoodsList
-                  selectedRows={selectedRows}
-                  loading={loading}
-                  data={data}
-                  onSelectRow={this.handleSelectRows}
-                  onChange={this.handleListChange}
-                />
+                <GoodsList {...listPops} />
               </div>
             </Card>
           </Col>

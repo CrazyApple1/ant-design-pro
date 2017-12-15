@@ -3,44 +3,50 @@ import { Table, Alert, Divider } from 'antd';
 import styles from './List.less';
 
 class List extends PureComponent {
-  state = {
-    selectedRowKeys: [],
-    totalCallNo: 0,
-  };
-
-  componentWillReceiveProps(nextProps) {
-    // clean state
-    if (nextProps.selectedRows.length === 0) {
-      this.setState({
-        selectedRowKeys: [],
-        totalCallNo: 0,
-      });
-    }
-  }
-
-  handleRowSelectChange = (selectedRowKeys, selectedRows) => {
-    const totalCallNo = selectedRows.reduce((sum, val) => {
-      return sum + parseFloat(val.callNo, 10);
-    }, 0);
-
-    if (this.props.onSelectRow) {
-      this.props.onSelectRow(selectedRows);
-    }
-
-    this.setState({ selectedRowKeys, totalCallNo });
-  };
-
-  handleTableChange = (pagination, filters, sorter) => {
-    this.props.onChange(pagination, filters, sorter);
-  };
-
+  // 清除选择
   cleanSelectedKeys = () => {
-    this.handleRowSelectChange([], []);
+    this.handleSelectRows([]);
+  };
+
+  // 行选事件
+  handleSelectRows = (rows) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'goods/updateState',
+      payload: { selectedRows: rows,}
+    });
+
+    console.info(this.props);
+  };
+
+  // 表格动作触发事件
+  handleListChange = (pagination, filtersArg, sorter) => {
+    const { dispatch, formValues } = this.props;
+
+    const filters = Object.keys(filtersArg).reduce((obj, key) => {
+      const newObj = { ...obj };
+      newObj[key] = getValue(filtersArg[key]);
+      return newObj;
+    }, {});
+
+    const params = {
+      currentPage: pagination.current,
+      pageSize: pagination.pageSize,
+      ...formValues,
+      ...filters,
+    };
+    if (sorter.field) {
+      params.sorter = `${sorter.field}_${sorter.order}`;
+    }
+
+    dispatch({
+      type: 'goods/fetch',
+      payload: params,
+    });
   };
 
   render() {
-    const { selectedRowKeys, totalCallNo } = this.state;
-    const { data: { list, pagination }, loading } = this.props;
+    const {selectedRows, data: { list, pagination }, loading } = this.props;
 
     const columns = [
       {
@@ -99,21 +105,20 @@ class List extends PureComponent {
       ...pagination,
     };
 
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.handleRowSelectChange,
-      getCheckboxProps: record => ({
-        disabled: record.disabled,
-      }),
+    const  rowSelectionProps = {
+        fixed: true,
+        selectedRowKeys: selectedRows,
+        onChange: (keys) => {
+          this.handleSelectRows(keys);
+        }
     };
-
     return (
       <div className={styles.standardTable}>
         <div className={styles.tableAlert}>
           <Alert
             message={(
               <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
+                已选择 <a style={{ fontWeight: 600 }}>{selectedRows.length}</a> 项&nbsp;&nbsp;
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空选择</a>
               </div>
             )}
@@ -123,16 +128,18 @@ class List extends PureComponent {
         </div>
         <Table
           loading={loading}
+          className={ styles.headBorder }
+          bordered
           rowKey={record => record.key}
-          rowSelection={rowSelection}
+          rowSelection = {rowSelectionProps}
           dataSource={list}
           columns={columns}
           pagination={paginationProps}
-          onChange={this.handleTableChange}
+          onSelectRow={this.handleSelectRows}
+          onChange={this.handleListChange}
         />
       </div>
     );
   }
 }
-
 export default List;

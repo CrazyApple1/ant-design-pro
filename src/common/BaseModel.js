@@ -12,7 +12,6 @@ const model = {
 };
 
 const pageModel = modelExtend(model, {
-
   state: {
     loading: true,
     data: {
@@ -28,8 +27,9 @@ const pageModel = modelExtend(model, {
   },
 
   reducers: {
-    querySuccess (state, { payload }) {
-      const { list, pagination } = payload;
+    // 查询成功
+    querySuccess(state, {payload}) {
+      const {list, pagination} = payload;
       return {
         ...state,
         list,
@@ -39,10 +39,22 @@ const pageModel = modelExtend(model, {
         },
       }
     },
-    changeLoading(state, action) {
+    save(state, action) {
       return {
         ...state,
-        loading: action.payload,
+        data: action.payload,
+      };
+    },
+    showLoading(state) {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    hideLoading(state) {
+      return {
+        ...state,
+        loading: false,
       };
     },
   },

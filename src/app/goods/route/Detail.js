@@ -46,7 +46,6 @@ const detail = ({
       <Form layout="horizontal">
         <FormItem label="名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
-            initialValue: item.name,
             rules: [{
                 required: true,
                 message: '请输入商品名称',
@@ -61,7 +60,7 @@ const detail = ({
                 message: '请选择商品分类',
             }],
           })(
-            <Select defaultValue="toy" hasFeedback {...formItemLayout}>
+            <Select hasFeedback {...formItemLayout}>
               <Option value="toy">玩具</Option>
               <Option value="omament">饰品</Option>
               <Option value="Yiminghe">工艺品</Option>
@@ -70,9 +69,7 @@ const detail = ({
         </FormItem>
         <FormItem label="编码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('code', {
-            initialValue: item.isMale,
             rules: [{
-                type: 'number',
                 message: '请输入正确的编码(仅限数字)',
             }],
           })(
@@ -81,12 +78,12 @@ const detail = ({
         </FormItem>
         <FormItem label="单位" hasFeedback {...formItemLayout}>
           {getFieldDecorator('unit', {
+            initialValue: '0001',
             rules: [{
-                initialValue: '0001',
                 required: true,
             }],
           })(
-            <Select defaultValue="0001" hasFeedback {...formItemLayout}>
+            <Select hasFeedback {...formItemLayout}>
               <Option value="0001">件</Option>
               <Option value="0002">只</Option>
               <Option value="0003">套</Option>
@@ -95,7 +92,6 @@ const detail = ({
         </FormItem>
         <FormItem label="装箱规格" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spec', {
-            initialValue: item.phone,
             rules: [{
                 type: 'number',
                 message: '请输入正确的装箱规格(仅限数字)',
@@ -104,9 +100,7 @@ const detail = ({
         </FormItem>
         <FormItem label="条码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('qrcode', {
-            initialValue: item.phone,
             rules: [{
-                type: 'number',
                 message: '请输入正确的条码(仅限数字)',
             }],
           })(<Input />)}

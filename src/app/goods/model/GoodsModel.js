@@ -3,7 +3,6 @@ import { pageModel } from '../../../common/BaseModel'
 import modelExtend from 'dva-model-extend'
 export default modelExtend(pageModel, {
   namespace: 'goods',
-
   state: {
     modalVisible: false,
     modalType: 'create',
@@ -11,14 +10,11 @@ export default modelExtend(pageModel, {
     selectedRows: [],
     formValues: {},
   },
-
   effects: {
+    // 查询
     *fetch({ payload }, { call, put }) {
       // loading
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
+      yield put({ type: 'showLoading' });
       // 查询数据
       const response = yield call(queryGoods, payload);
       yield put({
@@ -26,42 +22,34 @@ export default modelExtend(pageModel, {
         payload: response,
       });
       // 取消loading
-      yield put({
-        type: 'changeLoading',
-        payload: false,
-      });
+      yield put({ type: 'hideLoading' });
     },
+    // 新增
     *add({ payload, callback }, { call, put }) {
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
+      yield put({ type: 'showLoading' });
       const response = yield call(addGoods, payload);
+
       yield put({
         type: 'save',
         payload: response,
-      });
-      yield put({
-        type: 'changeLoading',
-        payload: false,
       });
 
+      yield put({ type: 'hideLoading' });
+
+      yield put({ type: 'hideModal' });
       if (callback) callback();
     },
+    // 删除
     *remove({ payload, callback }, { call, put }) {
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
+      yield put({ type: 'showLoading' });
       const response = yield call(removeGoods, payload);
+
       yield put({
         type: 'save',
         payload: response,
       });
-      yield put({
-        type: 'changeLoading',
-        payload: false,
-      });
+
+      yield put({ type: 'hideLoading' });
 
       if (callback) callback();
     },
@@ -73,12 +61,6 @@ export default modelExtend(pageModel, {
     },
     hideModal(state) {
       return { ...state, modalVisible: false };
-    },
-    save(state, action) {
-      return {
-        ...state,
-        data: action.payload,
-      };
     },
   },
 });
