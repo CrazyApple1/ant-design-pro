@@ -92,6 +92,8 @@ export default class Goods extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'goods/showModal',
+      modalType: 'create',
+      currentItem: [],
     });
   };
   // 左侧树
@@ -149,7 +151,7 @@ export default class Goods extends PureComponent {
   // 渲染界面
   render() {
     const { dispatch } = this.props;
-    const { loading, data, selectedRowKeys, modalVisible, modalType } = this.props.goods;
+    const { loading, data, selectedRowKeys, modalVisible, modalType, currentItem } = this.props.goods;
 
     const listPops = {
       dispatch,
@@ -159,11 +161,11 @@ export default class Goods extends PureComponent {
     };
 
     const modalProps = {
-      item: modalType,
+      item: currentItem,
       visible: modalVisible,
       maskClosable: false,
       // confirmLoading: loading.effects['goods/update'],
-      title: '添加商品',
+      title: `${modalType === 'create' ? '新增商品' : '编辑商品'}`,
       wrapClassName: 'vertical-center-modal',
       onOk(detailData) {
         dispatch({

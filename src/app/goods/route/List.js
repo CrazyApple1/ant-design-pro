@@ -27,15 +27,16 @@ class List extends PureComponent {
   };
 
   // 编辑事件
-  handleEditClick = (selectKey, e) => {
-    console.info("edit");
-    // dispatch({
-    //   type: 'goods/showModal',
-    //   payload: {
-    //     modalType: 'update',
-    //     currentItem: item,
-    //   },
-    // })
+  handleEditClick = (record, e) => {
+    const { dispatch } = this.props;
+
+    dispatch({
+      type: 'goods/showModal',
+      payload: {
+        modalType: 'update',
+        currentItem: record,
+      },
+    })
   };
 
   // 表格动作触发事件
