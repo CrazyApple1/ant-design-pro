@@ -49,18 +49,18 @@ export default class Goods extends PureComponent {
   };
   // 删除事件
   handleRemoveClick = () => {
-    const { dispatch, goods :{ selectedRows } } = this.props;
-    if (!selectedRows) return;
+    const { dispatch, goods :{ selectedRowKeys } } = this.props;
+    if (!selectedRowKeys) return;
 
     dispatch({
       type: 'goods/remove',
       payload: {
-        key: selectedRows.map(row => row.key).join(','),
+        key: selectedRowKeys,
       },
       callback: () => {
         dispatch({
           type: 'goods/updateState',
-          payload: { selectedRows: [],}
+          payload: { selectedRowKeys: [],}
         });
       },
     });
@@ -149,13 +149,13 @@ export default class Goods extends PureComponent {
   // 渲染界面
   render() {
     const { dispatch } = this.props;
-    const { loading, data, selectedRows, modalVisible, modalType } = this.props.goods;
+    const { loading, data, selectedRowKeys, modalVisible, modalType } = this.props.goods;
 
     const listPops = {
       dispatch,
       loading,
       data,
-      selectedRows,
+      selectedRowKeys,
     };
 
     const modalProps = {
@@ -196,7 +196,7 @@ export default class Goods extends PureComponent {
                 <div className={styles.goodsInfoListOperator}>
                   <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增商品</Button>
                   {
-                  selectedRows.length > 0 && (
+                  selectedRowKeys.length > 0 && (
                   <span>
                       <Popconfirm title={'确定要删除所选商品吗?'} placement="top" onConfirm={this.handleRemoveClick}>
                         <Button>删除商品</Button>

@@ -82,7 +82,9 @@ export function postGoods(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, key } = body;
+  const { method, key, name, category, code, unit, spec, qrcode, description } = body;
+
+  console.info(key);
 
   switch (method) {
     /* eslint no-case-declarations:0 */
@@ -93,13 +95,13 @@ export function postGoods(req, res, u, b) {
       const i = Math.ceil(Math.random() * 10000);
       tableListDataSource.unshift({
         key: i,
-        name: '商品名称',
-        category: `00${i % 2}`,
-        code: `SP ${i}`,
-        unit: '只',
-        spec: `${i}只`,
-        qrcode: `qrcode-${i}`,
-        description: '这是一段描述',
+        name,
+        category,
+        code,
+        unit,
+        spec,
+        qrcode,
+        description,
         status: Math.floor(Math.random() * 10) % 2,
         updatedAt: new Date(),
         createdAt: new Date(),

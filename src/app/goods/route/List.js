@@ -13,10 +13,29 @@ class List extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'goods/updateState',
-      payload: { selectedRows: rows,}
+      payload: { selectedRowKeys: rows,}
     });
+  };
 
-    console.info(this.props);
+  // 删除事件
+  handleDeleteClick = (selectKey, e) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'goods/remove',
+      payload: { key: [ selectKey.key ],},
+    })
+  };
+
+  // 编辑事件
+  handleEditClick = (selectKey, e) => {
+    console.info("edit");
+    // dispatch({
+    //   type: 'goods/showModal',
+    //   payload: {
+    //     modalType: 'update',
+    //     currentItem: item,
+    //   },
+    // })
   };
 
   // 表格动作触发事件
@@ -46,7 +65,7 @@ class List extends PureComponent {
   };
 
   render() {
-    const {selectedRows, data: { list, pagination }, loading } = this.props;
+    const { selectedRowKeys, data: { list, pagination }, loading } = this.props;
 
     const columns = [
       {
@@ -89,11 +108,11 @@ class List extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
+        render: (text, record) => (
           <div>
-            <a href="">编辑</a>
+            <a onClick={ e => this.handleEditClick(record, e) }>编辑</a>
             <Divider type="vertical" />
-            <a href="">删除</a>
+            <a onClick={ e => this.handleDeleteClick(record, e) }>删除</a>
           </div>
         ),
       },
@@ -107,9 +126,9 @@ class List extends PureComponent {
 
     const  rowSelectionProps = {
         fixed: true,
-        selectedRowKeys: selectedRows,
-        onChange: (keys) => {
-          this.handleSelectRows(keys);
+        selectedRowKeys: selectedRowKeys,
+        onChange: (selectedRowKeys, selectedRows) => {
+          this.handleSelectRows(selectedRowKeys);
         }
     };
     return (
@@ -118,7 +137,7 @@ class List extends PureComponent {
           <Alert
             message={(
               <div>
-                已选择 <a style={{ fontWeight: 600 }}>{selectedRows.length}</a> 项&nbsp;&nbsp;
+                已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
                 <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空选择</a>
               </div>
             )}

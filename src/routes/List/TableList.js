@@ -100,6 +100,7 @@ export default class TableList extends PureComponent {
   }
 
   handleSelectRows = (rows) => {
+    console.info(rows);
     this.setState({
       selectedRows: rows,
     });

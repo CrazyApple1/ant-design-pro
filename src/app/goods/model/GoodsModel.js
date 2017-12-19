@@ -4,10 +4,11 @@ import modelExtend from 'dva-model-extend'
 export default modelExtend(pageModel, {
   namespace: 'goods',
   state: {
+    currentItem: {},
     modalVisible: false,
     modalType: 'create',
     expandForm: false,
-    selectedRows: [],
+    selectedRowKeys: [],
     formValues: {},
   },
   effects: {
