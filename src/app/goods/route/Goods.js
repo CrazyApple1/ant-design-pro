@@ -21,12 +21,12 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 @Form.create()
 export default class Goods extends PureComponent {
   // 组件加载完成后加载数据
-    componentDidMount() {
-      const { dispatch } = this.props;
-      dispatch({
-        type: 'goods/fetch',
-      });
-    }
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'goods/fetch',
+    });
+  }
   // 树节点选择
   onSelect = (selectedKeys) => {
     const { dispatch } = this.props;
@@ -65,7 +65,6 @@ export default class Goods extends PureComponent {
       },
     });
   };
-
   // 搜索事件
   handleSearch = (e) => {
     e.preventDefault();
@@ -86,14 +85,15 @@ export default class Goods extends PureComponent {
       });
     });
   };
-
   // 新增窗口
   handleModalVisible = () => {
     const { dispatch } = this.props;
     dispatch({
       type: 'goods/showModal',
-      modalType: 'create',
-      currentItem: [],
+      payload: {
+         modalType: 'create',
+         currentItem: {},
+      }
     });
   };
   // 左侧树
@@ -161,7 +161,7 @@ export default class Goods extends PureComponent {
     };
 
     const modalProps = {
-      item: currentItem,
+      item: modalType === 'create' ? {} : currentItem,
       visible: modalVisible,
       maskClosable: false,
       // confirmLoading: loading.effects['goods/update'],

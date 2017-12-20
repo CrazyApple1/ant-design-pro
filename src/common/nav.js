@@ -52,6 +52,39 @@ export const getNavData = app => [
         ],
       },
       {
+        name: '系统管理',
+        icon: 'setting',
+        path: 'sys',
+        children: [
+          {
+            icon: 'flag',
+            name: '组织管理',
+            path: 'orginization',
+            component: dynamicWrapper(app, ['app/sys/orginization/model/Orginization'], () => import('../app/sys/orginization/route/Orginization')),
+          }, {
+            icon: 'usergroup-add',
+            name: '账户管理',
+            path: 'account',
+            component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../app/goods/route/Goods')),
+          }, {
+            icon: 'bars',
+            name: '模块管理',
+            path: 'module',
+            component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../app/goods/route/Goods')),
+          }, {
+            icon: 'form',
+            name: '权限管理',
+            path: 'role',
+            component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../app/goods/route/Goods')),
+          }, {
+            icon: 'profile',
+            name: '字典管理',
+            path: 'dictionary',
+            component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../app/goods/route/Goods')),
+          },
+        ],
+      },
+      {
         name: '表单页',
         path: 'form',
         icon: 'form',

@@ -8,6 +8,24 @@ const model = {
         ...payload,
       }
     },
+    save(state, action) {
+      return {
+        ...state,
+        data: action.payload,
+      };
+    },
+    showLoading(state) {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    hideLoading(state) {
+      return {
+        ...state,
+        loading: false,
+      };
+    },
   },
 };
 
@@ -29,7 +47,7 @@ const pageModel = modelExtend(model, {
   reducers: {
     // 查询成功
     querySuccess(state, {payload}) {
-      const {list, pagination} = payload;
+      const { list, pagination } = payload;
       return {
         ...state,
         list,
@@ -38,24 +56,6 @@ const pageModel = modelExtend(model, {
           ...pagination,
         },
       }
-    },
-    save(state, action) {
-      return {
-        ...state,
-        data: action.payload,
-      };
-    },
-    showLoading(state) {
-      return {
-        ...state,
-        loading: true,
-      };
-    },
-    hideLoading(state) {
-      return {
-        ...state,
-        loading: false,
-      };
     },
   },
 });
