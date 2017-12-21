@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
 import { Card } from 'antd';
 import { connect } from 'dva';
-import PageHeaderLayout from '../../../../layouts/PageHeaderLayout';
+import ModuleTree from './List';
+import PageHeaderLayout from '../../../core/layouts/PageHeaderLayout';
+
 
 @connect(state => ({
   orginization: state.orginization,
@@ -23,10 +25,19 @@ export default class Orginization extends PureComponent {
   handleSort = () => {
 
   };
+
   render() {
+    const { dispatch } = this.props;
+    const tableProps = {
+      dispatch,
+    };
+
+
     return (
       <PageHeaderLayout title="模块信息管理">
-        <Card> 这是组织管理页面 </Card>
+        <Card>
+          <ModuleTree {...tableProps} />
+        </Card>
       </PageHeaderLayout>
     )
   }

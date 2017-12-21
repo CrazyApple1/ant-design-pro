@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import { Card, Badge, Table, Divider } from 'antd';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
 import DescriptionList from '../../components/DescriptionList';
 import styles from './BasicProfile.less';
 

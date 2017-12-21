@@ -3,7 +3,7 @@ import moment from 'moment';
 import { connect } from 'dva';
 import { List, Card, Row, Col, Radio, Input, Progress, Button, Icon, Dropdown, Menu, Avatar } from 'antd';
 
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
 
 import styles from './BasicList.less';
 

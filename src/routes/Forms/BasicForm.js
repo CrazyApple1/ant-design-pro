@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import {
   Form, Input, DatePicker, Select, Button, Card, InputNumber, Radio, Icon, Tooltip,
 } from 'antd';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
 import styles from './style.less';
 
 const FormItem = Form.Item;

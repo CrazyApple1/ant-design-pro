@@ -12,7 +12,7 @@ const dynamicWrapper = (app, models, component) => dynamic({
 // nav data
 export const getNavData = app => [
   {
-    component: dynamicWrapper(app, ['models/user', 'models/login'], () => import('../layouts/BasicLayout')),
+    component: dynamicWrapper(app, ['models/user', 'models/login'], () => import('../app/core/layouts/BasicLayout')),
     layout: 'BasicLayout',
     name: '首页', // for breadcrumb
     path: '/',
@@ -212,7 +212,7 @@ export const getNavData = app => [
     ],
   },
   {
-    component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
+    component: dynamicWrapper(app, [], () => import('../app/core/layouts/UserLayout')),
     path: '/user',
     layout: 'UserLayout',
     children: [
@@ -241,7 +241,7 @@ export const getNavData = app => [
     ],
   },
   {
-    component: dynamicWrapper(app, [], () => import('../layouts/BlankLayout')),
+    component: dynamicWrapper(app, [], () => import('../app/core/layouts/BlankLayout')),
     layout: 'BlankLayout',
     children: {
       name: '使用文档',
