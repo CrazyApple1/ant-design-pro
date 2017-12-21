@@ -1,5 +1,5 @@
 import { stringify } from 'qs';
-import request from '../../../utils/request';
+import request from '../../../core/utils/request';
 
 export async function queryGoods(params) {
   return request(`/goods/list?${stringify(params)}`);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Alert, Divider } from 'antd';
 import { routerRedux } from 'dva/router';
-import { digitUppercase } from '../../../utils/utils';
+import { digitUppercase } from '../../../core/utils/utils';
 import styles from './style.less';
 
 export default ({ formItemLayout, form, data, dispatch, submitting }) => {

@@ -6,27 +6,21 @@ const List = ({...tableProps}) => {
   const columns = [{
     title: '模块名称',
     dataIndex: 'name',
-    sorter: true,
   },{
     title: '所属模块',
     dataIndex: 'parent',
-    sorter: true,
   },{
     title: '图标',
     dataIndex: 'icon',
-    sorter: true,
   },{
     title: '排序',
     dataIndex: 'order',
-    sorter: true,
   },{
     title: '路径',
     dataIndex: 'url',
-    sorter: true,
   },{
     title: '状态',
     dataIndex: 'status',
-    sorter: true,
   },{
     title: '操作',
     render: (text, record) => (

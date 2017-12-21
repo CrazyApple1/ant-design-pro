@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Card } from 'antd';
 import { connect } from 'dva';
 import ModuleTree from './List';
-import PageHeaderLayout from '../../../core/layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
 
 
 @connect(state => ({
@@ -31,7 +31,6 @@ export default class Orginization extends PureComponent {
     const tableProps = {
       dispatch,
     };
-
 
     return (
       <PageHeaderLayout title="模块信息管理">

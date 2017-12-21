@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link, Route } from 'dva/router';
 import DocumentTitle from 'react-document-title';
 import { Icon } from 'antd';
-import GlobalFooter from '../../../components/GlobalFooter/index';
+import GlobalFooter from '../../components/GlobalFooter/index';
 import styles from './UserLayout.less';
-import logo from '../../../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 
 const links = [{
   title: '帮助',

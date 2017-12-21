@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import { Form, Card, Select, List, Tag, Icon, Avatar, Row, Col, Button, Input } from 'antd';
 
-import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
 import StandardFormRow from '../../components/StandardFormRow';
 import TagSelect from '../../components/TagSelect';
 import styles from './SearchList.less';

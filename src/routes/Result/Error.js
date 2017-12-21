@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Icon, Card } from 'antd';
 import Result from '../../components/Result';
-import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
 
 const extra = (
   <div>

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Card, Button, Icon, List } from 'antd';
 
-import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
 import Ellipsis from '../../components/Ellipsis';
 
 import styles from './CardList.less';

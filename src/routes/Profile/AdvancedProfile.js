@@ -4,7 +4,7 @@ import Bind from 'lodash-decorators/bind';
 import { connect } from 'dva';
 import { Button, Menu, Dropdown, Icon, Row, Col, Steps, Card, Popover, Badge, Table, Tooltip, Divider } from 'antd';
 import classNames from 'classnames';
-import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
 import DescriptionList from '../../components/DescriptionList';
 import styles from './AdvancedProfile.less';
 

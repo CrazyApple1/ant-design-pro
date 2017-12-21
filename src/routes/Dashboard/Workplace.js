@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { Link } from 'dva/router';
 import { Row, Col, Card, List, Avatar } from 'antd';
 
-import PageHeaderLayout from '../../app/core/layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
 import EditableLinkGroup from '../../components/EditableLinkGroup';
 import { Radar } from '../../components/Charts';
 
