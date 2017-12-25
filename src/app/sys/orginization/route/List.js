@@ -1,10 +1,14 @@
 import React from 'react';
-import { Table, Divider, Icon } from 'antd';
+import { Table, Divider, Icon, Badge } from 'antd';
 
 // 菜单管理列表
 const List = ({...tableProps}) => {
 
   const { data } = { ...tableProps };
+
+  const statusMap = ['error', 'success'];
+  const status = ['已停用', '正常', ];
+
   const columns = [{
     title: '模块名称',
     dataIndex: 'name',
@@ -26,6 +30,9 @@ const List = ({...tableProps}) => {
   },{
     title: '状态',
     dataIndex: 'status',
+    render: (text, record) => {
+      return <Badge status={statusMap[text]} text={status[text]} />;
+    }
   },{
     title: '操作',
     render: (text, record) => (
