@@ -9,6 +9,14 @@ import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
   orginization: state.orginization,
 }))
 export default class Orginization extends PureComponent {
+  // 组件加载完成后加载数据
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'orginization/fetch',
+    });
+  }
+
   // 新增
   handleAdd = () => {
 
@@ -28,8 +36,10 @@ export default class Orginization extends PureComponent {
 
   render() {
     const { dispatch } = this.props;
+    const { data } = this.props.orginization;
     const tableProps = {
       dispatch,
+      data
     };
 
     return (

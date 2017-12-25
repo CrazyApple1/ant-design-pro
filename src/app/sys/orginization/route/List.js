@@ -3,6 +3,8 @@ import { Table, Divider } from 'antd';
 
 // 菜单管理列表
 const List = ({...tableProps}) => {
+
+  const { data } = { ...tableProps };
   const columns = [{
     title: '模块名称',
     dataIndex: 'name',
@@ -39,7 +41,7 @@ const List = ({...tableProps}) => {
     ),
   }];
 
-  const data = [];
+  console.info(tableProps);
 
   const rowSelection = {};
   return (

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { routerRedux, Route, Switch } from 'dva/router';
 import { connect } from 'dva';
 import { Input } from 'antd';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
 
 @connect()
 export default class SearchList extends Component {

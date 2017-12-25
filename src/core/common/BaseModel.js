@@ -1,6 +1,9 @@
 import modelExtend from 'dva-model-extend'
 
 const model = {
+  state: {
+    loading: true,
+  },
   reducers: {
     updateState (state, { payload }) {
       return {
@@ -31,7 +34,6 @@ const model = {
 
 const pageModel = modelExtend(model, {
   state: {
-    loading: true,
     data: {
       list: [],
       pagination: {
