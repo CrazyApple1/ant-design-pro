@@ -37,9 +37,9 @@ const List = ({...tableProps}) => {
     title: '操作',
     render: (text, record) => (
       <div>
-        <a >编辑</a>
+        <a>编辑</a>
         <Divider type="vertical" />
-        <a >删除</a>
+        <a>添加下级</a>
       </div>
     ),
   },{
@@ -47,6 +47,8 @@ const List = ({...tableProps}) => {
     render: (text, record) => (
       <div>
         <a>停用</a>
+        <Divider type="vertical" />
+        <a>删除</a>
       </div>
     ),
   }];
