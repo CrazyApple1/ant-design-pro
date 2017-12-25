@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
+import { getModule } from '../service/Orginization';
 
 export default modelExtend( model, {
   namespace: 'orginization',

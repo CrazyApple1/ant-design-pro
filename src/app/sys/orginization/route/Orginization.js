@@ -17,23 +17,6 @@ export default class Orginization extends PureComponent {
     });
   }
 
-  // 新增
-  handleAdd = () => {
-
-  };
-  //编辑
-  handleEdit = () => {
-
-  };
-  // 删除
-  handleDelete = () => {
-
-  };
-  // 排序
-  handleSort = () => {
-
-  };
-
   render() {
     const { dispatch } = this.props;
     const { data } = this.props.orginization;

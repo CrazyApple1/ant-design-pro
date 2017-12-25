@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Divider } from 'antd';
+import { Table, Divider, Icon } from 'antd';
 
 // 菜单管理列表
 const List = ({...tableProps}) => {
@@ -14,6 +14,9 @@ const List = ({...tableProps}) => {
   },{
     title: '图标',
     dataIndex: 'icon',
+    render: (text, record) => (
+      <Icon type={text} />
+    )
   },{
     title: '排序',
     dataIndex: 'order',
@@ -41,8 +44,24 @@ const List = ({...tableProps}) => {
     ),
   }];
 
-  console.info(tableProps);
+  // 新增
+  const handleAdd = () => {
 
+  };
+
+  // 删除
+  const handleDelete = () => {
+
+  };
+
+  //编辑
+  const handleEdit = () => {
+
+  };
+  // 排序
+  const handleSort = () => {
+
+  };
   const rowSelection = {};
   return (
     <Table columns={ columns } dataSource={ data }  rowKey={record => record.key} rowSelection={ rowSelection }/>
