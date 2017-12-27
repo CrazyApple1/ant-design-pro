@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Divider, Icon, Badge } from 'antd';
+import { Table, Divider, Badge } from 'antd';
+import styles from './Orginization.less';
 
 // 菜单管理列表
 const List = ({...tableProps}) => {
@@ -10,23 +11,14 @@ const List = ({...tableProps}) => {
   const status = ['已停用', '正常', ];
 
   const columns = [{
-    title: '模块名称',
+    title: '单位/部门名称',
     dataIndex: 'name',
   },{
-    title: '所属模块',
+    title: '所属单位/部门',
     dataIndex: 'parent',
-  },{
-    title: '图标',
-    dataIndex: 'icon',
-    render: (text, record) => (
-      <Icon type={text} />
-    )
   },{
     title: '排序',
     dataIndex: 'order',
-  },{
-    title: '路径',
-    dataIndex: 'url',
   },{
     title: '状态',
     dataIndex: 'status',
@@ -46,7 +38,7 @@ const List = ({...tableProps}) => {
     title: '是否启用',
     render: (text, record) => (
       <div>
-        <a>停用</a>
+        {'0' == record.status ? <a>停用</a> : <a>启用</a>}
         <Divider type="vertical" />
         <a>删除</a>
       </div>
@@ -73,7 +65,15 @@ const List = ({...tableProps}) => {
   };
   const rowSelection = {};
   return (
-    <Table columns={ columns } dataSource={ data }  rowKey={record => record.key} rowSelection={ rowSelection }/>
+    <Table
+       columns={ columns }
+       dataSource={ data }
+       rowClassName = { (record, index) => {
+         return '0' === record.status ? styles.disabled : styles.enabled;
+       }}
+       rowKey={record => record.key}
+       rowSelection={ rowSelection }
+    />
   )
 };
 

@@ -148,7 +148,6 @@ class List extends PureComponent {
         </div>
         <Table
           loading={loading}
-          className={ styles.headBorder }
           bordered
           rowKey={record => record.key}
           rowSelection = {rowSelectionProps}

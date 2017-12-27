@@ -14,6 +14,43 @@ const menuData = [{
     // hideInMenu: true,
   }],
 }, {
+    name: '商品管理',
+    icon: 'book',
+    path: 'goods',
+    children: [
+      {
+        name: '商品信息',
+        path: 'goodsinfo',
+      },
+    ],
+  }, {
+  name: '系统管理',
+  icon: 'setting',
+  path: 'sys',
+  children: [
+    {
+      icon: 'flag',
+      name: '组织管理',
+      path: 'orginization',
+    }, {
+      icon: 'usergroup-add',
+      name: '账户管理',
+      path: 'account',
+    }, {
+      icon: 'bars',
+      name: '模块管理',
+      path: 'module',
+    }, {
+      icon: 'form',
+      name: '权限管理',
+      path: 'role',
+    }, {
+      icon: 'profile',
+      name: '字典管理',
+      path: 'dictionary',
+    },
+  ],
+}, {
   name: '表单页',
   icon: 'form',
   path: 'form',

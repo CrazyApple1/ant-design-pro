@@ -8,6 +8,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:global {
+  // 修改表头样式 添加蓝色边线
+  .ant-table {
+    .ant-table-thead > tr > th {
+      text-align: center;
+      border-top: 5px solid #1da9ff;
+    }
+  }
+}
 .globalSpin {
   width: 100%;
   margin: 40px 0 !important;
