@@ -7,10 +7,10 @@ import { Route, Redirect, Switch } from 'dva/router';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import { enquireScreen } from 'enquire-js';
-import GlobalHeader from '../components/GlobalHeader';
-import GlobalFooter from '../components/GlobalFooter';
-import SiderMenu from '../components/SiderMenu';
-import NotFound from '../routes/Exception/404';
+import GlobalHeader from '../../components/GlobalHeader';
+import GlobalFooter from '../../components/GlobalFooter';
+import SiderMenu from '../../components/SiderMenu';
+import NotFound from '../../routes/Exception/404';
 import { getRoutes } from '../utils/utils';
 import { getMenuData } from '../common/menu';
 

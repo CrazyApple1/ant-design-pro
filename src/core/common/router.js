@@ -6,7 +6,9 @@ import { getMenuData } from './menu';
 const dynamicWrapper = (app, models, component) => dynamic({
   app,
   // eslint-disable-next-line no-underscore-dangle
-  models: () => models.filter(m => !app._models.some(({ namespace }) => namespace === m)).map(m => import(`../../models/${m}.js`)),
+  models: () => models.filter(m => !app._models.some(
+    ({ namespace }) => namespace === m
+  )).map(m => import(`../../${m}.js`)),
   // add routerData prop
   component: () => {
     const p = component();
@@ -124,7 +126,7 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, [], () => import('../../routes/Exception/500')),
     },
     '/exception/trigger': {
-      component: dynamicWrapper(app, ['error'], () => import('../routes/Exception/triggerException')),
+      component: dynamicWrapper(app, ['error'], () => import('../../routes/Exception/triggerException')),
     },
     '/user': {
       component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),

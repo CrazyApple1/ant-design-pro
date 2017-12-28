@@ -29,8 +29,28 @@
   position: relative;
   z-index: 10;
 }
+
 :global {
   .drawer .drawer-content {
-    background: #001529;
+    background: #272822;
+  }
+  // 侧边栏底色
+  .ant-layout-sider {
+    background: #3a3a3a;
+  }
+  // 一级菜单底色
+  .ant-menu-dark,
+  .ant-menu-dark .ant-menu-sub {
+    background: #3a3a3a;
+  }
+  // 二级菜单颜色
+  .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+    background: #272822;
+  }
+  // 选中菜单颜色
+  .ant-menu.ant-menu-dark .ant-menu-item-selected,
+  .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    background-color: #515151;
+    border-right: 3px solid #2be7d6;
   }
 }
