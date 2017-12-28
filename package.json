@@ -4,7 +4,6 @@
   "description": "An out-of-box UI solution for enterprise applications",
   "private": true,
   "scripts": {
-    "precommit": "npm run lint-staged",
     "start": "roadhog server",
     "start:no-proxy": "cross-env NO_PROXY=true roadhog server",
     "build": "roadhog build",
@@ -25,6 +24,7 @@
     "classnames": "^2.2.5",
     "core-js": "^2.5.1",
     "dva": "^2.1.0",
+    "enquire-js": "^0.1.1",
     "dva-model-extend": "^0.1.2",
     "g-cloud": "^1.0.2-beta",
     "g2": "^2.3.13",
@@ -36,6 +36,7 @@
     "numeral": "^2.0.6",
     "prop-types": "^15.5.10",
     "qs": "^6.5.0",
+    "rc-drawer-menu": "^0.5.0",
     "react": "^16.0.0",
     "react-container-query": "^0.9.1",
     "react-document-title": "^2.0.3",
