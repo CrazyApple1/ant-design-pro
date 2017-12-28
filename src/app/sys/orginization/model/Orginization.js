@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
-import { getModule } from '../service/Orginization';
+import { listOrg } from '../service/Orginization';
 
 export default modelExtend( model, {
   namespace: 'orginization',
@@ -18,7 +18,7 @@ export default modelExtend( model, {
       // loading
       yield put({ type: 'showLoading' });
       // 查询数据
-      const response = yield call(getModule, payload);
+      const response = yield call( listOrg, payload );
       yield put({
         type: 'save',
         payload: response,

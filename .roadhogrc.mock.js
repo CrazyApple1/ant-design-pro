@@ -3,12 +3,12 @@ import { getRule, postRule } from './mock/rule';
 import { getGoods, postGoods } from './mock/goods';
 import { getActivities, getNotice, getFakeList } from './mock/api';
 import { getFakeChartData } from './mock/chart';
-import { imgMap } from './mock/utils';
 import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
-import { format, delay } from 'roadhog-api-doc';
+import {  delay } from 'roadhog-api-doc';
 import { getModule } from './mock/module';
+import { getOrg } from './mock/orginization';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -61,6 +61,7 @@ const proxy = {
     $body: postRule,
   },
   'GET /module/getModule': getModule,
+  'GET /orginization/list': getOrg,
   'GET /goods/list': getGoods,
   'POST /goods/list': {
     $params: {
