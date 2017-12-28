@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { Card } from 'antd';
 import { connect } from 'dva';
 import OrgTreeGrid from './List';
 import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
@@ -27,9 +26,7 @@ export default class Orginization extends PureComponent {
 
     return (
       <PageHeaderLayout title="模块信息管理">
-        <Card>
           <OrgTreeGrid {...tableProps} />
-        </Card>
       </PageHeaderLayout>
     )
   }
