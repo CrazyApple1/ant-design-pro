@@ -7,7 +7,7 @@ const Search = Input.Search;
 // 菜单管理列表
 const List = ({...tableProps}) => {
 
-  const { dispatch, data,selectedRowKeys } = {...tableProps};
+  const {dispatch, data, selectedRowKeys} = {...tableProps};
 
   const statusMap = ['error', 'success'];
   const status = ['已停用', '正常',];
@@ -80,22 +80,22 @@ const List = ({...tableProps}) => {
   };
   // 搜索
   const handleSearch = (val) => {
-    console.info("搜索："+val);
+    console.info("搜索：" + val);
   };
   // 行选
   const handleSelectRows = (rows) => {
-    console.info("行选："+rows);
+    console.info("行选：" + rows);
     dispatch({
       type: 'orginization/updateState',
-      payload: { selectedRowKeys: rows,}
+      payload: {selectedRowKeys: rows,}
     });
   };
 
-  const rowSelection= {
+  const rowSelection = {
     fixed: true,
     selectedRowKeys: selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
-        handleSelectRows(selectedRowKeys);
+      handleSelectRows(selectedRowKeys);
     }
   };
   return (
@@ -103,13 +103,13 @@ const List = ({...tableProps}) => {
       <Row gutter={24} type="flex" justify="space-between" className={tableStyle.tableActionBtn}>
         <Col xl={6} lg={6} md={6} sm={6} xs={6}>
           <div>
-            <Button icon="plus" type="primary" onClick={ () => handleAdd() }>新增</Button>
+            <Button icon="plus" type="primary" onClick={() => handleAdd()}>新增</Button>
             {
               selectedRowKeys.length > 0 && (
                 <span>
-                      <Popconfirm title={'确定要删除所选商品吗?'} placement="top" onConfirm={ () => handleBatchDelete() }>
-                        <Button>删除商品</Button>
-                      </Popconfirm>
+                    <Popconfirm title={'确定要删除所选商品吗?'} placement="top" onConfirm={() => handleBatchDelete()}>
+                      <Button>删除商品</Button>
+                    </Popconfirm>
                   </span>
               )
             }
@@ -129,7 +129,7 @@ const List = ({...tableProps}) => {
         message={(
           <div>
             已选择 <a style={{fontWeight: 600}}> </a> 项&nbsp;&nbsp;
-            <a style={{marginLeft: 24}} onClick={ () => handleSelectRows([]) }>清空选择</a>
+            <a style={{marginLeft: 24}} onClick={() => handleSelectRows([])}>清空选择</a>
           </div>
         )}
         type="info"
@@ -137,13 +137,13 @@ const List = ({...tableProps}) => {
       />
       {/*列表*/}
       <Table
-        columns = { column }
-        dataSource= { data }
+        columns={column}
+        dataSource={data}
         rowClassName={(record, index) => {
           return '0' === record.status ? styles.disabled : styles.enabled;
         }}
         rowKey={record => record.key}
-        rowSelection={ rowSelection }
+        rowSelection={rowSelection}
       />
     </Card>
   )
