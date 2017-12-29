@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Alert, Divider, Badge, Button, Card, Input, Row, Col} from 'antd';
+import {Table, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col} from 'antd';
 import styles from './Orginization.less';
 import tableStyle from '../../../../core/style/Table.less';
 
@@ -7,7 +7,8 @@ const Search = Input.Search;
 // 菜单管理列表
 const List = ({...tableProps}) => {
 
-  const { data } = {...tableProps};
+  const { dispatch, data,selectedRowKeys } = {...tableProps};
+
   const statusMap = ['error', 'success'];
   const status = ['已停用', '正常',];
 
@@ -64,6 +65,11 @@ const List = ({...tableProps}) => {
     console.info('删除');
   };
 
+  // 批量删除
+  const handleBatchDelete = () => {
+    console.info('批量删除');
+  };
+
   //编辑
   const handleEdit = (record, e) => {
     console.info('编辑')
@@ -72,20 +78,47 @@ const List = ({...tableProps}) => {
   const handleSort = () => {
 
   };
-  const rowSelection = {};
+  // 搜索
+  const handleSearch = (val) => {
+    console.info("搜索："+val);
+  };
+  // 行选
+  const handleSelectRows = (rows) => {
+    console.info("行选："+rows);
+    dispatch({
+      type: 'orginization/updateState',
+      payload: { selectedRowKeys: rows,}
+    });
+  };
 
+  const rowSelection= {
+    fixed: true,
+    selectedRowKeys: selectedRowKeys,
+    onChange: (selectedRowKeys, selectedRows) => {
+        handleSelectRows(selectedRowKeys);
+    }
+  };
   return (
     <Card bordered={false}>
       <Row gutter={24} type="flex" justify="space-between" className={tableStyle.tableActionBtn}>
         <Col xl={6} lg={6} md={6} sm={6} xs={6}>
           <div>
-            <Button icon="plus" type="primary">新增</Button>
+            <Button icon="plus" type="primary" onClick={ () => handleAdd() }>新增</Button>
+            {
+              selectedRowKeys.length > 0 && (
+                <span>
+                      <Popconfirm title={'确定要删除所选商品吗?'} placement="top" onConfirm={ () => handleBatchDelete() }>
+                        <Button>删除商品</Button>
+                      </Popconfirm>
+                  </span>
+              )
+            }
           </div>
         </Col>
         <Col xl={6} lg={6} md={6} sm={6} xs={6} offset={12}>
           <Search
             placeholder="输入组织名称以搜索"
-            onSearch={value => console.log(value)}
+            onSearch={value => handleSearch(value)}
             style={{width: '100%'}}
           />
         </Col>
@@ -96,7 +129,7 @@ const List = ({...tableProps}) => {
         message={(
           <div>
             已选择 <a style={{fontWeight: 600}}> </a> 项&nbsp;&nbsp;
-            <a style={{marginLeft: 24}}>清空选择</a>
+            <a style={{marginLeft: 24}} onClick={ () => handleSelectRows([]) }>清空选择</a>
           </div>
         )}
         type="info"

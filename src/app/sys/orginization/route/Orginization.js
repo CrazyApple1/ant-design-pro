@@ -18,9 +18,10 @@ export default class Orginization extends PureComponent {
 
   render() {
     const { dispatch } = this.props;
-    const { data } = this.props.orginization;
+    const { data, selectedRowKeys } = this.props.orginization;
     const tableProps = {
       dispatch,
+      selectedRowKeys,
       data
     };
 
