@@ -58,7 +58,8 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['app/sys/orginization/model/Orginization'], () => import('../../app/sys/orginization/route/Orginization')),
     },
     '/sys/account': {
-      component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../../app/goods/route/Goods')),
+      name: '用户管理',
+      component: dynamicWrapper(app, ['app/sys/account/model/AccountModel'], () => import('../../app/sys/account/route/Account')),
     },
     '/sys/module': {
       component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../../app/goods/route/Goods')),
@@ -67,7 +68,8 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../../app/goods/route/Goods')),
     },
     '/sys/dictionary': {
-      component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../../app/goods/route/Goods')),
+      name: '字典管理',
+      component: dynamicWrapper(app, ['app/sys/dictionary/model/DictModel'], () => import('../../app/sys/dictionary/route/Dict')),
     },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['models/form'], () => import('../../routes/Forms/BasicForm')),

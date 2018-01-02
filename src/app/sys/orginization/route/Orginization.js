@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import OrgTreeGrid from './List';
 import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
 
-
 @connect(state => ({
   orginization: state.orginization,
 }))

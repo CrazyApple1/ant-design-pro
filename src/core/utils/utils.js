@@ -4,6 +4,10 @@ export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
 }
 
+export function getValue(obj) {
+  return Object.keys(obj).map(key => obj[key]).join(',');
+}
+
 export function getTimeDistance(type) {
   const now = new Date();
   const oneDay = 1000 * 60 * 60 * 24;
