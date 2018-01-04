@@ -17,7 +17,7 @@ export default class DictGrid extends PureComponent {
     }
     const { dispatch } = this.props;
     dispatch({
-      type: 'dict/loadDictItem',
+      type: 'dict/getDict',
       payload: {id: record.id,}
     });
   };
