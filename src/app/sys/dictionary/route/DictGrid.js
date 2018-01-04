@@ -4,15 +4,18 @@ import {Table, Input, Divider } from 'antd';
 const Search = Input.Search;
 export default class DictGrid extends PureComponent {
   componentDidMount() {
-    console.info("左侧表格初始化")
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'dict/loadDict'
+    });
   }
   // 行点击事件
   handleOnRowClick = (record, index) => {
+    // 根节点不加载
+    if(record.parent === 0) {
+      return;
+    }
     const { dispatch } = this.props;
-
-    console.info("row click " + index);
-    console.info(record.id);
-
     dispatch({
       type: 'dict/loadDictItem',
       payload: {id: record.id,}
@@ -21,7 +24,7 @@ export default class DictGrid extends PureComponent {
 
   // 搜索事件
   handleOnSearch = (val) => {
-    const { dispatch,data } = this.props;
+    const { dispatch } = this.props;
 
     console.info("search " + val);
     dispatch({
@@ -31,7 +34,7 @@ export default class DictGrid extends PureComponent {
   };
 
   render() {
-    const { loading } = this.props;
+    const { loading, data } = this.props;
 
     const column = [{
       dataIndex: 'name'

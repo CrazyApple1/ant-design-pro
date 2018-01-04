@@ -9,6 +9,7 @@ import { getNotices } from './mock/notices';
 import {  delay } from 'roadhog-api-doc';
 import { getModule } from './mock/module';
 import { getOrg } from './mock/orginization';
+import { listDict,getDict } from './mock/dict';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -61,6 +62,8 @@ const proxy = {
     $body: postRule,
   },
   'GET /module/getModule': getModule,
+  'GET /dict/getDict': getDict,
+  'GET /dict/listDict': listDict,
   'GET /orginization/list': getOrg,
   'GET /goods/list': getGoods,
   'POST /goods/list': {

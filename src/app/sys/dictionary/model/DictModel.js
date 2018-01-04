@@ -1,24 +1,12 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
+import { loadDict, loadDictItem } from '../service/DictService';
 
 export default modelExtend( model, {
   namespace: 'dict',
   state: {
     currentItem: {},
-    loading,
-    data: [{
-      id: 1,
-      name: '业务代码',
-      children: [{
-        id: 11,
-        name: 'base_system',
-        desc: '系统类型',
-      }, {
-        id: 12,
-        name: 'base_operate',
-        desc: '操作类型',
-      }]
-    }],
+    data: [],
     formValues: {}
   },
   effects: {
@@ -34,8 +22,14 @@ export default modelExtend( model, {
     },
     // 加载字典
     *loadDictItem({ payload }, { call, put }) {
-      console.info("click load");
-      console.info(payload);
+      console.info("-------");
+      const response = yield call( loadDictItem, payload );
+      console.info(response);
+      console.info("-------");
+      yield put({
+        type: 'updateState',
+        payload: {currentItem: response},
+      });
     },
     // 新增字典项
     *addDictItem({ payload }, { call, put }) {

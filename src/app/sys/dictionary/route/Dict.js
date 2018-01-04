@@ -15,10 +15,11 @@ export default class Dict extends PureComponent {
   }
   render() {
     const { dispatch } = this.props;
-    const { currentItem, data } = this.props.dict;
+    const { currentItem, data, loading } = this.props.dict;
 
     const DictProps = {
       dispatch,
+      loading,
       data
     };
 
