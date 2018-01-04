@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Input, Table, Form, Row, Col, Switch, InputNumber, Divider} from 'antd';
+import {Input, Badge, Table, Form, Row, Col, Switch, InputNumber, Divider} from 'antd';
 import style from './Dict.less';
 
 const FormItem = Form.Item;
@@ -12,26 +12,31 @@ export default class DictDetail extends PureComponent {
   }
 
   render() {
+    const { data } = this.props.currentItem;
     const {getFieldDecorator, getFieldValue} = this.props.form;
 
     const column = [{
       title: 'Key',
-      dataIndex: 'key',
+      dataIndex: 'keyName',
     }, {
       title: 'Value',
-      dataIndex: 'value',
+      dataIndex: 'keyValue',
     }, {
       title: '排序',
       dataIndex: 'order',
     }, {
       title: '是否可用',
       dataIndex: 'enable',
+      render: (text, record) => {
+       return record.enable ?
+            <Badge status="success" text="正常"/>: <Badge status="error" text="停用"/>
+      }
     }, {
       title: '描述',
       dataIndex: 'desc',
     }];
 
-    const data = [];
+
     const formItemLayout = {
       labelCol: {
         xs: {span: 2},
@@ -68,7 +73,12 @@ export default class DictDetail extends PureComponent {
             <Area placeholder="请输入你的阶段性工作目标"/>
           </FormItem>
           <Divider/>
-          <Table columns={column} dataSource={data} pagination={false} size="small"/>
+          <Table
+            rowKey={record => record.id}
+            columns={column}
+            dataSource={data}
+            pagination={false}
+            size="small"/>
         </Form>
       </div>
     )

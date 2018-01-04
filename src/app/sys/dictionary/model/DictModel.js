@@ -20,12 +20,9 @@ export default modelExtend( model, {
       });
       yield put({ type: "hideLoading"});
     },
-    // 加载字典
+    // 加载字典项
     *loadDictItem({ payload }, { call, put }) {
-      console.info("-------");
       const response = yield call( loadDictItem, payload );
-      console.info(response);
-      console.info("-------");
       yield put({
         type: 'updateState',
         payload: {currentItem: response},

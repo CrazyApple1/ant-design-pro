@@ -17,10 +17,16 @@ export default class Dict extends PureComponent {
     const { dispatch } = this.props;
     const { currentItem, data, loading } = this.props.dict;
 
-    const DictProps = {
+    const DictGridProps = {
       dispatch,
       loading,
       data
+    };
+
+    const DictDetailProps = {
+      dispatch,
+      loading,
+      currentItem
     };
 
     return (
@@ -29,12 +35,12 @@ export default class Dict extends PureComponent {
           <Row gutter={24}>
             {/*左侧列表*/}
             <Col xl={6} lg={6} md={6} sm={6} xs={6}>
-              <DictGrid {...DictProps}/>
+              <DictGrid {...DictGridProps}/>
             </Col>
             {/*右-上-字典键值列表*/}
             {/*右-下-字典键值新增/编辑区域*/}
             <Col xl={18} lg={18} md={18} sm={18} xs={18}>
-              <DictDetail />
+              <DictDetail {...DictDetailProps} />
             </Col>
           </Row>
         </Card>

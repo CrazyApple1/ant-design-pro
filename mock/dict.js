@@ -61,18 +61,20 @@ export function getDict(req, res, u) {
   if (params.id) {
     currentItem = {
         data: [{
+          id: 111,
           code: 'base_demo',
-          key_name: '交旧商品库_示例',
-          key_val: '0001',
+          keyName: '0001',
+          keyValue: '交旧商品库_示例',
           desc: '这是描述',
           enable: true,
           order: 1,
           parent: 1,
           parentName: '业务代码',
         }, {
+          id: 112,
           code: 'base_demo',
-          key_name: '销售商品库_示例',
-          key_val: '0002',
+          keyName: '0002',
+          keyValue: '销售商品库_示例',
           desc: '这是描述',
           enable: false,
           order: 2,
