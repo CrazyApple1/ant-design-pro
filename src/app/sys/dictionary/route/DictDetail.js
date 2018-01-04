@@ -74,6 +74,7 @@ export default class DictDetail extends PureComponent {
       <div>
         <Form className={style.dict_form_item}>
           <FormItem label="编码"  {...formItemLayout} >
+            {/* TODO 这里对齐有问题 */}
             <Row gutter={24}>
               <Col span={8}>{currentItem.code}</Col>
               <Col span={7} offset={9}>
@@ -101,6 +102,7 @@ export default class DictDetail extends PureComponent {
               }],
             })(<Input/>)}
           </FormItem>
+          {/* TODO 这里对齐有问题 */}
           <Row gutter={24}>
             <Col span={8}>
               <FormItem label="排序" labelCol={{span: 6}}>
@@ -112,6 +114,7 @@ export default class DictDetail extends PureComponent {
             <Col span={8}>
               <FormItem label="是否可用" labelCol={{span: 6}}>
                 {getFieldDecorator('enable', {
+                  valuePropName: 'checked',
                   initialValue: currentItem.enable
                 })(<Switch checkedChildren="启用" unCheckedChildren="停用"/>)}
               </FormItem>
