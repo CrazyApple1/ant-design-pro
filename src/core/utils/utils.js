@@ -128,9 +128,9 @@ export function getRoutes(path, routerData) {
   const renderRoutes = renderArr.map((item) => {
     const exact = !routes.some(route => route !== item && getRelation(route, item) === 1);
     return {
+      ...routerData[`${path}${item}`],
       key: `${path}${item}`,
       path: `${path}${item}`,
-      component: routerData[`${path}${item}`].component,
       exact,
     };
   });
