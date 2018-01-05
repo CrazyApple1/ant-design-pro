@@ -9,7 +9,7 @@ import { getNotices } from './mock/notices';
 import {  delay } from 'roadhog-api-doc';
 import { getModule } from './mock/module';
 import { getOrg } from './mock/orginization';
-import { listDict,getDict, deleteDictItem } from './mock/dict';
+import { listDict,getDict, deleteDictItem,addDictItem } from './mock/dict';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -65,6 +65,7 @@ const proxy = {
   'GET /dict/getDict': getDict,
   'GET /dict/listDict': listDict,
   'POST /dict/deleteDictItem': deleteDictItem,
+  'POST /dict/addDictItem': addDictItem,
   'GET /orginization/list': getOrg,
   'GET /goods/list': getGoods,
   'POST /goods/list': {
