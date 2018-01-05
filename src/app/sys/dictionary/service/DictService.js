@@ -17,3 +17,12 @@ export async function deleteDictItem(params) {
     },
   });
 }
+// 新增/编辑字典项
+export async function addDictItem(params) {
+  return request('/dict/addDictItem', {
+    method: 'POST',
+    body: {
+      ...params
+    },
+  });
+}

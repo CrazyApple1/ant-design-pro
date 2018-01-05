@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
-import { loadDict, getDict, deleteDictItem } from '../service/DictService';
+import { loadDict, getDict, deleteDictItem, addDictItem } from '../service/DictService';
 
 export default modelExtend( model, {
   namespace: 'dict',
@@ -26,12 +26,19 @@ export default modelExtend( model, {
       const response = yield call( getDict, payload );
       yield put({
         type: 'updateState',
-        payload: {dictData: response},
+        payload: response,
       });
     },
     // 新增字典项
     *addDictItem({ payload }, { call, put }) {
-
+      const response = yield call( addDictItem, payload );
+      yield put({
+        type: 'updateState',
+        payload: {
+          currentItem:{},
+          dictData: response
+        },
+      });
     },
     *deleteDictItem({ payload }, { call, put }) {
       const response = yield call( deleteDictItem, payload );
@@ -43,13 +50,5 @@ export default modelExtend( model, {
         },
       });
     },
-    // 编辑/删除字典项
-    *getDictItem({ payload }, { call, put }) {
-      const response = yield call( getDictItem, payload );
-      yield put({
-        type: 'updateState',
-        payload: {currentItem: response},
-      });
-    }
   }
 })

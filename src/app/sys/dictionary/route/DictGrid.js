@@ -25,8 +25,6 @@ export default class DictGrid extends PureComponent {
   // 搜索事件
   handleOnSearch = (val) => {
     const { dispatch } = this.props;
-
-    console.info("search " + val);
     dispatch({
       type: 'dict/loadDict',
       payload: {filter: val,}

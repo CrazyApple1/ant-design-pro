@@ -9,12 +9,25 @@ const Area = Input.TextArea;
 export default class DictDetail extends PureComponent {
   componentDidMount() {
   }
+
   // 新增
   handleAddClick = () => {
-    const {dispatch} = this.props;
+    const {dispatch, currentItem, form} = this.props;
+    form.resetFields();
     dispatch({
       type: 'dict/updateState',
-      payload: {currentItem: {},}
+      payload: {
+        currentItem: {
+          keyName: '',
+          keyValue: '',
+          desc: '',
+          order: 1,
+          id: '',
+          code: currentItem.code,
+          parent: currentItem.parent,
+          enable: true,
+        },
+      }
     });
   };
   // 编辑事件
@@ -28,6 +41,22 @@ export default class DictDetail extends PureComponent {
   // 保存
   handleSaveClick = () => {
     console.info("save");
+    const {dispatch, currentItem} = this.props;
+    const {getFieldsValue, validateFields} = this.props.form;
+    validateFields((errors) => {
+      if (errors) {
+        return;
+      }
+      const data = {
+        ...getFieldsValue(),
+        id: currentItem.id
+      };
+
+      dispatch({
+        type: 'dict/addDictItem',
+        payload: data
+      });
+    });
   };
 
   // 删除事件
@@ -41,7 +70,7 @@ export default class DictDetail extends PureComponent {
 
   render() {
     const {dictData, currentItem} = this.props;
-    const {getFieldDecorator, getFieldValue} = this.props.form;
+    const {getFieldDecorator} = this.props.form;
 
     const column = [{
       title: 'Key',
@@ -73,7 +102,6 @@ export default class DictDetail extends PureComponent {
       )
     }];
 
-
     const formItemLayout = {
       labelCol: {
         xs: {span: 2},
@@ -88,11 +116,23 @@ export default class DictDetail extends PureComponent {
           <FormItem label="编码"  {...formItemLayout} >
             {/* TODO 这里两个按钮的对齐有问题 */}
             <Row gutter={24}>
-              <Col span={8}>{currentItem.code}</Col>
+              <Col span={8}>
+                {
+                  currentItem.code ? currentItem.code : getFieldDecorator('code', {
+                  initialValue: currentItem.keyName,
+                  rules: [{
+                    required: true,
+                    message: '请输入编码',
+                  }],
+                })(<Input/>)
+                }
+              </Col>
               <Col span={7} offset={9}>
-                <Button type="danger" onClick={ () => this.handleAddClick() }>新增</Button>
-                <Divider type="vertical" />
-                <Button type="primary" onClick={ () => this.handleSaveClick() }>保存</Button>
+                <Button type="danger" onClick={() => this.handleAddClick()}>新增</Button>
+                {currentItem.code && <Divider type="vertical"/>}
+                {currentItem.code &&
+                <Button type="primary" onClick={() => this.handleSaveClick()}>保存</Button>
+                }
               </Col>
             </Row>
           </FormItem>
@@ -127,13 +167,13 @@ export default class DictDetail extends PureComponent {
               <FormItem label="是否可用" labelCol={{span: 6}}>
                 {getFieldDecorator('enable', {
                   valuePropName: 'checked',
-                  initialValue: currentItem.enable
+                  initialValue: currentItem.enable ? currentItem.enable : true,
                 })(<Switch checkedChildren="启用" unCheckedChildren="停用"/>)}
               </FormItem>
             </Col>
           </Row>
           <FormItem label="描述" {...formItemLayout}>
-            {getFieldDecorator('order', {
+            {getFieldDecorator('desc', {
               initialValue: currentItem.desc
             })(<Area/>)}
           </FormItem>
