@@ -9,7 +9,14 @@ const Area = Input.TextArea;
 export default class DictDetail extends PureComponent {
   componentDidMount() {
   }
-
+  // 新增
+  handleAddClick = () => {
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'dict/updateState',
+      payload: {currentItem: {},}
+    });
+  };
   // 编辑事件
   handleEditClick = (record, e) => {
     const {dispatch} = this.props;
@@ -18,6 +25,11 @@ export default class DictDetail extends PureComponent {
       payload: {currentItem: record,}
     });
   };
+  // 保存
+  handleSaveClick = () => {
+    console.info("save");
+  };
+
   // 删除事件
   handleDeleteClick = (record, e) => {
     const {dispatch} = this.props;
@@ -74,13 +86,13 @@ export default class DictDetail extends PureComponent {
       <div>
         <Form className={style.dict_form_item}>
           <FormItem label="编码"  {...formItemLayout} >
-            {/* TODO 这里对齐有问题 */}
+            {/* TODO 这里两个按钮的对齐有问题 */}
             <Row gutter={24}>
               <Col span={8}>{currentItem.code}</Col>
               <Col span={7} offset={9}>
-                <Button type="danger">新增</Button>
+                <Button type="danger" onClick={ () => this.handleAddClick() }>新增</Button>
                 <Divider type="vertical" />
-                <Button type="primary">保存</Button>
+                <Button type="primary" onClick={ () => this.handleSaveClick() }>保存</Button>
               </Col>
             </Row>
           </FormItem>

@@ -63,7 +63,7 @@ export function listDict(req, res, u) {
   let dataSource = [...data];
   // 查询
   if (params.filter) {
-    dataSource = dataSource.filter(data => data.name.indexOf(params.filter) > -1);
+    dataSource = dataSource.filter(data => data.name.indexOf(params.filter) > -1 || data.code.indexOf(params.filter) > -1 );
   }
 
   if (res && res.json) {
@@ -104,6 +104,23 @@ export function deleteDictItem(req, res, u, b) {
     return dataSource;
   }
 }
+
+// 添加字典项数据
+export function addDictItem(req, res, u, b) {
+  const body = (b && b.body) || req.body;
+  const { id } = body;
+
+  let dataSource = [...itemData];
+  if (id) {
+    dataSource = dataSource.filter(item =>  id !== item.id);
+  }
+
+  if (res && res.json) {
+    res.json(dataSource);
+  } else {
+    return dataSource;
+  }
+
 
 export default {
   listDict,
