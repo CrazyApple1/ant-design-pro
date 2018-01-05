@@ -3,31 +3,37 @@ import {getUrlParams} from './utils';
 let data = [{
   id: 1,
   name: '业务代码',
+  code: 'busin_',
   parent: 0,
   children: [{
     id: 11,
     parent: 1,
     name: 'base_system',
+    code: 'base_system',
     desc: '系统类型',
   }, {
     id: 12,
     parent: 1,
     name: 'base_operate',
+    code: 'base_operate',
     desc: '操作类型',
   }]
 }, {
   id: 2,
   name: '系统代码',
+  code: 'sys_c',
   parent: 0,
   children: [{
     id: 21,
     parent: 2,
     name: 'base_system',
+    code: 'base_system',
     desc: '系统类型',
   }, {
     id: 22,
     parent: 2,
     name: 'base_operate',
+    code: 'base_operate',
     desc: '操作类型',
   }]
 }];
@@ -79,7 +85,10 @@ export function getDict(req, res, u) {
     url = req.url; // eslint-disable-line
   }
   const params = getUrlParams(url);
-  let data = itemData;
+  let data = {
+    currentItem:{code: 'base_demo'},
+    dictData:itemData
+  };
 
   if (res && res.json) {
     res.json(data);
@@ -108,11 +117,21 @@ export function deleteDictItem(req, res, u, b) {
 // 添加字典项数据
 export function addDictItem(req, res, u, b) {
   const body = (b && b.body) || req.body;
-  const { id } = body;
+  const newRecord = {...body};
 
   let dataSource = [...itemData];
-  if (id) {
-    dataSource = dataSource.filter(item =>  id !== item.id);
+
+  if (newRecord.id) {
+    // 编辑
+    dataSource = dataSource.map(item =>  {
+      if(item.id === newRecord.id){
+        item = newRecord;
+      }
+      return item;
+    });
+  } else {
+    // 新增
+    dataSource.push(newRecord);
   }
 
   if (res && res.json) {
@@ -120,9 +139,10 @@ export function addDictItem(req, res, u, b) {
   } else {
     return dataSource;
   }
-
+}
 
 export default {
+  addDictItem,
   listDict,
   deleteDictItem,
   getDict
