@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'dva/router';
 import DocumentTitle from 'react-document-title';
-import { Icon } from 'antd';
+import { Icon, Card } from 'antd';
 import GlobalFooter from '../../components/GlobalFooter';
 import styles from './UserLayout.less';
 import logo from '../../assets/logo.svg';
@@ -35,6 +35,7 @@ class UserLayout extends React.PureComponent {
     return (
       <DocumentTitle title={this.getPageTitle()}>
         <div className={styles.container}>
+          <Card>
           <div className={styles.top}>
             <div className={styles.header}>
               <Link to="/">
@@ -57,6 +58,7 @@ class UserLayout extends React.PureComponent {
             )
           }
           <GlobalFooter className={styles.footer} links={links} copyright={copyright} />
+          </Card>
         </div>
       </DocumentTitle>
     );

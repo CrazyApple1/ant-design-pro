@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider} from 'antd';
+import {Input, Badge, Button, Table, Card,  Form, Row, Col, Switch, InputNumber, Divider} from 'antd';
 import style from './Dict.less';
 
 const FormItem = Form.Item;
@@ -112,29 +112,29 @@ export default class DictDetail extends PureComponent {
     };
     return (
       <div>
+          <Button type="danger" onClick={() => this.handleAddClick()}>删除字典项</Button>
+          <Divider type="vertical"/>
+          <Button.Group>
+            <Button onClick={() => this.handleAddClick()}>新增字典项</Button>
+            <Button onClick={() => this.handleAddClick()}>新增子条目</Button>
+          </Button.Group>
+          {currentItem.code && <Divider type="vertical"/>}
+          {currentItem.code &&
+          <Button type="primary" onClick={() => this.handleSaveClick()}>保存</Button>
+          }
+        <Divider dashed={true}/>
         <Form className={style.dict_form_item}>
           <FormItem label="编码"  {...formItemLayout} >
             {/* TODO 这里两个按钮的对齐有问题 */}
-            <Row gutter={24}>
-              <Col span={8}>
-                {
-                  currentItem.code ? currentItem.code : getFieldDecorator('code', {
-                  initialValue: currentItem.keyName,
-                  rules: [{
-                    required: true,
-                    message: '请输入编码',
-                  }],
-                })(<Input/>)
-                }
-              </Col>
-              <Col span={7} offset={9}>
-                <Button type="danger" onClick={() => this.handleAddClick()}>新增</Button>
-                {currentItem.code && <Divider type="vertical"/>}
-                {currentItem.code &&
-                <Button type="primary" onClick={() => this.handleSaveClick()}>保存</Button>
-                }
-              </Col>
-            </Row>
+            {
+              currentItem.code ? currentItem.code : getFieldDecorator('code', {
+                initialValue: currentItem.keyName,
+                rules: [{
+                  required: true,
+                  message: '请输入编码',
+                }],
+              })(<Input/>)
+            }
           </FormItem>
           <FormItem label="键名"  {...formItemLayout}>
             {getFieldDecorator('keyName', {
