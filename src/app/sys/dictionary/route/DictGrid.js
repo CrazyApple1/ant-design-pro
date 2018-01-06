@@ -1,24 +1,24 @@
-import React, {PureComponent} from 'react';
-import {Table, Input, Divider } from 'antd';
+import React, { PureComponent } from 'react';
+import { Table, Input, Divider } from 'antd';
 // 字典管理左侧列表树
-const Search = Input.Search;
+const { Search } = { ...Input };
 export default class DictGrid extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'dict/loadDict'
+      type: 'dict/loadDict',
     });
   }
   // 行点击事件
-  handleOnRowClick = (record, index) => {
+  handleOnRowClick = (record) => {
     // 根节点不加载
-    if(record.parent === 0) {
+    if (record.parent === 0) {
       return;
     }
     const { dispatch } = this.props;
     dispatch({
       type: 'dict/getDict',
-      payload: {id: record.id,}
+      payload: { id: record.id },
     });
   };
 
@@ -27,7 +27,7 @@ export default class DictGrid extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'dict/loadDict',
-      payload: {filter: val,}
+      payload: { filter: val },
     });
   };
 
@@ -35,9 +35,9 @@ export default class DictGrid extends PureComponent {
     const { loading, data } = this.props;
 
     const column = [{
-      dataIndex: 'name'
+      dataIndex: 'name',
     }, {
-      dataIndex: 'desc'
+      dataIndex: 'desc',
     }];
 
     return (
@@ -46,19 +46,21 @@ export default class DictGrid extends PureComponent {
           placeholder="字典检索"
           onSearch={value => this.handleOnSearch(value)}
         />
-        <Divider dashed={true}/>
-        <Table onRow={(record, index) => ( {
-                  onClick: () => this.handleOnRowClick(record, index)
+        <Divider dashed />
+        <Table
+          onRow={(record, index) => ({
+                  onClick: () => this.handleOnRowClick(record, index),
                 })}
-               loading = {loading}
-               rowKey={record => record.id}
-               defaultExpandAllRows={true}
-               scroll={{y: 640}}
-               size="small"
-               dataSource={data}
-               columns={column}
-               pagination={false}/>
+          loading={loading}
+          rowKey={record => record.id}
+          defaultExpandAllRows
+          scroll={{ y: 640 }}
+          size="small"
+          dataSource={data}
+          columns={column}
+          pagination={false}
+        />
       </div>
-    )
+    );
   }
 }

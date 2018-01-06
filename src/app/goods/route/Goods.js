@@ -1,6 +1,6 @@
-import React, {PureComponent} from 'react';
-import {connect} from 'dva';
-import {Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm} from 'antd';
+import React, { PureComponent } from 'react';
+import { connect } from 'dva';
+import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import GoodsList from './List';
 import Detail from './Detail';
 import PageHeaderLayout from '../../../core/layouts/PageHeaderLayout';
@@ -8,10 +8,7 @@ import PageHeaderLayout from '../../../core/layouts/PageHeaderLayout';
 import styles from './Goods.less';
 
 const FormItem = Form.Item;
-const TreeNode = Tree.TreeNode;
-
-// 将对象转为，分割的字符串
-const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
+const { TreeNode } = { ...Tree };
 
 // 连接组件和store
 // 把state.goods定给组件的goods
@@ -22,7 +19,7 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 export default class Goods extends PureComponent {
   // 组件加载完成后加载数据
   componentDidMount() {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'goods/fetch',
     });
@@ -30,7 +27,7 @@ export default class Goods extends PureComponent {
 
   // 树节点选择
   onSelect = (selectedKeys) => {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     const values = {
       category: selectedKeys[0],
     };
@@ -41,7 +38,7 @@ export default class Goods extends PureComponent {
   };
   // 重置事件
   handleFormReset = () => {
-    const {form, dispatch} = this.props;
+    const { form, dispatch } = this.props;
     form.resetFields();
     dispatch({
       type: 'goods/fetch',
@@ -50,7 +47,7 @@ export default class Goods extends PureComponent {
   };
   // 删除事件
   handleRemoveClick = () => {
-    const {dispatch, goods: {selectedRowKeys}} = this.props;
+    const { dispatch, goods: { selectedRowKeys } } = this.props;
     if (!selectedRowKeys) return;
 
     dispatch({
@@ -61,7 +58,7 @@ export default class Goods extends PureComponent {
       callback: () => {
         dispatch({
           type: 'goods/updateState',
-          payload: {selectedRowKeys: [],}
+          payload: { selectedRowKeys: [] },
         });
       },
     });
@@ -70,7 +67,7 @@ export default class Goods extends PureComponent {
   handleSearch = (e) => {
     e.preventDefault();
 
-    const {dispatch, form} = this.props;
+    const { dispatch, form } = this.props;
     // 表单验证
     form.validateFields((err, fieldsValue) => {
       if (err) return;
@@ -88,13 +85,13 @@ export default class Goods extends PureComponent {
   };
   // 新增窗口
   handleModalVisible = () => {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'goods/showModal',
       payload: {
         modalType: 'create',
         currentItem: {},
-      }
+      },
     });
   };
 
@@ -103,18 +100,18 @@ export default class Goods extends PureComponent {
     return (
       <Card bordered={false}>
         <div className={styles.goodsInfoCategory}>
-          <Icon type="tags"/>选择商品分类
+          <Icon type="tags" />选择商品分类
         </div>
         <Tree showLine defaultExpandedKeys={['021']} onSelect={this.onSelect}>
           <TreeNode title="parent 1" key="0">
             <TreeNode title="parent 1-0" key="01">
-              <TreeNode title="leaf" key="012"/>
-              <TreeNode title="leaf" key="014"/>
+              <TreeNode title="leaf" key="012" />
+              <TreeNode title="leaf" key="014" />
             </TreeNode>
           </TreeNode>
           <TreeNode title="parent 1-2" key="03">
-            <TreeNode title="leaf" key="031"/>
-            <TreeNode title="leaf" key="032"/>
+            <TreeNode title="leaf" key="031" />
+            <TreeNode title="leaf" key="032" />
           </TreeNode>
         </Tree>
       </Card>
@@ -123,28 +120,28 @@ export default class Goods extends PureComponent {
 
   // 简单搜索条件
   renderSimpleForm() {
-    const {getFieldDecorator} = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{md: 8, lg: 24, xl: 48}}>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="商品名称">
               {getFieldDecorator('name')(
-                <Input placeholder="请输入"/>
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="商品编码">
               {getFieldDecorator('code')(
-                <Input placeholder="请输入"/>
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{marginLeft: 8}} onClick={this.handleFormReset}>重置</Button>
+              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
             </span>
           </Col>
         </Row>
@@ -154,8 +151,9 @@ export default class Goods extends PureComponent {
 
   // 渲染界面
   render() {
-    const {dispatch} = this.props;
-    const {loading, data, selectedRowKeys, modalVisible, modalType, currentItem} = this.props.goods;
+    const { dispatch } = this.props;
+    const { loading, data, selectedRowKeys,
+      modalVisible, modalType, currentItem } = this.props.goods;
 
     const listPops = {
       dispatch,
@@ -200,15 +198,20 @@ export default class Goods extends PureComponent {
                   {this.renderSimpleForm()}
                 </div>
                 <div className={styles.goodsInfoListOperator}>
-                  <Button icon="plus" type="primary"
-                          onClick={() => this.handleModalVisible(true, 'create')}>新增商品</Button>
+                  <Button
+                    icon="plus"
+                    type="primary"
+                    onClick={() => this.handleModalVisible(true, 'create')}
+                  >
+                    新增商品
+                  </Button>
                   {
                     selectedRowKeys.length > 0 && (
                       <span>
-                      <Popconfirm title={'确定要删除所选商品吗?'} placement="top" onConfirm={this.handleRemoveClick}>
-                        <Button>删除商品</Button>
-                      </Popconfirm>
-                  </span>
+                        <Popconfirm title="确定要删除所选商品吗?" placement="top" onConfirm={() => this.handleRemoveClick}>
+                          <Button>删除商品</Button>
+                        </Popconfirm>
+                      </span>
                     )
                   }
                 </div>

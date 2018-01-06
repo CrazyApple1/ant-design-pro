@@ -1,15 +1,15 @@
-import modelExtend from 'dva-model-extend'
+import modelExtend from 'dva-model-extend';
 
-const model = {
+export const model = {
   state: {
     loading: true,
   },
   reducers: {
-    updateState (state, { payload }) {
+    updateState(state, { payload }) {
       return {
         ...state,
         ...payload,
-      }
+      };
     },
     save(state, action) {
       return {
@@ -32,7 +32,7 @@ const model = {
   },
 };
 
-const pageModel = modelExtend(model, {
+export const pageModel = modelExtend(model, {
   state: {
     data: {
       list: [],
@@ -45,10 +45,9 @@ const pageModel = modelExtend(model, {
       },
     },
   },
-
   reducers: {
     // 查询成功
-    querySuccess(state, {payload}) {
+    querySuccess(state, { payload }) {
       const { list, pagination } = payload;
       return {
         ...state,
@@ -57,12 +56,7 @@ const pageModel = modelExtend(model, {
           ...state.pagination,
           ...pagination,
         },
-      }
+      };
     },
   },
 });
-
-module.exports = {
-  model,
-  pageModel,
-};

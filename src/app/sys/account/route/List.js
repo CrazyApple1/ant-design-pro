@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Table, Alert, Divider } from 'antd';
 import styles from './List.less';
+import { getValue } from '../../../../core/utils/utils';
 
 class List extends PureComponent {
   // 清除选择
@@ -13,21 +14,21 @@ class List extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'account/updateState',
-      payload: { selectedRowKeys: rows,}
+      payload: { selectedRowKeys: rows },
     });
   };
 
   // 删除事件
-  handleDeleteClick = (selectKey, e) => {
+  handleDeleteClick = (selectKey) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'account/remove',
-      payload: { key: [ selectKey.key ],},
-    })
+      payload: { key: [selectKey.key] },
+    });
   };
 
   // 编辑事件
-  handleEditClick = (record, e) => {
+  handleEditClick = (record) => {
     const { dispatch } = this.props;
 
     dispatch({
@@ -36,7 +37,7 @@ class List extends PureComponent {
         modalType: 'update',
         currentItem: record,
       },
-    })
+    });
   };
 
   // 表格动作触发事件
@@ -111,9 +112,9 @@ class List extends PureComponent {
         title: '操作',
         render: (text, record) => (
           <div>
-            <a onClick={ e => this.handleEditClick(record, e) }>编辑</a>
+            <a onClick={e => this.handleEditClick(record, e)}>编辑</a>
             <Divider type="vertical" />
-            <a onClick={ e => this.handleDeleteClick(record, e) }>删除</a>
+            <a onClick={e => this.handleDeleteClick(record, e)}>删除</a>
           </div>
         ),
       },
@@ -125,12 +126,12 @@ class List extends PureComponent {
       ...pagination,
     };
 
-    const  rowSelectionProps = {
-        fixed: true,
-        selectedRowKeys: selectedRowKeys,
-        onChange: (selectedRowKeys, selectedRows) => {
-          this.handleSelectRows(selectedRowKeys);
-        }
+    const rowSelectionProps = {
+      fixed: true,
+      selectedRowKeys,
+      onChange: (selectedKeys) => {
+        this.handleSelectRows(selectedKeys);
+      },
     };
     return (
       <div className={styles.standardTable}>
@@ -150,7 +151,7 @@ class List extends PureComponent {
           loading={loading}
           bordered
           rowKey={record => record.key}
-          rowSelection = {rowSelectionProps}
+          rowSelection={rowSelectionProps}
           dataSource={list}
           columns={columns}
           pagination={paginationProps}
@@ -161,4 +162,5 @@ class List extends PureComponent {
     );
   }
 }
+
 export default List;

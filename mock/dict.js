@@ -1,6 +1,6 @@
-import {getUrlParams} from './utils';
+import { getUrlParams } from './utils';
 // 树形数据
-let data = [{
+const data = [{
   id: 1,
   name: '业务代码',
   code: 'busin_',
@@ -17,7 +17,7 @@ let data = [{
     name: 'base_operate',
     code: 'base_operate',
     desc: '操作类型',
-  }]
+  }],
 }, {
   id: 2,
   name: '系统代码',
@@ -35,10 +35,10 @@ let data = [{
     name: 'base_operate',
     code: 'base_operate',
     desc: '操作类型',
-  }]
+  }],
 }];
 
-let itemData = [{
+const itemData = [{
   id: 111,
   code: 'base_demo',
   keyName: '0001',
@@ -69,7 +69,8 @@ export function listDict(req, res, u) {
   let dataSource = [...data];
   // 查询
   if (params.filter) {
-    dataSource = dataSource.filter(data => data.name.indexOf(params.filter) > -1 || data.code.indexOf(params.filter) > -1 );
+    dataSource = dataSource.filter(item => item.name.indexOf(params.filter) > -1
+      || item.code.indexOf(params.filter) > -1);
   }
 
   if (res && res.json) {
@@ -79,32 +80,27 @@ export function listDict(req, res, u) {
   }
 }
 // 获取字典项数据
-export function getDict(req, res, u) {
-  let url = u;
-  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-    url = req.url; // eslint-disable-line
-  }
-  const params = getUrlParams(url);
-  let data = {
-    currentItem:{code: 'base_demo'},
-    dictData:itemData
+export function getDict(res) {
+  const dictdata = {
+    currentItem: { code: 'base_demo' },
+    dictData: itemData,
   };
 
   if (res && res.json) {
-    res.json(data);
+    res.json(dictdata);
   } else {
-    return data;
+    return dictdata;
   }
 }
 
 // 删除字典项数据
-export function deleteDictItem(req, res, u, b) {
+export function deleteDictItem(req, res, b) {
   const body = (b && b.body) || req.body;
   const { id } = body;
 
   let dataSource = [...itemData];
   if (id) {
-    dataSource = dataSource.filter(item =>  id !== item.id);
+    dataSource = dataSource.filter(item => id !== item.id);
   }
 
   if (res && res.json) {
@@ -117,14 +113,14 @@ export function deleteDictItem(req, res, u, b) {
 // 添加字典项数据
 export function addDictItem(req, res, u, b) {
   const body = (b && b.body) || req.body;
-  const newRecord = {...body};
+  const newRecord = { ...body };
 
   let dataSource = [...itemData];
 
   if (newRecord.id) {
     // 编辑
-    dataSource = dataSource.map(item =>  {
-      if(item.id === newRecord.id){
+    dataSource = dataSource.map((item) => {
+      if (item.id === newRecord.id) {
         item = newRecord;
       }
       return item;
@@ -145,5 +141,5 @@ export default {
   addDictItem,
   listDict,
   deleteDictItem,
-  getDict
-}
+  getDict,
+};

@@ -2,7 +2,7 @@ import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
 import { listOrg } from '../service/Orginization';
 
-export default modelExtend( model, {
+export default modelExtend(model, {
   namespace: 'orginization',
   state: {
     currentItem: {},
@@ -10,7 +10,7 @@ export default modelExtend( model, {
     modalType: 'create',
     selectedRowKeys: [],
     formValues: {},
-    data:[]
+    data: [],
   },
   effects: {
     // 查询
@@ -18,7 +18,7 @@ export default modelExtend( model, {
       // loading
       yield put({ type: 'showLoading' });
       // 查询数据
-      const response = yield call( listOrg, payload );
+      const response = yield call(listOrg, payload);
       yield put({
         type: 'save',
         payload: response,
@@ -26,5 +26,5 @@ export default modelExtend( model, {
       // 取消loading
       yield put({ type: 'hideLoading' });
     },
-  }
-})
+  },
+});

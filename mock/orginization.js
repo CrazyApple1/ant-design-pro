@@ -1,6 +1,5 @@
-import { getUrlParams } from './utils';
 // 树形数据
-let data = [{
+const data = [{
   key: 1,
   name: '根节点',
   parent: '',
@@ -48,14 +47,8 @@ let data = [{
   status: '0',
 }];
 // 获取模块数据
-export function getOrg(req, res, u) {
-  let url = u;
-  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
-    url = req.url; // eslint-disable-line
-  }
-  const params = getUrlParams(url);
-
-  let dataSource = [...data];
+export function getOrg(res) {
+  const dataSource = [...data];
 
   if (res && res.json) {
     res.json(dataSource);
@@ -65,5 +58,5 @@ export function getOrg(req, res, u) {
 }
 
 export default {
-  getOrg
-}
+  getOrg,
+};

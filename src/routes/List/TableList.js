@@ -54,7 +54,7 @@ export default class TableList extends PureComponent {
       type: 'rule/fetch',
       payload: params,
     });
-  }
+  };
 
   handleFormReset = () => {
     const { form, dispatch } = this.props;
@@ -66,13 +66,13 @@ export default class TableList extends PureComponent {
       type: 'rule/fetch',
       payload: {},
     });
-  }
+  };
 
   toggleForm = () => {
     this.setState({
       expandForm: !this.state.expandForm,
     });
-  }
+  };
 
   handleMenuClick = (e) => {
     const { dispatch } = this.props;
@@ -97,14 +97,13 @@ export default class TableList extends PureComponent {
       default:
         break;
     }
-  }
+  };
 
   handleSelectRows = (rows) => {
-    console.info(rows);
     this.setState({
       selectedRows: rows,
     });
-  }
+  };
 
   handleSearch = (e) => {
     e.preventDefault();
@@ -128,19 +127,19 @@ export default class TableList extends PureComponent {
         payload: values,
       });
     });
-  }
+  };
 
   handleModalVisible = (flag) => {
     this.setState({
       modalVisible: !!flag,
     });
-  }
+  };
 
   handleAddInput = (e) => {
     this.setState({
       addInputValue: e.target.value,
     });
-  }
+  };
 
   handleAdd = () => {
     this.props.dispatch({
@@ -154,7 +153,7 @@ export default class TableList extends PureComponent {
     this.setState({
       modalVisible: false,
     });
-  }
+  };
 
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;

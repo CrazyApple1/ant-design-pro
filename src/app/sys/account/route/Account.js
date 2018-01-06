@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import {connect} from 'dva';
-import {Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm} from 'antd';
+import { connect } from 'dva';
+import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import AccountList from './List';
 import Detail from './Detail';
 import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
@@ -8,7 +8,7 @@ import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
 import styles from './Account.less';
 
 const FormItem = Form.Item;
-const TreeNode = Tree.TreeNode;
+const { TreeNode } = { ...Tree };
 
 // 连接组件和store
 // 把state.goods定给组件的goods
@@ -19,7 +19,7 @@ const TreeNode = Tree.TreeNode;
 export default class Account extends PureComponent {
   // 组件加载完成后加载数据
   componentDidMount() {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'account/fetch',
     });
@@ -27,7 +27,7 @@ export default class Account extends PureComponent {
 
   // 树节点选择
   onSelect = (selectedKeys) => {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     const values = {
       category: selectedKeys[0],
     };
@@ -38,7 +38,7 @@ export default class Account extends PureComponent {
   };
   // 重置事件
   handleFormReset = () => {
-    const {form, dispatch} = this.props;
+    const { form, dispatch } = this.props;
     form.resetFields();
     dispatch({
       type: 'account/fetch',
@@ -47,7 +47,7 @@ export default class Account extends PureComponent {
   };
   // 删除事件
   handleRemoveClick = () => {
-    const {dispatch, goods: {selectedRowKeys}} = this.props;
+    const { dispatch, goods: { selectedRowKeys } } = this.props;
     if (!selectedRowKeys) return;
 
     dispatch({
@@ -58,7 +58,7 @@ export default class Account extends PureComponent {
       callback: () => {
         dispatch({
           type: 'account/updateState',
-          payload: {selectedRowKeys: [],}
+          payload: { selectedRowKeys: [] },
         });
       },
     });
@@ -67,7 +67,7 @@ export default class Account extends PureComponent {
   handleSearch = (e) => {
     e.preventDefault();
 
-    const {dispatch, form} = this.props;
+    const { dispatch, form } = this.props;
     // 表单验证
     form.validateFields((err, fieldsValue) => {
       if (err) return;
@@ -85,13 +85,13 @@ export default class Account extends PureComponent {
   };
   // 新增窗口
   handleModalVisible = () => {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch({
       type: 'account/showModal',
       payload: {
         modalType: 'create',
         currentItem: {},
-      }
+      },
     });
   };
 
@@ -100,18 +100,18 @@ export default class Account extends PureComponent {
     return (
       <Card bordered={false}>
         <div className={styles.goodsInfoCategory}>
-          <Icon type="tags"/>归属部门
+          <Icon type="tags" />归属部门
         </div>
         <Tree showLine defaultExpandedKeys={['021']} onSelect={this.onSelect}>
           <TreeNode title="parent 1" key="0">
             <TreeNode title="parent 1-0" key="01">
-              <TreeNode title="leaf" key="012"/>
-              <TreeNode title="leaf" key="014"/>
+              <TreeNode title="leaf" key="012" />
+              <TreeNode title="leaf" key="014" />
             </TreeNode>
           </TreeNode>
           <TreeNode title="parent 1-2" key="03">
-            <TreeNode title="leaf" key="031"/>
-            <TreeNode title="leaf" key="032"/>
+            <TreeNode title="leaf" key="031" />
+            <TreeNode title="leaf" key="032" />
           </TreeNode>
         </Tree>
       </Card>
@@ -120,28 +120,28 @@ export default class Account extends PureComponent {
 
   // 简单搜索条件
   renderSimpleForm() {
-    const {getFieldDecorator} = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
-        <Row gutter={{md: 8, lg: 24, xl: 48}}>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="帐号">
               {getFieldDecorator('account_no')(
-                <Input placeholder="输入帐号搜索"/>
+                <Input placeholder="输入帐号搜索" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="用户名称">
               {getFieldDecorator('account_name')(
-                <Input placeholder="输入用户名称搜索"/>
+                <Input placeholder="输入用户名称搜索" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
               <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{marginLeft: 8}} onClick={this.handleFormReset}>重置</Button>
+              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
             </span>
           </Col>
         </Row>
@@ -151,8 +151,9 @@ export default class Account extends PureComponent {
 
   // 渲染界面
   render() {
-    const {dispatch} = this.props;
-    const {loading, data, selectedRowKeys, modalVisible, modalType, currentItem} = this.props.account;
+    const { dispatch } = this.props;
+    const { loading, data, selectedRowKeys,
+      modalVisible, modalType, currentItem } = this.props.account;
 
     const listPops = {
       dispatch,
@@ -196,15 +197,19 @@ export default class Account extends PureComponent {
                   {this.renderSimpleForm()}
                 </div>
                 <div className={styles.goodsInfoListOperator}>
-                  <Button icon="plus" type="primary"
-                          onClick={() => this.handleModalVisible(true, 'create')}>新增用户</Button>
+                  <Button
+                    icon="plus"
+                    type="primary"
+                    onClick={() => this.handleModalVisible(true, 'create')}
+                  >新增用户
+                  </Button>
                   {
                     selectedRowKeys.length > 0 && (
                       <span>
-                      <Popconfirm title={'确定要删除所选用户吗?'} placement="top" onConfirm={this.handleRemoveClick}>
-                        <Button>删除用户</Button>
-                      </Popconfirm>
-                  </span>
+                        <Popconfirm title="确定要删除所选用户吗?" placement="top" onConfirm={this.handleRemoveClick}>
+                          <Button>删除用户</Button>
+                        </Popconfirm>
+                      </span>
                     )
                   }
                 </div>

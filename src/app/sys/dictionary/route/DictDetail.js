@@ -1,5 +1,5 @@
-import React, {PureComponent} from 'react';
-import {Input, Badge, Button, Table, Card,  Form, Row, Col, Switch, InputNumber, Divider} from 'antd';
+import React, { PureComponent } from 'react';
+import { Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider } from 'antd';
 import style from './Dict.less';
 
 const FormItem = Form.Item;
@@ -12,7 +12,7 @@ export default class DictDetail extends PureComponent {
 
   // 新增
   handleAddClick = () => {
-    const {dispatch, currentItem, form} = this.props;
+    const { dispatch, currentItem, form } = this.props;
     form.resetFields();
     dispatch({
       type: 'dict/updateState',
@@ -27,50 +27,50 @@ export default class DictDetail extends PureComponent {
           parent: currentItem.parent,
           enable: true,
         },
-      }
+      },
     });
   };
   // 编辑事件
-  handleEditClick = (record, e) => {
-    const {dispatch} = this.props;
+  handleEditClick = (record) => {
+    const { dispatch } = this.props;
     dispatch({
       type: 'dict/updateState',
-      payload: {currentItem: record,}
+      payload: { currentItem: record },
     });
   };
   // 保存
   handleSaveClick = () => {
-    console.info("save");
-    const {dispatch, currentItem} = this.props;
-    const {getFieldsValue, validateFields} = this.props.form;
+    console.info('save');
+    const { dispatch, currentItem } = this.props;
+    const { getFieldsValue, validateFields } = this.props.form;
     validateFields((errors) => {
       if (errors) {
         return;
       }
       const data = {
         ...getFieldsValue(),
-        id: currentItem.id
+        id: currentItem.id,
       };
 
       dispatch({
         type: 'dict/addDictItem',
-        payload: data
+        payload: data,
       });
     });
   };
 
   // 删除事件
-  handleDeleteClick = (record, e) => {
-    const {dispatch} = this.props;
+  handleDeleteClick = (record) => {
+    const { dispatch } = this.props;
     dispatch({
       type: 'dict/deleteDictItem',
-      payload: {id: record.id}
+      payload: { id: record.id },
     });
   };
 
   render() {
-    const {dictData, currentItem} = this.props;
-    const {getFieldDecorator} = this.props.form;
+    const { dictData, currentItem } = this.props;
+    const { getFieldDecorator } = this.props.form;
 
     const column = [{
       title: 'Key',
@@ -86,8 +86,8 @@ export default class DictDetail extends PureComponent {
       dataIndex: 'enable',
       render: (text, record) => {
         return record.enable ?
-          <Badge status="success" text="正常"/> : <Badge status="error" text="停用"/>
-      }
+          <Badge status="success" text="正常" /> : <Badge status="error" text="停用" />;
+      },
     }, {
       title: '描述',
       dataIndex: 'desc',
@@ -96,35 +96,35 @@ export default class DictDetail extends PureComponent {
       render: (text, record) => (
         <div>
           <a onClick={e => this.handleEditClick(record, e)}>编辑</a>
-          <Divider type="vertical"/>
+          <Divider type="vertical" />
           <a onClick={e => this.handleDeleteClick(record, e)}>删除</a>
         </div>
-      )
+      ),
     }];
 
     const formItemLayout = {
       labelCol: {
-        xs: {span: 2},
+        xs: { span: 2 },
       },
       wrapperCol: {
-        xs: {span: 18},
+        xs: { span: 18 },
       },
     };
     return (
       <div>
-          <Button type="danger" onClick={() => this.handleAddClick()}>删除字典项</Button>
-          <Divider type="vertical"/>
-          <Button.Group>
-            <Button onClick={() => this.handleAddClick()}>新增字典项</Button>
-            <Button onClick={() => this.handleAddClick()}>新增子条目</Button>
-          </Button.Group>
-          {currentItem.code && <Divider type="vertical"/>}
-          {currentItem.code &&
-          <Button type="primary" onClick={() => this.handleSaveClick()}>保存</Button>
-          }
-        <Divider dashed={true}/>
+        <Button type="danger" onClick={() => this.handleAddClick()}>删除字典项</Button>
+        <Divider type="vertical" />
+        <Button.Group>
+          <Button onClick={() => this.handleAddClick()}>新增字典项</Button>
+          <Button onClick={() => this.handleAddClick()}>新增子条目</Button>
+        </Button.Group>
+        {currentItem.code && <Divider type="vertical" />}
+        {currentItem.code &&
+        <Button type="primary" onClick={() => this.handleSaveClick()}>保存</Button>
+        }
+        <Divider dashed />
         <Form className={style.dict_form_item}>
-          <FormItem label="编码"  {...formItemLayout} >
+          <FormItem label="编码" {...formItemLayout} >
             {/* TODO 这里两个按钮的对齐有问题 */}
             {
               currentItem.code ? currentItem.code : getFieldDecorator('code', {
@@ -133,17 +133,17 @@ export default class DictDetail extends PureComponent {
                   required: true,
                   message: '请输入编码',
                 }],
-              })(<Input/>)
+              })(<Input />)
             }
           </FormItem>
-          <FormItem label="键名"  {...formItemLayout}>
+          <FormItem label="键名" {...formItemLayout}>
             {getFieldDecorator('keyName', {
               initialValue: currentItem.keyName,
               rules: [{
                 required: true,
                 message: '请输入编码',
               }],
-            })(<Input/>)}
+            })(<Input />)}
           </FormItem>
           <FormItem label="键值" {...formItemLayout}>
             {getFieldDecorator('keyValue', {
@@ -152,41 +152,42 @@ export default class DictDetail extends PureComponent {
                 required: true,
                 message: '请输入编码',
               }],
-            })(<Input/>)}
+            })(<Input />)}
           </FormItem>
           {/* TODO 这里对齐有问题 */}
           <Row gutter={24}>
             <Col span={8}>
-              <FormItem label="排序" labelCol={{span: 6}}>
+              <FormItem label="排序" labelCol={{ span: 6 }}>
                 {getFieldDecorator('order', {
-                  initialValue: currentItem.order
-                })(<InputNumber/>)}
+                  initialValue: currentItem.order,
+                })(<InputNumber />)}
               </FormItem>
             </Col>
             <Col span={8}>
-              <FormItem label="是否可用" labelCol={{span: 6}}>
+              <FormItem label="是否可用" labelCol={{ span: 6 }}>
                 {getFieldDecorator('enable', {
                   valuePropName: 'checked',
                   initialValue: currentItem.enable ? currentItem.enable : true,
-                })(<Switch checkedChildren="启用" unCheckedChildren="停用"/>)}
+                })(<Switch checkedChildren="启用" unCheckedChildren="停用" />)}
               </FormItem>
             </Col>
           </Row>
           <FormItem label="描述" {...formItemLayout}>
             {getFieldDecorator('desc', {
-              initialValue: currentItem.desc
-            })(<Area/>)}
+              initialValue: currentItem.desc,
+            })(<Area />)}
           </FormItem>
-          <Divider/>
+          <Divider />
           <Table
             rowKey={record => record.id}
             columns={column}
             dataSource={dictData}
             pagination={false}
-            size="small"/>
+            size="small"
+          />
         </Form>
       </div>
-    )
+    );
   }
 }
 

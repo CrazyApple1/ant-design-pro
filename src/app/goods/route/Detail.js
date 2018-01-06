@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, InputNumber, Modal, Select } from 'antd';
 
-const Option = Select.Option;
+const { Option } = { ...Select };
 
 const FormItem = Form.Item;
 
@@ -117,9 +117,6 @@ const detail = ({
 
 detail.propTypes = {
   form: PropTypes.object.isRequired,
-  type: PropTypes.string,
-  item: PropTypes.object,
-  onOk: PropTypes.func,
 };
 
 export default Form.create()(detail);

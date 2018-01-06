@@ -21,14 +21,14 @@ export default class Orginization extends PureComponent {
     const tableProps = {
       dispatch,
       selectedRowKeys,
-      data
+      data,
     };
 
     return (
       <PageHeaderLayout title="模块信息管理">
-          <OrgTreeGrid {...tableProps} />
+        <OrgTreeGrid {...tableProps} />
       </PageHeaderLayout>
-    )
+    );
   }
-};
+}
 
