@@ -7,8 +7,9 @@ import { Pie, WaterWave, Gauge, TagCloud } from '../../components/Charts';
 import NumberInfo from '../../components/NumberInfo';
 import CountDown from '../../components/CountDown';
 import ActiveChart from '../../components/ActiveChart';
-
 import styles from './Monitor.less';
+
+const { Secured } = Authorized;
 
 const targetTime = new Date().getTime() + 3900000;
 
