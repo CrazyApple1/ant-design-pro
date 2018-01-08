@@ -15,11 +15,11 @@ body {
 }
 
 :global {
-  // 淇敼琛ㄥご鏍峰紡 娣诲姞钃濊壊杈圭嚎
+  // 修改表头样式 添加蓝色边线
   .ant-table-content {
       border-top: 5px solid #1da9ff;
   }
-  // 淇敼琛ㄥご鏍峰紡 娣诲姞钃濊壊杈圭嚎 - 澶嶉�夊垪
+  // 修改表头样式 添加蓝色边线 - 复选列
   .ant-table.ant-table-scroll-position-left .ant-table-fixed-left {
     border-top: 5px solid #1da9ff;
   }
@@ -29,3 +29,9 @@ body {
   margin: 40px 0 !important;
 }
 
+// temp fix for https://github.com/ant-design/ant-design/commit/a1fafb5b727b62cb0be29ce6e9eca8f579d4f8b7
+:global {
+  .ant-spin-container {
+    overflow: visible;
+  }
+}

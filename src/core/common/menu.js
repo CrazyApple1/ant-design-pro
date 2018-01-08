@@ -122,7 +122,6 @@ const menuData = [{
   children: [{
     name: '403',
     path: '403',
-    authority: 'user',
   }, {
     name: '404',
     path: '404',
