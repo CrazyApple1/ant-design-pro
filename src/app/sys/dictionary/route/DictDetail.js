@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider } from 'antd';
+import { Card, Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider } from 'antd';
 import style from './Dict.less';
 
 const FormItem = Form.Item;
@@ -11,24 +11,34 @@ export default class DictDetail extends PureComponent {
   }
 
   // 新增
-  handleAddClick = () => {
+  handleAddClick = (operateType) => {
     const { dispatch, currentItem, form } = this.props;
-    form.resetFields();
-    dispatch({
-      type: 'dict/updateState',
-      payload: {
-        currentItem: {
-          keyName: '',
-          keyValue: '',
-          desc: '',
-          order: 1,
-          id: '',
-          code: currentItem.code,
-          parent: currentItem.parent,
-          enable: true,
+    if (operateType === 'newDict') {
+      dispatch({
+        type: 'dict/updateState',
+        payload: {
+          operateType,
         },
-      },
-    });
+      });
+    } else {
+      form.resetFields();
+      dispatch({
+        type: 'dict/updateState',
+        payload: {
+          operateType: 'newItem',
+          currentItem: {
+            keyName: '',
+            keyValue: '',
+            desc: '',
+            order: 1,
+            id: '',
+            code: currentItem.code,
+            parent: currentItem.parent,
+            enable: true,
+          },
+        },
+      });
+    }
   };
   // 编辑事件
   handleEditClick = (record) => {
@@ -69,7 +79,7 @@ export default class DictDetail extends PureComponent {
   };
 
   render() {
-    const { dictData, currentItem } = this.props;
+    const { dictData, currentItem, operateType } = this.props;
     const { getFieldDecorator } = this.props.form;
 
     const column = [{
@@ -110,18 +120,26 @@ export default class DictDetail extends PureComponent {
         xs: { span: 18 },
       },
     };
-    return (
+
+    const extraContent = (
+      <Button type="danger" onClick={() => this.handleAddClick()}>删除字典项</Button>
+    );
+
+    const titleContent = (
       <div>
-        <Button type="danger" onClick={() => this.handleAddClick()}>删除字典项</Button>
-        <Divider type="vertical" />
         <Button.Group>
-          <Button onClick={() => this.handleAddClick()}>新增字典项</Button>
+          <Button onClick={() => this.handleAddClick('newDict')}>新增字典项</Button>
           <Button onClick={() => this.handleAddClick()}>新增子条目</Button>
         </Button.Group>
-        {currentItem.code && <Divider type="vertical" />}
-        {currentItem.code &&
+        { operateType !== '' && <Divider type="vertical" />}
+        {operateType !== '' &&
         <Button type="primary" onClick={() => this.handleSaveClick()}>保存</Button>
         }
+      </div>
+    );
+    return (
+      <div>
+        <Card bordered={false} title={titleContent} bodyStyle={{ padding: '0 32px 0 32px' }} extra={extraContent} />
         <Divider dashed />
         <Form className={style.dict_form_item}>
           <FormItem label="编码" {...formItemLayout} >

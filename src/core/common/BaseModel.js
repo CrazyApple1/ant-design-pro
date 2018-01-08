@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 
 export const model = {
+  namespace: 'model',
   state: {
     loading: true,
   },
@@ -33,6 +34,7 @@ export const model = {
 };
 
 export const pageModel = modelExtend(model, {
+  namespace: 'pageModel',
   state: {
     data: {
       list: [],

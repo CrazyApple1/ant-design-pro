@@ -1,41 +1,75 @@
-import React from 'react';
+import { createElement } from 'react';
 import dynamic from 'dva/dynamic';
 import { getMenuData } from './menu';
 
+let routerDataCache;
+
+const modelNotExisted = (app, model) => (
+  // eslint-disable-next-line
+  !app._models.some(({ namespace }) => {
+    return namespace.toLowerCase() === model.substring(model.lastIndexOf('/') + 1).toLowerCase();
+  })
+
+);
+
 // wrapper of dynamic
-const dynamicWrapper = (app, models, component) => dynamic({
-  app,
-  // eslint-disable-next-line no-underscore-dangle
-  models: () => models.filter(m => !app._models.some(
-    ({ namespace }) => namespace === m
-  )).map(m => import(`../../${m}.js`)),
-  // add routerData prop
-  component: () => {
-    const p = component();
-    return new Promise((resolve, reject) => {
-      p.then((raw) => {
-        const Comp = raw.default || raw;
-        resolve(props => <Comp {...props} routerData={getRouterData(app)} />);
-      }).catch(err => reject(err));
+const dynamicWrapper = (app, models, component) => {
+  // () => require('module')
+  // transformed by babel-plugin-dynamic-import-node-sync
+  if (component.toString().indexOf('.then(') < 0) {
+    models.forEach((model) => {
+      if (modelNotExisted(app, model)) {
+        // eslint-disable-next-line
+        app.model(require(`../../${model}`).default);
+      }
     });
-  },
-});
+    return (props) => {
+      if (!routerDataCache) {
+        routerDataCache = getRouterData(app);
+      }
+      return createElement(component().default, {
+        ...props,
+        routerData: routerDataCache,
+      });
+    };
+  }
+  // () => import('module')
+  return dynamic({
+    app,
+    models: () => models.filter(
+      model => modelNotExisted(app, model)).map(m => import(`../../${m}.js`)
+    ),
+    // add routerData prop
+    component: () => {
+      if (!routerDataCache) {
+        routerDataCache = getRouterData(app);
+      }
+      return component().then((raw) => {
+        const Component = raw.default || raw;
+        return props => createElement(Component, {
+          ...props,
+          routerData: routerDataCache,
+        });
+      });
+    },
+  });
+};
 
 function getFlatMenuData(menus) {
   let keys = {};
   menus.forEach((item) => {
     if (item.children) {
-      keys[item.path] = item.name;
+      keys[item.path] = { ...item };
       keys = { ...keys, ...getFlatMenuData(item.children) };
     } else {
-      keys[item.path] = item.name;
+      keys[item.path] = { ...item };
     }
   });
   return keys;
 }
 
 export const getRouterData = (app) => {
-  const routerData = {
+  const routerConfig = {
     '/': {
       component: dynamicWrapper(app, ['models/user', 'models/login'], () => import('../layouts/BasicLayout')),
     },
@@ -52,24 +86,18 @@ export const getRouterData = (app) => {
     },
     '/goods/goodsinfo': {
       name: '商品信息',
-      component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../../app/goods/route/Goods')),
+      component: dynamicWrapper(app, ['app/goods/model/Goods'], () => import('../../app/goods/route/Goods')),
     },
     '/sys/orginization': {
       component: dynamicWrapper(app, ['app/sys/orginization/model/Orginization'], () => import('../../app/sys/orginization/route/Orginization')),
     },
     '/sys/account': {
       name: '用户管理',
-      component: dynamicWrapper(app, ['app/sys/account/model/AccountModel'], () => import('../../app/sys/account/route/Account')),
-    },
-    '/sys/module': {
-      component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../../app/goods/route/Goods')),
-    },
-    '/sys/role': {
-      component: dynamicWrapper(app, ['app/goods/model/GoodsModel'], () => import('../../app/goods/route/Goods')),
+      component: dynamicWrapper(app, ['app/sys/account/model/Account'], () => import('../../app/sys/account/route/Account')),
     },
     '/sys/dictionary': {
       name: '字典管理',
-      component: dynamicWrapper(app, ['app/sys/dictionary/model/DictModel'], () => import('../../app/sys/dictionary/route/Dict')),
+      component: dynamicWrapper(app, ['app/sys/dictionary/model/Dict'], () => import('../../app/sys/dictionary/route/Dict')),
     },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['models/form'], () => import('../../routes/Forms/BasicForm')),
@@ -129,7 +157,7 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, [], () => import('../../routes/Exception/500')),
     },
     '/exception/trigger': {
-      component: dynamicWrapper(app, ['error'], () => import('../../routes/Exception/triggerException')),
+      component: dynamicWrapper(app, [], () => import('../../routes/Exception/triggerException')),
     },
     '/user': {
       component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
@@ -149,12 +177,14 @@ export const getRouterData = (app) => {
   };
   // Get name from ./menu.js or just set it in the router data.
   const menuData = getFlatMenuData(getMenuData());
-  const routerDataWithName = {};
-  Object.keys(routerData).forEach((item) => {
-    routerDataWithName[item] = {
-      ...routerData[item],
-      name: routerData[item].name || menuData[item.replace(/^\//, '')],
+  const routerData = {};
+  Object.keys(routerConfig).forEach((item) => {
+    const menuItem = menuData[item.replace(/^\//, '')] || {};
+    routerData[item] = {
+      ...routerConfig[item],
+      name: routerConfig[item].name || menuItem.name,
+      authority: routerConfig[item].authority || menuItem.authority,
     };
   });
-  return routerDataWithName;
+  return routerData;
 };

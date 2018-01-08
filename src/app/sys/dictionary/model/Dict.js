@@ -6,8 +6,9 @@ export default modelExtend(model, {
   namespace: 'dict',
   state: {
     currentItem: {},
-    dictData: [],
+    operateType: '',
     data: [],
+    dictData: [],
     formValues: {},
   },
   effects: {
