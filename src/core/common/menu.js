@@ -58,6 +58,18 @@ const menuData = [{
     {
       name: '数据库监控',
       path: 'druid',
+    }, {
+      name: 'Hystrix',
+      path: 'hystrix',
+    }, {
+      name: 'Swagger',
+      path: 'swagger',
+    }, {
+      name: '访问日志',
+      path: 'loginlog',
+    }, {
+      name: '操作日志',
+      path: 'operatelog',
     },
   ],
 }, {

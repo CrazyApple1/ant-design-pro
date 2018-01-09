@@ -88,6 +88,22 @@ export const getRouterData = (app) => {
       name: 'Druid监控',
       component: dynamicWrapper(app, [], () => import('../../app/monitor/druid/Druid')),
     },
+    '/monitor/hystrix': {
+      name: 'Hystrix',
+      component: dynamicWrapper(app, [], () => import('../../app/monitor/hystrix/Hystrix')),
+    },
+    '/monitor/swagger': {
+      name: 'Swagger',
+      component: dynamicWrapper(app, [], () => import('../../app/monitor/swagger/Swagger')),
+    },
+    '/monitor/loginlog': {
+      name: 'loginlog',
+      component: dynamicWrapper(app, [], () => import('../../app/monitor/druid/Druid')),
+    },
+    '/monitor/operatelog': {
+      name: 'operatelog',
+      component: dynamicWrapper(app, [], () => import('../../app/monitor/druid/Druid')),
+    },
     '/goods/goodsinfo': {
       name: '商品信息',
       component: dynamicWrapper(app, ['app/goods/model/Goods'], () => import('../../app/goods/route/Goods')),
