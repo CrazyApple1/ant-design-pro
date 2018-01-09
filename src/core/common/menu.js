@@ -51,6 +51,16 @@ const menuData = [{
     },
   ],
 }, {
+  name: '系统监控',
+  icon: 'book',
+  path: 'monitor',
+  children: [
+    {
+      name: '数据库监控',
+      path: 'druid',
+    },
+  ],
+}, {
   name: '表单页',
   icon: 'form',
   path: 'form',

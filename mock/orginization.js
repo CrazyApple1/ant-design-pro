@@ -47,16 +47,14 @@ const data = [{
   status: '0',
 }];
 // 获取模块数据
-export function getOrg(res) {
+export function listOrg(req, res, u) {
   const dataSource = [...data];
-
   if (res && res.json) {
     res.json(dataSource);
   } else {
     return dataSource;
   }
 }
-
 export default {
-  getOrg,
+  listOrg,
 };
