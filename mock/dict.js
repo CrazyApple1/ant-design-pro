@@ -80,16 +80,15 @@ export function listDict(req, res, u) {
   }
 }
 // 获取字典项数据
-export function getDict(res) {
-  const dictdata = {
+export function getDict(req, res, u) {
+  const returnData = {
     currentItem: { code: 'base_demo' },
     dictData: itemData,
   };
-
   if (res && res.json) {
-    res.json(dictdata);
+    res.json(returnData);
   } else {
-    return dictdata;
+    return returnData;
   }
 }
 

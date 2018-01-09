@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
-import { loadDict, getDict, deleteDictItem, addDictItem } from '../service/DictService';
+import { list, getById, deleteById, add } from '../service/DictService';
+import {message} from "antd/lib/index";
 
 export default modelExtend(model, {
   namespace: 'dict',
@@ -15,7 +16,7 @@ export default modelExtend(model, {
     // 搜索
     *loadDict({ payload }, { call, put }) {
       yield put({ type: 'showLoading' });
-      const response = yield call(loadDict, payload);
+      const response = yield call(list, payload);
       yield put({
         type: 'save',
         payload: response,
@@ -24,7 +25,7 @@ export default modelExtend(model, {
     },
     // 加载字典项
     *getDict({ payload }, { call, put }) {
-      const response = yield call(getDict, payload);
+      const response = yield call(getById, payload);
       yield put({
         type: 'updateState',
         payload: response,
@@ -32,7 +33,7 @@ export default modelExtend(model, {
     },
     // 新增字典项
     *addDictItem({ payload }, { call, put }) {
-      const response = yield call(addDictItem, payload);
+      const response = yield call(add, payload);
       yield put({
         type: 'updateState',
         payload: {
@@ -41,8 +42,11 @@ export default modelExtend(model, {
         },
       });
     },
+    *submit() {
+      message.success('提交成功');
+    },
     *deleteDictItem({ payload }, { call, put }) {
-      const response = yield call(deleteDictItem, payload);
+      const response = yield call(deleteById, payload);
       yield put({
         type: 'updateState',
         payload: {

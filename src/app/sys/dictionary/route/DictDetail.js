@@ -1,13 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Card, Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider } from 'antd';
 import style from './Dict.less';
+import {connect} from "dva";
 
 const FormItem = Form.Item;
 const Area = Input.TextArea;
 
+@connect(({ loading }) => ({
+  submitting: loading.effects['dict/submit'],
+}))
 @Form.create()
-export default class DictDetail extends PureComponent {
+export default class DictDetail extends Component {
   componentDidMount() {
+    console.info("dict detail")
   }
 
   // 新增
@@ -141,9 +146,8 @@ export default class DictDetail extends PureComponent {
       <div>
         <Card bordered={false} title={titleContent} bodyStyle={{ padding: '0 32px 0 32px' }} extra={extraContent} />
         <Divider dashed />
-        <Form className={style.dict_form_item}>
-          <FormItem label="编码" {...formItemLayout} >
-            {/* TODO 这里两个按钮的对齐有问题 */}
+        <Form  key="1" className={style.dict_form_item}>
+          <FormItem key="2" label="编码" {...formItemLayout} >
             {
               currentItem.code ? currentItem.code : getFieldDecorator('code', {
                 initialValue: currentItem.keyName,
@@ -154,7 +158,7 @@ export default class DictDetail extends PureComponent {
               })(<Input />)
             }
           </FormItem>
-          <FormItem label="键名" {...formItemLayout}>
+          <FormItem key="3" label="键名" {...formItemLayout}>
             {getFieldDecorator('keyName', {
               initialValue: currentItem.keyName,
               rules: [{
@@ -163,7 +167,7 @@ export default class DictDetail extends PureComponent {
               }],
             })(<Input />)}
           </FormItem>
-          <FormItem label="键值" {...formItemLayout}>
+          <FormItem key="4" label="键值" {...formItemLayout}>
             {getFieldDecorator('keyValue', {
               initialValue: currentItem.keyValue,
               rules: [{
@@ -175,14 +179,14 @@ export default class DictDetail extends PureComponent {
           {/* TODO 这里对齐有问题 */}
           <Row gutter={24}>
             <Col span={8}>
-              <FormItem label="排序" labelCol={{ span: 6 }}>
+              <FormItem key="5" label="排序" labelCol={{ span: 6 }}>
                 {getFieldDecorator('order', {
                   initialValue: currentItem.order,
                 })(<InputNumber />)}
               </FormItem>
             </Col>
             <Col span={8}>
-              <FormItem label="是否可用" labelCol={{ span: 6 }}>
+              <FormItem key="6" label="是否可用" labelCol={{ span: 6 }}>
                 {getFieldDecorator('enable', {
                   valuePropName: 'checked',
                   initialValue: currentItem.enable ? currentItem.enable : true,
@@ -195,6 +199,7 @@ export default class DictDetail extends PureComponent {
               initialValue: currentItem.desc,
             })(<Area />)}
           </FormItem>
+          </Form>
           <Divider />
           <Table
             rowKey={record => record.id}
@@ -203,7 +208,6 @@ export default class DictDetail extends PureComponent {
             pagination={false}
             size="small"
           />
-        </Form>
       </div>
     );
   }
