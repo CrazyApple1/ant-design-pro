@@ -48,6 +48,7 @@ export default class DictGrid extends PureComponent {
         />
         <Divider dashed />
         <Table
+          style={{ height:640,borderColor:'#F6F5F4',borderWidth:3,borderStyle:'solid' }}
           onRow={(record, index) => ({
                   onClick: () => this.handleOnRowClick(record, index),
                 })}

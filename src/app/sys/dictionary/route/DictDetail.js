@@ -22,7 +22,7 @@ export default class DictDetail extends Component {
     if(operateType === 'newDict') {
       code = '';
     }
-    form.resetFields();
+
     dispatch({
       type: 'dict/updateState',
       payload: {
@@ -40,6 +40,7 @@ export default class DictDetail extends Component {
         dictData: [],
       },
     });
+    form.resetFields();
   };
   // 编辑事件
   handleEditClick = (record) => {
@@ -159,7 +160,7 @@ export default class DictDetail extends Component {
               initialValue: currentItem.keyName,
               rules: [{
                 required: true,
-                message: '请输入编码',
+                message: '请输入字典项',
               }],
             })(<Input/>)}
           </FormItem>
@@ -168,7 +169,7 @@ export default class DictDetail extends Component {
               initialValue: currentItem.keyValue,
               rules: [{
                 required: true,
-                message: '请输入编码',
+                message: '请输入键值',
               }],
             })(<Input/>)}
           </FormItem>
