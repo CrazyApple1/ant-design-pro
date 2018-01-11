@@ -8,7 +8,6 @@ export default modelExtend(model, {
   state: {
     currentItem: {},
     operateType: '',
-    data: [],
     dictData: [],
     formValues: {},
   },

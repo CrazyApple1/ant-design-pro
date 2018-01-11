@@ -14,16 +14,6 @@ const menuData = [{
     // hideInMenu: true,
   }],
 }, {
-  name: '商品管理',
-  icon: 'book',
-  path: 'goods',
-  children: [
-    {
-      name: '商品信息',
-      path: 'goodsinfo',
-    },
-  ],
-}, {
   name: '系统管理',
   icon: 'setting',
   path: 'sys',
@@ -70,6 +60,16 @@ const menuData = [{
     }, {
       name: '操作日志',
       path: 'operatelog',
+    },
+  ],
+}, {
+  name: '商品管理',
+  icon: 'book',
+  path: 'goods',
+  children: [
+    {
+      name: '商品信息',
+      path: 'goodsinfo',
     },
   ],
 }, {

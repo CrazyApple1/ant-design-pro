@@ -8,8 +8,9 @@ import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import {  delay } from 'roadhog-api-doc';
 import { getModule } from './mock/module';
+import { listRole, listModulebyRoleId, getDictItemByRoleId } from './mock/role';
 import { listOrg } from './mock/orginization';
-import { listDict,getDict, deleteDictItem,addDictItem } from './mock/dict';
+import { listDict, getDict, deleteDictItem, addDictItem } from './mock/dict';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -62,6 +63,9 @@ const proxy = {
     $body: postRule,
   },
   'GET /module/getModule': getModule,
+  'GET /role/listRole': listRole,
+  'GET /role/listModulebyRoleId': listModulebyRoleId,
+  'GET /role/getDictItemByRoleId': getDictItemByRoleId,
   'GET /dict/getDict': getDict,
   'GET /dict/listDict': listDict,
   'POST /dict/deleteDictItem': deleteDictItem,

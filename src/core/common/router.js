@@ -97,11 +97,11 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, [], () => import('../../app/monitor/swagger/Swagger')),
     },
     '/monitor/loginlog': {
-      name: 'loginlog',
+      name: '登录日志',
       component: dynamicWrapper(app, [], () => import('../../app/monitor/druid/Druid')),
     },
     '/monitor/operatelog': {
-      name: 'operatelog',
+      name: '操作日志',
       component: dynamicWrapper(app, [], () => import('../../app/monitor/druid/Druid')),
     },
     '/goods/goodsinfo': {
@@ -109,11 +109,16 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['app/goods/model/Goods'], () => import('../../app/goods/route/Goods')),
     },
     '/sys/orginization': {
+      name: '组织管理',
       component: dynamicWrapper(app, ['app/sys/orginization/model/Orginization'], () => import('../../app/sys/orginization/route/Orginization')),
     },
     '/sys/account': {
       name: '用户管理',
       component: dynamicWrapper(app, ['app/sys/account/model/Account'], () => import('../../app/sys/account/route/Account')),
+    },
+    '/sys/role': {
+      name: '角色授权管理',
+      component: dynamicWrapper(app, ['app/sys/role/model/Role'], () => import('../../app/sys/role/route/Role')),
     },
     '/sys/dictionary': {
       name: '字典管理',

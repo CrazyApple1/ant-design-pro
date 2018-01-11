@@ -3,6 +3,7 @@ import modelExtend from 'dva-model-extend';
 export const model = {
   namespace: 'model',
   state: {
+    data: [],
     loading: true,
   },
   reducers: {

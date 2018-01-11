@@ -59,6 +59,7 @@ const itemData = [{
   parent: 1,
   parentName: '业务代码',
 }];
+
 // 获取字典列表数据
 export function listDict(req, res, u) {
   let url = u;
