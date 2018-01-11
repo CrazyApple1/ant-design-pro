@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Icon, message, BackTop } from 'antd';
+import { Layout, Icon, message, BackTop, Popover } from 'antd';
 import DocumentTitle from 'react-document-title';
 import { connect } from 'dva';
 import { Route, Redirect, Switch } from 'dva/router';
@@ -207,7 +207,9 @@ class BasicLayout extends React.PureComponent {
               }
             />
             <BackTop visibilityHeight={ -1 }>
-              <img src={pkaq} alt="pkaq" style={{ height:60,width:60 }} />
+              <Popover content="Hi jack" trigger="hover">
+                <img src={pkaq} alt="pkaq" style={{ height:60,width:60 }} />
+              </Popover>
             </BackTop>
           </Content>
         </Layout>
