@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect, Switch, Route } from 'dva/router';
 import DocumentTitle from 'react-document-title';
-import { Icon } from 'antd';
+import { Icon, BackTop } from 'antd';
 import GlobalFooter from '../../components/GlobalFooter';
 import styles from './UserLayout.less';
 import logo from '../../assets/logo.svg';
@@ -61,6 +61,7 @@ class UserLayout extends React.PureComponent {
             <Redirect exact from="/user" to="/user/login" />
           </Switch>
           <GlobalFooter className={styles.footer} links={links} copyright={copyright} />
+          <BackTop/>
         </div>
       </DocumentTitle>
     );
