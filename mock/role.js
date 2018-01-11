@@ -64,7 +64,6 @@ const treeData = [{
   id: '0-2',
 }];
 
-
 const configData = [{
   id: 1,
   code: 'sysconfig',
@@ -90,6 +89,53 @@ const configData = [{
   checked: true,
   order: 3,
 },];
+
+const userData = [{
+  id: '0',
+  username: '李忱',
+  loginName: 'lichen',
+  sex: 'male',
+  idCard: '3709************38',
+  phone: '186****9871',
+  department: '统合部',
+  lock: false,
+},{
+  id: '1',
+  username: '刘欢',
+  loginName: 'liuhuan',
+  sex: 'male',
+  idCard: '3709************38',
+  phone: '186****9871',
+  department: '财务部',
+  lock: false,
+},{
+  id: '2',
+  username: '曹瑞',
+  loginName: 'caorui',
+  sex: 'female',
+  idCard: '3709************38',
+  phone: '186****9871',
+  department: '销售部',
+  lock: false,
+},{
+  id: '3',
+  username: '孙策',
+  loginName: 'sunce',
+  sex: 'male',
+  idCard: '3709************38',
+  phone: '186****9871',
+  department: '统合部',
+  lock: true,
+},{
+  id: '4',
+  username: '钟会',
+  loginName: 'zhonghui',
+  sex: 'male',
+  idCard: '3709************38',
+  phone: '186****9871',
+  department: '统合部',
+  lock: false,
+}];
 // 获取权限列表数据
 export function listRole(req, res, u) {
   const dataSource = [...data];
@@ -124,9 +170,24 @@ export function getDictItemByRoleId(req, res, u) {
     return configData;
   }
 }
+// 获取用户列表
+export function listUserByRoleId(req, res, u) {
+  const checked = ['0','1','4'];
+  const result = {
+    data: userData,
+    checked,
+  };
+
+  if (res && res.json) {
+    res.json(result);
+  } else {
+    return result;
+  }
+}
 export default {
   listRole,
   listModulebyRoleId,
+  listUserByRoleId,
   getDictItemByRoleId
 };
 

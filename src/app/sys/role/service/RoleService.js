@@ -13,3 +13,7 @@ export async function listModulebyRoleId(params) {
 export async function getDictItemByRoleId(params) {
   return request(`/role/getDictItemByRoleId?${stringify(params)}`);
 }
+// 获取授权用户列表
+export async function listUserByRoleId(params) {
+  return request(`/role/listUserByRoleId?${stringify(params)}`);
+}

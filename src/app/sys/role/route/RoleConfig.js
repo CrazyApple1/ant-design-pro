@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, {  PureComponent } from 'react';
 import { Modal, Switch, List } from 'antd';
 // 权限参数配置
-export default class RoleConfig extends Component {
+export default class RoleConfig extends PureComponent {
 
   render() {
     const { operateType, data, loading } = this.props;
     return (
-      <Modal visible={operateType==='config'}
+      <Modal visible={operateType==='Config'}
              title="选择授权参数"
              okText="保存"
              cancelText="取消"

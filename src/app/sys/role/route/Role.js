@@ -26,7 +26,8 @@ export default class Role extends PureComponent {
 
   render(){
     const { dispatch, loading } = this.props;
-    const { data, operateType, currentItem, moduleData, configData } = this.props.role;
+    const { data, operateType, currentItem,
+      userData, moduleData, configData } = this.props.role;
 
     const roleGridProps = {
       dispatch,
@@ -45,9 +46,9 @@ export default class Role extends PureComponent {
         <Card>
           <RoleGrid {...roleGridProps} />
         </Card>
-        { operateType === 'module' && <RoleModule {...modalProps} data = {moduleData} handleCancel={()=>this.handleCancel()} /> }
-        { operateType === 'user' && <RoleUser {...modalProps} handleCancel={()=>this.handleCancel()} /> }
-        { operateType === 'config' && <RoleConfig {...modalProps} data = {configData} handleCancel={()=>this.handleCancel()} /> }
+        { operateType === 'Module' && <RoleModule {...modalProps} data = {moduleData} handleCancel={()=>this.handleCancel()} /> }
+        { operateType === 'User' && <RoleUser {...modalProps} data={userData} handleCancel={()=>this.handleCancel()} /> }
+        { operateType === 'Config' && <RoleConfig {...modalProps} data = {configData} handleCancel={()=>this.handleCancel()} /> }
       </PageHeaderLayout>
     )
   }

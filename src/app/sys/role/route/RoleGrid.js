@@ -9,38 +9,16 @@ export default class RoleGrid extends PureComponent {
       type: 'role/listRole',
     });
   }
-  // 编辑相应窗口
+  // 用户授权按钮
   handleEditClick = (record, operate) => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'role/updateState',
-      payload: {
-        operateType: operate
-      }
-    })
-  };
 
-  // 模块授权按钮
-  handleModuleBtn = (record, e) => {
-    const { dispatch } = this.props;
     dispatch({
-      type: 'role/listModule',
+      type: `role/list${operate}`,
       payload: {
         id: record.id,
         currentItem: record,
-        operateType: 'module'
-      }
-    })
-  };
-  // 参数授权按钮
-  handleConfigBtn = (record, e) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'role/listConfig',
-      payload: {
-        id: record.id,
-        currentItem: record,
-        operateType: 'config'
+        operateType: operate
       }
     })
   };
@@ -61,7 +39,7 @@ export default class RoleGrid extends PureComponent {
       title: '模块授权',
       render: (text, record) => (
         <div>
-          <a onClick={(e) => this.handleModuleBtn(record, e)}>
+          <a onClick={(e) => this.handleEditClick(record, 'Module')}>
             <Icon type="bars" />
             模块授权
           </a>
@@ -71,7 +49,7 @@ export default class RoleGrid extends PureComponent {
       title: '用户授权',
       render: (text, record) => (
         <div>
-          <a onClick={() => this.handleEditClick(record, 'user')}>
+          <a onClick={() => this.handleEditClick(record, 'User')}>
             <Icon type="usergroup-add" />
             用户授权
           </a>
@@ -81,7 +59,7 @@ export default class RoleGrid extends PureComponent {
       title: '配置授权',
       render: (text, record) => (
         <div>
-          <a onClick={(e) => this.handleConfigBtn(record, e)}>
+          <a onClick={(e) => this.handleEditClick(record, 'Config')}>
             <Icon type="setting" />
             配置授权
           </a>

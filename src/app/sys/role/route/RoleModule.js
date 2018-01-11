@@ -27,7 +27,7 @@ export default class RoleModule extends Component {
         okText="保存"
         cancelText="取消"
         onCancel={() => this.props.handleCancel()}
-        visible={operateType === 'module'}
+        visible={operateType === 'Module'}
         width={360}
         bodyStyle={ { height:480,overflowY: 'auto',overflowX: 'auto' }}>
         <Tree
