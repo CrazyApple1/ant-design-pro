@@ -82,8 +82,8 @@ export default class OrgList extends Component {
       render: (text, record) => (
         <div>
           {record.status === '0' ?
-            <a onClick={e => this.handleEnable(record, e, '0')}>停用</a>
-            : <a onClick={e => this.handleEnable(record, e, '1')}>启用</a>}
+            <a onClick={e => this.handleEnable(record, e, '1')}>启用</a>
+            : <a onClick={e => this.handleEnable(record, e, '0')}>停用</a>}
           <Divider type="vertical" />
           <a onClick={e => this.handleDelete(record, e)}>删除</a>
         </div>

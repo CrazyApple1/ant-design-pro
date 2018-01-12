@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Layout, Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider } from 'antd';
+import { Layout, Menu, Icon, Spin, Tag, Dropdown, Avatar, Divider, Tooltip } from 'antd';
 import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
+import screenfull from 'screenfull';
 import { Link } from 'dva/router';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
@@ -11,6 +12,10 @@ import styles from './index.less';
 const { Header } = Layout;
 
 export default class GlobalHeader extends PureComponent {
+  state = {
+    fullscreen: 0,
+  };
+
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
   }
@@ -51,12 +56,26 @@ export default class GlobalHeader extends PureComponent {
     const event = document.createEvent('HTMLEvents');
     event.initEvent('resize', true, false);
     window.dispatchEvent(event);
-  }
+  };
+
+  @Debounce(600)
+  f11 = () => {
+    this.setState({
+      fullscreen: screenfull.isFullscreen ? 0 : 1
+    });
+    screenfull.toggle();
+  };
+
   render() {
+    const fullscreenIcon = ['arrows-alt','shrink'];
+    const fullscreenText = ['全屏','退出全屏'];
+    const fullscreen = this.state.fullscreen;
+
     const {
       currentUser, collapsed, fetchingNotices, isMobile, logo,
       onNoticeVisibleChange, onMenuClick, onNoticeClear,
     } = this.props;
+
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
@@ -125,6 +144,12 @@ export default class GlobalHeader extends PureComponent {
               emptyImage="https://gw.alipayobjects.com/zos/rmsportal/HsIsxMZiWKrNUavQUXqx.svg"
             />
           </NoticeIcon>
+          {/*全屏按钮*/}
+          <span className={styles.action} onClick={() => this.f11()}>
+              <Tooltip placement="bottom" title={fullscreenText[fullscreen]}>
+                <Icon type={fullscreenIcon[fullscreen]} />
+              </Tooltip>
+          </span>
           {currentUser.name ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>

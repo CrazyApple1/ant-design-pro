@@ -28,9 +28,10 @@
     "classnames": "^2.2.5",
     "dva": "^2.1.0",
     "dva-loading": "^1.0.4",
+    "dva-model-extend": "^0.1.2",
     "enquire-js": "^0.1.1",
     "fastclick": "^1.0.6",
-    "dva-model-extend": "^0.1.2",
+    "immutability-helper": "^2.6.3",
     "lodash": "^4.17.4",
     "lodash-decorators": "^4.4.1",
     "moment": "^2.19.1",
@@ -41,12 +42,12 @@
     "rc-drawer-menu": "^0.5.0",
     "react": "^16.2.0",
     "react-container-query": "^0.9.1",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.2.0",
     "react-fittext": "^1.0.0",
-    "react-dnd":"^2.5.4",
-    "react-dnd-html5-backend":"^2.5.4",
-    "immutability-helper":"^2.6.3"
+    "screenfull": "^3.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.2",
