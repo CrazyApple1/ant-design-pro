@@ -17,6 +17,9 @@ import { getMenuData } from '../common/menu';
 import logo from '../../assets/logo.svg';
 import pkaq from '../../assets/pkaq.svg';
 
+import themeBlue from '../../core/style/theme-blue.less';
+import themeGreen from '../../core/style/theme-green.less';
+
 const { Content } = Layout;
 const { AuthorizedRoute } = Authorized;
 
@@ -65,6 +68,9 @@ enquireScreen((b) => {
   isMobile = b;
 });
 
+@connect(({ theme })  => ({
+  theme,
+}))
 class BasicLayout extends React.PureComponent {
   static childContextTypes = {
     location: PropTypes.object,
@@ -104,28 +110,39 @@ class BasicLayout extends React.PureComponent {
       type: 'global/changeLayoutCollapsed',
       payload: collapsed,
     });
-  }
+  };
   handleNoticeClear = (type) => {
     message.success(`清空了${type}`);
     this.props.dispatch({
       type: 'global/clearNotices',
       payload: type,
     });
-  }
+  };
   handleMenuClick = ({ key }) => {
     if (key === 'logout') {
       this.props.dispatch({
         type: 'login/logout',
       });
     }
-  }
+  };
   handleNoticeVisibleChange = (visible) => {
     if (visible) {
       this.props.dispatch({
         type: 'global/fetchNotices',
       });
     }
-  }
+  };
+  // 切换主题
+  changeTheme = () => {
+    const { theme } = this.props.theme;
+
+    this.props.dispatch({
+      type: 'theme/switchTheme',
+      payload: {
+        theme: theme === themeBlue? themeGreen : (theme === null? themeBlue : null)
+      }
+    });
+  };
   render() {
     const {
       currentUser, collapsed, fetchingNotices, notices, routerData, match, location,
@@ -206,8 +223,9 @@ class BasicLayout extends React.PureComponent {
                 </div>
               }
             />
+            {/* pkaq pin icon*/}
             <BackTop visibilityHeight={ -1 }>
-              <Popover content="Hi jack" trigger="hover">
+              <Popover content="Hi jack" trigger="hover" onClick={() => this.changeTheme()}>
                 <img src={pkaq} alt="pkaq" style={{ height:60,width:60 }} />
               </Popover>
             </BackTop>

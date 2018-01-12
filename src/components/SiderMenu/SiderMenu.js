@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'dva/router';
+import {connect} from "dva";
 import styles from './index.less';
-
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -20,6 +20,9 @@ const getIcon = (icon) => {
   return icon;
 };
 
+@connect(({ theme })  => ({
+  theme,
+}))
 export default class SiderMenu extends PureComponent {
   constructor(props) {
     super(props);
@@ -177,10 +180,14 @@ export default class SiderMenu extends PureComponent {
     this.setState({
       openKeys: isMainMenu ? [lastOpenKey] : [...openKeys],
     });
-  }
+  };
   render() {
     const { logo, collapsed, location: { pathname }, onCollapse } = this.props;
     const { openKeys } = this.state;
+    let { theme } = this.props.theme;
+    if(!theme) {
+      theme = styles;
+    }
     // Don't show popup menu when it is been collapsed
     const menuProps = collapsed ? {} : {
       openKeys,
@@ -198,12 +205,12 @@ export default class SiderMenu extends PureComponent {
         breakpoint="md"
         onCollapse={onCollapse}
         width={256}
-        className={styles.sider}
+        className={theme.sider}
       >
-        <div className={styles.logo} key="logo">
+        <div className={theme.logo} key="logo">
           <Link to="/">
             <img src={logo} alt="logo" />
-            <h1>PKAQ Design</h1>
+            <h1 onClick={()=>this.handleClick()}>PKAQ Design</h1>
           </Link>
         </div>
         <Menu
