@@ -10,21 +10,16 @@ export default modelExtend(model, {
     modalType: 'create',
     selectedRowKeys: [],
     formValues: {},
-    data: [],
   },
   effects: {
     // 查询
-    *fetch({ payload }, { call, put }) {
-      // loading
-      yield put({ type: 'showLoading' });
+    *listOrg({ payload }, { call, put }) {
       // 查询数据
       const response = yield call(listOrg, payload);
       yield put({
         type: 'save',
         payload: response,
       });
-      // 取消loading
-      yield put({ type: 'hideLoading' });
     },
   },
 });

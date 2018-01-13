@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import { Table, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col } from 'antd';
+import { hasChildren } from '../../../../core/utils/DataHelper';
+
 import styles from './Orginization.less';
 import tableStyle from '../../../../core/style/Table.less';
 
 const { Search } = { ...Input };
 
-// 菜单管理列表
+// 部门管理列表
 export default class OrgList extends Component {
-
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'orginization/listOrg',
+    });
+  }
   // 新增
   handleAdd = () => {
-    console.info('添加下级');
+    const { dispatch } = this.props;
   };
 
   // 启用/停用
@@ -25,7 +32,10 @@ export default class OrgList extends Component {
 
   // 批量删除
   handleBatchDelete = () => {
-    console.info('批量删除');
+    const { dispatch, selectedRowKeys, data } = this.props;
+    const blockItem = hasChildren(data, selectedRowKeys);
+    console.info(blockItem);
+    // 存在子节点的不允许删除
   };
 
   // 编辑
@@ -38,8 +48,7 @@ export default class OrgList extends Component {
   };
   // 行选
   handleSelectRows = (rows) => {
-    console.info(`行选：${rows}`);
-    const { dispatch } = this.props.dispatch;
+    const { dispatch } = this.props;
     dispatch({
       type: 'orginization/updateState',
       payload: { selectedRowKeys: rows },
@@ -107,8 +116,8 @@ export default class OrgList extends Component {
               {
                 selectedRowKeys.length > 0 && (
                   <span>
-                  <Popconfirm title="确定要删除所选商品吗?" placement="top" onConfirm={() => this.handleBatchDelete()}>
-                    <Button>删除商品</Button>
+                  <Popconfirm title="确定要删除选中的条目吗?" placement="top" onConfirm={() => this.handleBatchDelete()}>
+                    <Button>删除菜单</Button>
                   </Popconfirm>
                 </span>
                 )
