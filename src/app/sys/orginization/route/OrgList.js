@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col } from 'antd';
+import { Table, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message } from 'antd';
 import { hasChildren } from '../../../../core/utils/DataHelper';
 
 import styles from './Orginization.less';
@@ -33,9 +33,10 @@ export default class OrgList extends Component {
   // 批量删除
   handleBatchDelete = () => {
     const { dispatch, selectedRowKeys, data } = this.props;
-    const blockItem = hasChildren(data, selectedRowKeys);
-    console.info(blockItem);
     // 存在子节点的不允许删除
+    const blockItem = hasChildren(data, selectedRowKeys);
+    message.error(`错误： [${blockItem}] 存在子节点,无法删除.`);
+
   };
 
   // 编辑
@@ -152,7 +153,7 @@ export default class OrgList extends Component {
           rowClassName={(record) => {
             return record.status === '0' ? styles.disabled : styles.enabled;
           }}
-          rowKey={record => record.key}
+          rowKey={record => record.id}
           rowSelection={rowSelection}
         />
       </Card>
