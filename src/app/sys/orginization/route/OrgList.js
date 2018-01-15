@@ -4,11 +4,16 @@ import { hasChildren } from '../../../../core/utils/DataHelper';
 
 import styles from './Orginization.less';
 import tableStyle from '../../../../core/style/Table.less';
+import {connect} from "dva";
 
 const { Search } = { ...Input };
 
 // 部门管理列表
+@connect(({ loading }) => ({
+  loading: loading.models.orginization,
+}))
 export default class OrgList extends Component {
+  // 加载组织列表
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -26,17 +31,39 @@ export default class OrgList extends Component {
   };
 
   // 删除
-  handleDelete = () => {
-    console.info('删除');
+  handleDelete = (record) => {
+    const { dispatch } = this.props;
+    if (!record.isLeaf) {
+      message.error(`错误： [${record.name}] 存在子节点,无法删除.`);
+    } else {
+      dispatch({
+        type: 'orginization/deleteOrg',
+        payload: {
+          ids: [record.id]
+        },callback: () => {
+          message.success('操作成功.');
+        },
+      })
+    }
   };
 
   // 批量删除
   handleBatchDelete = () => {
-    const { dispatch, selectedRowKeys, data } = this.props;
+    const { dispatch, selectedRowKeys, data, loading } = this.props;
+    console.info(">>> ---- loading ---- >>> ");
+    console.info(loading);
     // 存在子节点的不允许删除
     const blockItem = hasChildren(data, selectedRowKeys);
-    message.error(`错误： [${blockItem}] 存在子节点,无法删除.`);
-
+    if (blockItem) {
+      message.error(`错误： [${blockItem}] 存在子节点,无法删除.`);
+    } else {
+      dispatch({
+        type: 'orginization/deleteOrg',
+        payload: {
+          ids: selectedRowKeys
+        }
+      })
+    }
   };
 
   // 编辑
@@ -57,7 +84,7 @@ export default class OrgList extends Component {
   };
 
   render(){
-    const { data, selectedRowKeys } = { ...this.props };
+    const { data, selectedRowKeys, loading } =  this.props ;
 
     const statusMap = ['error', 'success'];
     const status = ['已停用', '正常'];
@@ -150,6 +177,7 @@ export default class OrgList extends Component {
         <Table
           columns={column}
           dataSource={data}
+          loading={loading}
           rowClassName={(record) => {
             return record.status === '0' ? styles.disabled : styles.enabled;
           }}

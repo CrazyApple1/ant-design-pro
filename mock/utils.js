@@ -6,6 +6,7 @@ export const imgMap = {
   d: 'https://gw.alipayobjects.com/zos/rmsportal/jvpNzacxUYLlNsHTtrAD.png',
 };
 
+
 // refers: https://www.sitepoint.com/get-url-parameters-with-javascript/
 export function getUrlParams(url) {
   const d = decodeURIComponent;

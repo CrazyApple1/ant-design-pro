@@ -5,6 +5,7 @@
 - [ ] 远程加载菜单
 - [ ] 拖拽排序
 - [ ] react-intl业务文案国际化
+- [ ] 添加nprogress
 
 TIP: 代码里针对namespace和model文件名进行了忽略大小写的处理
 
