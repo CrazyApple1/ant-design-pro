@@ -78,7 +78,8 @@ class BasicLayout extends React.PureComponent {
   static childContextTypes = {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
-  }
+  };
+
   state = {
     isMobile,
   };
@@ -127,7 +128,7 @@ class BasicLayout extends React.PureComponent {
     urlParams.searchParams.delete('redirect');
     window.history.pushState(null, 'redirect', urlParams.href);
     return redirect;
-  }
+  };
   handleMenuCollapse = (collapsed) => {
     this.props.dispatch({
       type: 'global/changeLayoutCollapsed',
