@@ -48,6 +48,7 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.2.0",
     "react-fittext": "^1.0.0",
+    "react-loaders": "^3.0.1",
     "screenfull": "^3.3.2"
   },
   "devDependencies": {

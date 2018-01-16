@@ -1,7 +1,9 @@
 // 树形数据
+import {getUrlParams} from "./utils";
+
 const data = [{
   id: 1,
-  name: '根节点',
+  name: '根节点 Ora',
   isLeaf: false,
   parent: '',
   order: 1,
@@ -69,7 +71,17 @@ const data = [{
 }];
 // 获取模块数据
 export function listOrg(req, res, u) {
-  const dataSource = [...data];
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
+  }
+  let dataSource = [...data];
+
+  const params = getUrlParams(url);
+  if (params.name) {
+    dataSource = dataSource.filter(data => data.name.indexOf(params.name) > -1);
+  }
+
   if (res && res.json) {
     res.json(dataSource);
   } else {

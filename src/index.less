@@ -15,11 +15,11 @@ body {
 }
 
 :global {
-  // 修改表头样式 添加蓝色边线
+  // 琛ㄥご棰滆壊
   .ant-table-content {
       border-top: 5px solid #1da9ff;
   }
-  // 修改表头样式 添加蓝色边线 - 复选列
+  // 琛ㄥご澶嶉�夊垪
   .ant-table.ant-table-scroll-position-left .ant-table-fixed-left {
     border-top: 5px solid #1da9ff;
   }
@@ -33,5 +33,76 @@ body {
 :global {
   .ant-spin-container {
     overflow: visible !important;
+  }
+}
+//nprogress鏍峰紡
+:global {
+  #nprogress {
+    pointer-events: none;
+
+    .bar {
+      background: #1da9ff;
+      position: fixed;
+      z-index: 1024;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 2px;
+    }
+
+    .peg {
+      display: block;
+      position: absolute;
+      right: 0;
+      width: 100px;
+      height: 100%;
+      box-shadow: 0 0 10px #1da9ff,0 0 5px #1da9ff;
+      opacity: 1.0;
+      transform: rotate(3deg) translate(0px,-4px);
+    }
+
+    .spinner {
+      display: block;
+      position: fixed;
+      z-index: 1031;
+      top: 15px;
+      right: 15px;
+    }
+
+    .spinner-icon {
+      width: 18px;
+      height: 18px;
+      box-sizing: border-box;
+      border: solid 2px transparent;
+      border-top-color: #1da9ff;
+      border-left-color: #1da9ff;
+      border-radius: 50%;
+
+      :local {
+        animation: nprogress-spinner 400ms linear infinite;
+      }
+    }
+  }
+
+  .nprogress-custom-parent {
+    overflow: hidden;
+    position: relative;
+
+    #nprogress {
+      .bar,
+      .spinner {
+        position: absolute;
+      }
+    }
+  }
+}
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -21,6 +21,7 @@ import pkaq from '../../assets/pkaq.svg';
 import themeBlue from '../../core/style/theme-blue.less';
 import themeGreen from '../../core/style/theme-green.less';
 
+let lastHref;
 const { Content } = Layout;
 const { AuthorizedRoute } = Authorized;
 
@@ -69,7 +70,8 @@ enquireScreen((b) => {
   isMobile = b;
 });
 
-@connect(({ theme })  => ({
+@connect(({ theme, loading })  => ({
+  loading,
   theme,
 }))
 class BasicLayout extends React.PureComponent {
@@ -107,6 +109,16 @@ class BasicLayout extends React.PureComponent {
     return title;
   }
   getBashRedirect = () => {
+    const { location, loading } = this.props;
+    // 添加nprogress样式
+    const href = location.pathname;
+    if (lastHref !== href) {
+      NProgress.start();
+      if (!loading.global) {
+        NProgress.done();
+        lastHref = location.pathname;
+      }
+    }
     // According to the url parameter to redirect
     // 这里是重定向的,重定向到 url 的 redirect 参数所示地址
     const urlParams = new URL(window.location.href);
@@ -130,6 +142,7 @@ class BasicLayout extends React.PureComponent {
     });
   };
   handleMenuClick = ({ key }) => {
+
     if (key === 'triggerError') {
       this.props.dispatch(routerRedux.push('/exception/trigger'));
       return;
@@ -209,7 +222,7 @@ class BasicLayout extends React.PureComponent {
                 }
                 {
                   redirectData.map(item =>
-                    <Redirect key={item.from} exact from={item.from} to={item.to} />
+                     <Redirect key={item.from} exact from={item.from} to={item.to} />
                   )
                 }
                 <Redirect exact from="/" to={bashRedirect} />

@@ -50,8 +50,6 @@ export default class OrgList extends Component {
   // 批量删除
   handleBatchDelete = () => {
     const { dispatch, selectedRowKeys, data, loading } = this.props;
-    console.info(">>> ---- loading ---- >>> ");
-    console.info(loading);
     // 存在子节点的不允许删除
     const blockItem = hasChildren(data, selectedRowKeys);
     if (blockItem) {
@@ -64,6 +62,7 @@ export default class OrgList extends Component {
         }
       })
     }
+    // end if/else
   };
 
   // 编辑
@@ -72,7 +71,13 @@ export default class OrgList extends Component {
   };
   // 搜索
   handleSearch = (val) => {
-    console.info(`搜索：${val}`);
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'orginization/listOrg',
+      payload: {
+        name: val
+      }
+    });
   };
   // 行选
   handleSelectRows = (rows) => {
