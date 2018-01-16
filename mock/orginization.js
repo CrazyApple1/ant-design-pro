@@ -96,7 +96,31 @@ export function deleteOrg(req, res, b) {
   if(data.length>2){
     data.pop();
   }
-  return res.json(data);
+  if (res && res.json) {
+    res.json(data);
+  } else {
+    return data;
+  }
+}
+// 修改状态
+export function changeStatus(req, res, b){
+  const body = (b && b.body) || req.body;
+  const { id, status } = body;
+
+  let dataSource = [...data];
+  dataSource = dataSource.map(data => {
+    if(id === data.id){
+      data.status = status;
+    }
+    return data;
+  });
+
+  if (res && res.json) {
+    res.json(dataSource);
+  } else {
+    return dataSource;
+  }
+
 }
 export default {
   listOrg,

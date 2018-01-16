@@ -21,13 +21,21 @@ export default class OrgList extends Component {
     });
   }
   // 新增
-  handleAdd = () => {
-    const { dispatch } = this.props;
+  handleAdd = (record) => {
+
   };
 
   // 启用/停用
-  handleEnable = () => {
-    console.info('停用/启用');
+  handleEnable = (record, e, status) => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'orginization/changeStatus',
+      payload: {
+        id: record.id,
+        status: status,
+      }
+    })
+
   };
 
   // 删除

@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
-import { listOrg, deleteOrg } from '../service/Orginization';
+import { listOrg, deleteOrg, changeStatus } from '../service/Orginization';
 
 export default modelExtend(model, {
   namespace: 'orginization',
@@ -16,6 +16,14 @@ export default modelExtend(model, {
     *listOrg({ payload }, { call, put }) {
       // 查询数据
       const response = yield call(listOrg, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+    },
+    // 更改可用状态
+    *changeStatus({ payload }, { call, put }) {
+      const response = yield call(changeStatus, payload);
       yield put({
         type: 'save',
         payload: response,
