@@ -22,7 +22,13 @@ export default class OrgList extends Component {
   }
   // 新增
   handleAdd = (record) => {
-
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'orginization/editOrg',
+      payload: {
+        parent: record.id,
+      }
+    });
   };
 
   // 启用/停用
@@ -57,7 +63,7 @@ export default class OrgList extends Component {
 
   // 批量删除
   handleBatchDelete = () => {
-    const { dispatch, selectedRowKeys, data, loading } = this.props;
+    const { dispatch, selectedRowKeys, data } = this.props;
     // 存在子节点的不允许删除
     const blockItem = hasChildren(data, selectedRowKeys);
     if (blockItem) {

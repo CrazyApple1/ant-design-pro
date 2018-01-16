@@ -6,7 +6,6 @@ export default modelExtend(model, {
   namespace: 'orginization',
   state: {
     currentItem: {},
-    modalVisible: false,
     modalType: 'create',
     selectedRowKeys: [],
     formValues: {},
