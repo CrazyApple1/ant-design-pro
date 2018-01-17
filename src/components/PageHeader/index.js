@@ -7,21 +7,31 @@ import styles from './index.less';
 const { TabPane } = Tabs;
 
 function getBreadcrumb(breadcrumbNameMap, url) {
-  if (breadcrumbNameMap[url]) {
-    return breadcrumbNameMap[url];
-  }
-  const urlWithoutSplash = url.replace(/\/$/, '');
-  if (breadcrumbNameMap[urlWithoutSplash]) {
-    return breadcrumbNameMap[urlWithoutSplash];
-  }
+  // 在routerData里找一遍
   let breadcrumb = {};
-  Object.keys(breadcrumbNameMap).forEach((item) => {
-    const itemRegExpStr = `^${item.replace(/:[\w-]+/g, '[\\w-]+')}$`;
-    const itemRegExp = new RegExp(itemRegExpStr);
-    if (itemRegExp.test(url)) {
-      breadcrumb = breadcrumbNameMap[item];
-    }
-  });
+  let breadArray = [];
+  const urlWithoutSplash = url.replace(/\/$/, '');
+
+  if (breadcrumbNameMap[url]) {
+    // breadArray = breadcrumbNameMap[url].breadcrumb.concat();
+    return breadcrumbNameMap[url];
+  } else if (breadcrumbNameMap[urlWithoutSplash]) {
+  // 去掉结尾 / 再找一遍
+  //   breadArray = breadcrumbNameMap[urlWithoutSplash].breadcrumb.concat();
+    return breadcrumbNameMap[urlWithoutSplash];
+  } else {
+
+    // 校验map中是否有与url匹配的属性 再找一次
+    Object.keys(breadcrumbNameMap).forEach((item) => {
+      const itemRegExpStr = `^${item.replace(/:[\w-]+/g, '[\\w-]+')}$`;
+      const itemRegExp = new RegExp(itemRegExpStr);
+      if (itemRegExp.test(url)) {
+        // breadArray = breadcrumbNameMap[item].breadcrumb.concat();
+        breadcrumb = breadcrumbNameMap[item];
+      }
+    });
+  }
+
   return breadcrumb;
 }
 
@@ -91,20 +101,33 @@ export default class PageHeader extends PureComponent {
       );
     } else if (location && location.pathname) {
       const pathSnippets = location.pathname.split('/').filter(i => i);
+      // 获取面包屑
       const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
         const currentBreadcrumb = getBreadcrumb(breadcrumbNameMap, url);
-        const isLinkable = (index !== pathSnippets.length - 1) && currentBreadcrumb.component;
-        return currentBreadcrumb.name && !currentBreadcrumb.hideInBreadcrumb ? (
+        const isLinkable = (index !== pathSnippets.length - 1);
+        return currentBreadcrumb.breadcrumb? currentBreadcrumb.breadcrumb.map( item => (
           <Breadcrumb.Item key={url}>
             {createElement(
-              isLinkable ? linkElement : 'span',
+              (isLinkable && item.component) ? linkElement : 'span',
+              { [linkElement === 'a' ? 'href' : 'to']: url },
+              item.name,
+            )}
+          </Breadcrumb.Item>
+         )): currentBreadcrumb.name ? (
+          <Breadcrumb.Item key={url}>
+            {createElement(
+              (isLinkable && currentBreadcrumb.component)? linkElement : 'span',
               { [linkElement === 'a' ? 'href' : 'to']: url },
               currentBreadcrumb.name,
             )}
           </Breadcrumb.Item>
         ) : null;
+
       });
+
+      console.info(extraBreadcrumbItems);
       const breadcrumbItems = [(
         <Breadcrumb.Item key="home">
           {createElement(linkElement, {

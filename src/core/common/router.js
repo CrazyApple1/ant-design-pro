@@ -46,14 +46,33 @@ const dynamicWrapper = (app, models, component) => {
   });
 };
 // 获取菜单路径对象
-function getFlatMenuData(menus) {
+function getFlatMenuData(menus, breadCrumb) {
   let keys = {};
+
   menus.forEach((item) => {
+    let bread = [];
+
+    if (breadCrumb){
+      bread = breadCrumb.concat();
+    }
+
+    bread.push({
+      name: item.name,
+      url: item.path
+    });
+
     if (item.children) {
-      keys[item.path] = { ...item };
-      keys = { ...keys, ...getFlatMenuData(item.children) };
+      keys[item.path] = {
+        ...item,
+        breadcrumb: bread
+      };
+
+      keys = { ...keys, ...getFlatMenuData(item.children, bread) };
     } else {
-      keys[item.path] = { ...item };
+      keys[item.path] = {
+        ...item ,
+        breadcrumb: bread
+      };
     }
   });
   return keys;
@@ -186,6 +205,7 @@ export const getRouterData = (app, menus) => {
       ...routerConfig[item],
       name: routerConfig[item].name || menuItem.name,
       authority: routerConfig[item].authority || menuItem.authority,
+      breadcrumb: menuItem.breadcrumb,
     };
   });
   return routerData;
