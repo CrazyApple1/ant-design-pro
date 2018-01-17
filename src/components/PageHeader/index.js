@@ -107,6 +107,7 @@ export default class PageHeader extends PureComponent {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
         const currentBreadcrumb = getBreadcrumb(breadcrumbNameMap, url);
         const isLinkable = (index !== pathSnippets.length - 1);
+
         return currentBreadcrumb.breadcrumb? currentBreadcrumb.breadcrumb.map( item => (
           <Breadcrumb.Item key={url}>
             {createElement(
@@ -115,7 +116,7 @@ export default class PageHeader extends PureComponent {
               item.name,
             )}
           </Breadcrumb.Item>
-         )): currentBreadcrumb.name ? (
+         )): currentBreadcrumb.name && !currentBreadcrumb.hideInBreadcrumb ? (
           <Breadcrumb.Item key={url}>
             {createElement(
               (isLinkable && currentBreadcrumb.component)? linkElement : 'span',

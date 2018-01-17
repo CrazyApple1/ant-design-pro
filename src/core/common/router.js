@@ -56,10 +56,13 @@ function getFlatMenuData(menus, breadCrumb) {
       bread = breadCrumb.concat();
     }
 
-    bread.push({
-      name: item.name,
-      url: item.path
-    });
+    if(!item.hideInBreadcrumb){
+      bread.push({
+        name: item.name,
+        url: item.path,
+        icon: item.icon,
+      });
+    }
 
     if (item.children) {
       keys[item.path] = {
