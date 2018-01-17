@@ -224,54 +224,29 @@ export default class BasicLayout extends React.Component {
             onNoticeVisibleChange={this.handleNoticeVisibleChange}
           />
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-            <div style={{ minHeight: 'calc(100vh - 260px)' }}>
-              <Switch>
-                {
-                  redirectData.map(item =>
-                    <Redirect key={item.from} exact from={item.from} to={item.to} />
-                  )
-                }
-                {
-                  getRoutes(match.path, routerData).map(item =>
-                    (
-                      <AuthorizedRoute
-                        key={item.key}
-                        path={item.path}
-                        component={item.component}
-                        exact={item.exact}
-                        authority={item.authority}
-                        redirectPath="/exception/403"
-                      />
-                    )
-                  )
-                }
-                <Redirect exact from="/" to={bashRedirect} />
-                <Route render={NotFound} />
-              </Switch>
-            </div>
-            <GlobalFooter
-              links={[{
-                key: 'Pro 首页',
-                title: 'Pro 首页',
-                href: 'http://pro.ant.design',
-                blankTarget: true,
-              }, {
-                key: 'github',
-                title: <Icon type="github" />,
-                href: 'https://github.com/ant-design/ant-design-pro',
-                blankTarget: true,
-              }, {
-                key: 'Ant Design',
-                title: 'Ant Design',
-                href: 'http://ant.design',
-                blankTarget: true,
-              }]}
-              copyright={
-                <div>
-                  Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
-                </div>
+            <Switch>
+              {
+                redirectData.map(item =>
+                  <Redirect key={item.from} exact from={item.from} to={item.to} />
+                )
               }
-            />
+              {
+                getRoutes(match.path, routerData).map(item =>
+                  (
+                    <AuthorizedRoute
+                      key={item.key}
+                      path={item.path}
+                      component={item.component}
+                      exact={item.exact}
+                      authority={item.authority}
+                      redirectPath="/exception/403"
+                    />
+                  )
+                )
+              }
+              <Redirect exact from="/" to={bashRedirect} />
+              <Route render={NotFound} />
+            </Switch>
             {/* pkaq pin icon*/}
             <BackTop visibilityHeight={ -1 }>
               <Popover content="Hi jack" trigger="hover" onClick={() => this.changeTheme()}>
@@ -279,6 +254,29 @@ export default class BasicLayout extends React.Component {
               </Popover>
             </BackTop>
           </Content>
+          <GlobalFooter
+            links={[{
+              key: 'Pro 首页',
+              title: 'Pro 首页',
+              href: 'http://pro.ant.design',
+              blankTarget: true,
+            }, {
+              key: 'github',
+              title: <Icon type="github" />,
+              href: 'https://github.com/ant-design/ant-design-pro',
+              blankTarget: true,
+            }, {
+              key: 'Ant Design',
+              title: 'Ant Design',
+              href: 'http://ant.design',
+              blankTarget: true,
+            }]}
+            copyright={
+              <div>
+                Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
+              </div>
+            }
+          />
         </Layout>
       </Layout>
     );
