@@ -7,7 +7,7 @@ import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import {  delay } from 'roadhog-api-doc';
-import { getModule } from './mock/module';
+import { getModule, getUserMenu } from './mock/module';
 import { listRole, listModulebyRoleId, getDictItemByRoleId, listUserByRoleId } from './mock/role';
 import { listOrg, deleteOrg, changeStatus } from './mock/orginization';
 import { listDict, getDict, deleteDictItem, addDictItem } from './mock/dict';
@@ -63,6 +63,7 @@ const proxy = {
     $body: postRule,
   },
   'GET /module/getModule': getModule,
+  'GET /module/getUserMenu': getUserMenu,
   'GET /role/listRole': listRole,
   'GET /role/listModulebyRoleId': listModulebyRoleId,
   'GET /role/listUserByRoleId': listUserByRoleId,

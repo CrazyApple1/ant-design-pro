@@ -1,8 +1,6 @@
 import { createElement } from 'react';
 import dynamic from 'dva/dynamic';
 
-let routerDataCache;
-
 // 判断model是否已存在
 const modelNotExisted = (app, model) => (
   // eslint-disable-next-line

@@ -61,7 +61,7 @@ enquireScreen((b) => {
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,
 }))
-export default class BasicLayout extends React.PureComponent {
+export default class BasicLayout extends React.Component {
   static childContextTypes = {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
@@ -79,14 +79,12 @@ export default class BasicLayout extends React.PureComponent {
   }
   componentWillMount() {
     // 设置routerData
-    const { app, menus } = this.props;
-    const routerData = getRouterData(app, menus);
+    const { app } = this.props;
     this.props.dispatch({
-      type: 'global/updateState',
-      payload: {
-        routerData
-      }
+      type: 'global/fetchMenus',
+      app
     });
+
     enquireScreen((mobile) => {
       this.setState({
         isMobile: mobile,

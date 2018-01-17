@@ -1,5 +1,6 @@
 import { queryNotices } from '../services/api';
-import {getMenuData} from "../core/common/menu";
+import { getUserMenu } from '../core/service/global';
+import {getRouterData} from "../core/common/router";
 export default {
   namespace: 'global',
   state: {
@@ -15,12 +16,14 @@ export default {
   },
   effects: {
     // 获取菜单
-    *fetchMenus({ payload }, { put, select }) {
-      const response = getMenuData();
+    *fetchMenus({ payload, app }, { put, call }) {
+      const response = yield call(getUserMenu, payload);
+      const routerData = getRouterData(app, response);
       // 查询数据
       yield put({
         type: 'updateState',
         payload: {
+          routerData,
           menus: response
         },
       });
@@ -78,11 +81,6 @@ export default {
 
   subscriptions: {
     setup({ history, dispatch }) {
-      // 获取菜单
-      dispatch({
-        type: 'fetchMenus'
-      });
-
       // Subscribe history(url) change, trigger `load` action if pathname is `/`
       return history.listen(({ pathname, search }) => {
         if (typeof window.ga !== 'undefined') {

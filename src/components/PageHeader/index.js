@@ -128,7 +128,6 @@ export default class PageHeader extends PureComponent {
 
       });
 
-      console.info(extraBreadcrumbItems);
       const breadcrumbItems = [(
         <Breadcrumb.Item key="home">
           {createElement(linkElement, {
