@@ -1,18 +1,16 @@
 import { createElement } from 'react';
 import dynamic from 'dva/dynamic';
-import { getMenuData } from './menu';
 
 let routerDataCache;
 
+// 判断model是否已存在
 const modelNotExisted = (app, model) => (
   // eslint-disable-next-line
   !app._models.some(({ namespace }) => {
     return namespace.toLowerCase() === model.substring(model.lastIndexOf('/') + 1).toLowerCase();
   })
-
 );
-
-// wrapper of dynamic
+// model包装器
 const dynamicWrapper = (app, models, component) => {
   // () => require('module')
   // transformed by babel-plugin-dynamic-import-node-sync
@@ -24,37 +22,30 @@ const dynamicWrapper = (app, models, component) => {
       }
     });
     return (props) => {
-      if (!routerDataCache) {
-        routerDataCache = getRouterData(app);
-      }
       return createElement(component().default, {
         ...props,
-        routerData: routerDataCache,
       });
     };
   }
   // () => import('module')
   return dynamic({
     app,
+    // 判断model是否存在 避免重复注册
     models: () => models.filter(
       model => modelNotExisted(app, model)).map(m => import(`../../${m}.js`)
     ),
-    // add routerData prop
     component: () => {
-      if (!routerDataCache) {
-        routerDataCache = getRouterData(app);
-      }
       return component().then((raw) => {
         const Component = raw.default || raw;
         return props => createElement(Component, {
-          ...props,
-          routerData: routerDataCache,
+          ...props
         });
       });
     },
+    // end component
   });
 };
-
+// 获取菜单路径对象
 function getFlatMenuData(menus) {
   let keys = {};
   menus.forEach((item) => {
@@ -67,8 +58,8 @@ function getFlatMenuData(menus) {
   });
   return keys;
 }
-
-export const getRouterData = (app) => {
+// 获取路由配置
+export const getRouterData = (app, menus) => {
   const routerConfig = {
     '/': {
       component: dynamicWrapper(app, ['models/user', 'models/login'], () => import('../layouts/BasicLayout')),
@@ -184,25 +175,11 @@ export const getRouterData = (app) => {
     '/exception/trigger': {
       component: dynamicWrapper(app, ['models/error'], () => import('../../routes/Exception/triggerException')),
     },
-    '/user': {
-      component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
-    },
-    '/user/login': {
-      component: dynamicWrapper(app, ['models/login'], () => import('../../routes/User/Login')),
-    },
-    '/user/register': {
-      component: dynamicWrapper(app, ['models/register'], () => import('../../routes/User/Register')),
-    },
-    '/user/register-result': {
-      component: dynamicWrapper(app, [], () => import('../../routes/User/RegisterResult')),
-    },
-    // '/user/:id': {
-    //   component: dynamicWrapper(app, [], () => import('../../routes/User/SomeComponent')),
-    // },
   };
-  // Get name from ./menu.js or just set it in the router data.
-  const menuData = getFlatMenuData(getMenuData());
+  const menuData = getFlatMenuData(menus);
+  //  返回附加了name和authority的routerData
   const routerData = {};
+  // 遍历所有路径 为routerConfig对象添加name和authority
   Object.keys(routerConfig).forEach((item) => {
     const menuItem = menuData[item.replace(/^\//, '')] || {};
     routerData[item] = {

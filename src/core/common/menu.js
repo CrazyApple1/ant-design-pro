@@ -25,13 +25,13 @@ const menuData = [{
       name: '组织管理',
       path: 'orginization',
     }, {
-      icon: 'usergroup-add',
-      name: '账户管理',
-      path: 'account',
-    }, {
       icon: 'bars',
       name: '模块管理',
       path: 'module',
+    }, {
+      icon: 'usergroup-add',
+      name: '用户管理',
+      path: 'account',
     }, {
       icon: 'form',
       name: '权限管理',

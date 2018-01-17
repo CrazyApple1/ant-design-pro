@@ -14,35 +14,16 @@ import SiderMenu from '../../components/SiderMenu';
 import NotFound from '../../routes/Exception/404';
 import { getRoutes } from '../utils/utils';
 import Authorized from '../utils/Authorized';
-import { getMenuData } from '../common/menu';
 import logo from '../../assets/logo.svg';
 import pkaq from '../../assets/pkaq.svg';
 
 import themeBlue from '../../core/style/theme-blue.less';
 import themeGreen from '../../core/style/theme-green.less';
+import {getRouterData} from "../common/router";
 
 let lastHref;
 const { Content } = Layout;
 const { AuthorizedRoute } = Authorized;
-
-/**
- * 根据菜单取得重定向地址.
- */
-const redirectData = [];
-const getRedirect = (item) => {
-  if (item && item.children) {
-    if (item.children[0] && item.children[0].path) {
-      redirectData.push({
-        from: `/${item.path}`,
-        to: `/${item.children[0].path}`,
-      });
-      item.children.forEach((children) => {
-        getRedirect(children);
-      });
-    }
-  }
-};
-getMenuData().forEach(getRedirect);
 
 const query = {
   'screen-xs': {
@@ -70,11 +51,17 @@ enquireScreen((b) => {
   isMobile = b;
 });
 
-@connect(({ theme, loading })  => ({
+@connect(({ theme, loading, global })  => ({
   loading,
   theme,
+  currentUser: global.currentUser,
+  menus: global.menus,
+  routerData: global.routerData,
+  collapsed: global.collapsed,
+  fetchingNotices: loading.effects['global/fetchNotices'],
+  notices: global.notices,
 }))
-class BasicLayout extends React.PureComponent {
+export default class BasicLayout extends React.PureComponent {
   static childContextTypes = {
     location: PropTypes.object,
     breadcrumbNameMap: PropTypes.object,
@@ -90,7 +77,16 @@ class BasicLayout extends React.PureComponent {
       breadcrumbNameMap: routerData,
     };
   }
-  componentDidMount() {
+  componentWillMount() {
+    // 设置routerData
+    const { app, menus } = this.props;
+    const routerData = getRouterData(app, menus);
+    this.props.dispatch({
+      type: 'global/updateState',
+      payload: {
+        routerData
+      }
+    });
     enquireScreen((mobile) => {
       this.setState({
         isMobile: mobile,
@@ -100,8 +96,8 @@ class BasicLayout extends React.PureComponent {
       type: 'user/fetchCurrent',
     });
   }
-  getPageTitle() {
-    const { routerData, location } = this.props;
+  getPageTitle(routerData) {
+    const { location, } = this.props;
     const { pathname } = location;
     let title = 'Ant Design Pro';
     if (routerData[pathname] && routerData[pathname].name) {
@@ -174,8 +170,28 @@ class BasicLayout extends React.PureComponent {
   };
   render() {
     const {
-      currentUser, collapsed, fetchingNotices, notices, routerData, match, location,
+      currentUser, collapsed, fetchingNotices, notices, routerData, match, location, menus
     } = this.props;
+
+    /**
+     * 根据菜单取得重定向地址.
+     */
+    const redirectData = [];
+    const getRedirect = (item) => {
+      if (item && item.children) {
+        if (item.children[0] && item.children[0].path) {
+          redirectData.push({
+            from: `/${item.path}`,
+            to: `/${item.children[0].path}`,
+          });
+          item.children.forEach((children) => {
+            getRedirect(children);
+          });
+        }
+      }
+    };
+    menus.forEach(getRedirect);
+
     const bashRedirect = this.getBashRedirect();
     const layout = (
       <Layout>
@@ -185,7 +201,7 @@ class BasicLayout extends React.PureComponent {
           // If you do not have the Authorized parameter
           // you will be forced to jump to the 403 interface without permission
           Authorized={Authorized}
-          menuData={getMenuData()}
+          menuData={menus}
           collapsed={collapsed}
           location={location}
           isMobile={this.state.isMobile}
@@ -265,7 +281,7 @@ class BasicLayout extends React.PureComponent {
     );
 
     return (
-      <DocumentTitle title={this.getPageTitle()}>
+      <DocumentTitle title={this.getPageTitle(routerData)}>
         <ContainerQuery query={query}>
           {params => <div className={classNames(params)}>{layout}</div>}
         </ContainerQuery>
@@ -274,9 +290,3 @@ class BasicLayout extends React.PureComponent {
   }
 }
 
-export default connect(({ user, global, loading }) => ({
-  currentUser: user.currentUser,
-  collapsed: global.collapsed,
-  fetchingNotices: loading.effects['global/fetchNotices'],
-  notices: global.notices,
-}))(BasicLayout);
