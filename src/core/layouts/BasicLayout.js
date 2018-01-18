@@ -19,7 +19,6 @@ import pkaq from '../../assets/pkaq.svg';
 
 import themeBlue from '../../core/style/theme-blue.less';
 import themeGreen from '../../core/style/theme-green.less';
-import {getRouterData} from "../common/router";
 
 let lastHref;
 const { Content } = Layout;
@@ -78,6 +77,7 @@ export default class BasicLayout extends React.Component {
     };
   }
   componentWillMount() {
+    console.info("rrrrr");
     // 设置routerData
     const { app } = this.props;
     this.props.dispatch({
