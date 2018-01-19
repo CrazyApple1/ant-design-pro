@@ -5,34 +5,9 @@ import { Breadcrumb, Tabs } from 'antd';
 import classNames from 'classnames';
 import styles from './index.less';
 
-
 const { TabPane } = Tabs;
 
 function getBreadcrumb(breadcrumbNameMap, url) {
-  // 在routerData里找一遍
-  let breadcrumb = {};
-  let breadArray = [];
-  const urlWithoutSplash = url.replace(/\/$/, '');
-
-  if (breadcrumbNameMap[url]) {
-    // breadArray = breadcrumbNameMap[url].breadcrumb.concat();
-    return breadcrumbNameMap[url];
-  } else if (breadcrumbNameMap[urlWithoutSplash]) {
-  // 去掉结尾 / 再找一遍
-  //   breadArray = breadcrumbNameMap[urlWithoutSplash].breadcrumb.concat();
-    return breadcrumbNameMap[urlWithoutSplash];
-  } else {
-
-    // 校验map中是否有与url匹配的属性 再找一次
-    Object.keys(breadcrumbNameMap).forEach((item) => {
-      const itemRegExpStr = `^${item.replace(/:[\w-]+/g, '[\\w-]+')}$`;
-      const itemRegExp = new RegExp(itemRegExpStr);
-      if (itemRegExp.test(url)) {
-        // breadArray = breadcrumbNameMap[item].breadcrumb.concat();
-        breadcrumb = breadcrumbNameMap[item];
-      }
-    });
-  }
   let breadcrumb = {};
   Object.keys(breadcrumbNameMap).forEach((item) => {
     if (pathToRegexp(item).test(url)) {
@@ -159,76 +134,6 @@ export default class PageHeader extends PureComponent {
       tabList, className, tabActiveKey,
     } = this.props;
     const clsString = classNames(styles.pageHeader, className);
-    let breadcrumb;
-    if (breadcrumbList && breadcrumbList.length) {
-      breadcrumb = (
-        <Breadcrumb className={styles.breadcrumb}>
-          {
-            breadcrumbList.map(item => (
-              <Breadcrumb.Item key={item.title}>
-                {item.href ? (
-                  createElement(linkElement, {
-                    [linkElement === 'a' ? 'href' : 'to']: item.href,
-                  }, item.title)
-                ) : item.title}
-              </Breadcrumb.Item>)
-            )
-          }
-        </Breadcrumb>
-      );
-    } else if (routes && params) {
-      breadcrumb = (
-        <Breadcrumb
-          className={styles.breadcrumb}
-          routes={routes.filter(route => route.breadcrumbName)}
-          params={params}
-          itemRender={this.itemRender}
-        />
-      );
-    } else if (location && location.pathname) {
-      const pathSnippets = location.pathname.split('/').filter(i => i);
-      // 获取面包屑
-      const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-
-        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-        const currentBreadcrumb = getBreadcrumb(breadcrumbNameMap, url);
-        const isLinkable = (index !== pathSnippets.length - 1);
-
-        return currentBreadcrumb.breadcrumb? currentBreadcrumb.breadcrumb.map( item => (
-          <Breadcrumb.Item key={url}>
-            {createElement(
-              (isLinkable && item.component) ? linkElement : 'span',
-              { [linkElement === 'a' ? 'href' : 'to']: url },
-              item.name,
-            )}
-          </Breadcrumb.Item>
-         )): currentBreadcrumb.name && !currentBreadcrumb.hideInBreadcrumb ? (
-          <Breadcrumb.Item key={url}>
-            {createElement(
-              (isLinkable && currentBreadcrumb.component)? linkElement : 'span',
-              { [linkElement === 'a' ? 'href' : 'to']: url },
-              currentBreadcrumb.name,
-            )}
-          </Breadcrumb.Item>
-        ) : null;
-
-      });
-
-      const breadcrumbItems = [(
-        <Breadcrumb.Item key="home">
-          {createElement(linkElement, {
-            [linkElement === 'a' ? 'href' : 'to']: '/',
-          }, '首页')}
-        </Breadcrumb.Item>
-      )].concat(extraBreadcrumbItems);
-      breadcrumb = (
-        <Breadcrumb className={styles.breadcrumb}>
-          {breadcrumbItems}
-        </Breadcrumb>
-      );
-    } else {
-      breadcrumb = null;
-    }
 
     let tabDefaultValue;
     if (tabActiveKey !== undefined && tabList) {

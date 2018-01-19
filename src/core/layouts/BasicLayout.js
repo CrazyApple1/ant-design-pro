@@ -19,6 +19,8 @@ import pkaq from '../../assets/pkaq.svg';
 
 import themeBlue from '../../core/style/theme-blue.less';
 import themeGreen from '../../core/style/theme-green.less';
+import {getRouterData} from "../common/router";
+import App from "../../components/App/App";
 
 let lastHref;
 const { Content } = Layout;
@@ -49,13 +51,11 @@ let isMobile;
 enquireScreen((b) => {
   isMobile = b;
 });
-
+@App
 @connect(({ theme, loading, global })  => ({
   loading,
   theme,
   currentUser: global.currentUser,
-  menus: global.menus,
-  routerData: global.routerData,
   collapsed: global.collapsed,
   fetchingNotices: loading.effects['global/fetchNotices'],
   notices: global.notices,
@@ -76,15 +76,7 @@ export default class BasicLayout extends React.Component {
       breadcrumbNameMap: routerData,
     };
   }
-  componentWillMount() {
-    console.info("rrrrr");
-    // 设置routerData
-    const { app } = this.props;
-    this.props.dispatch({
-      type: 'global/fetchMenus',
-      app
-    });
-
+  componentDidMount() {
     enquireScreen((mobile) => {
       this.setState({
         isMobile: mobile,
@@ -94,6 +86,7 @@ export default class BasicLayout extends React.Component {
       type: 'user/fetchCurrent',
     });
   }
+  // 页面title
   getPageTitle(routerData) {
     const { location, } = this.props;
     const { pathname } = location;
@@ -172,9 +165,12 @@ export default class BasicLayout extends React.Component {
     });
   };
   render() {
+    console.info("render");
+    console.info(this.props);
     const {
-      currentUser, collapsed, fetchingNotices, notices, routerData, match, location, menus
+      currentUser, collapsed, fetchingNotices, notices, routerConfig, match, location, menus
     } = this.props;
+    const routerData = getRouterData(routerConfig, menus);
 
     /**
      * 根据菜单取得重定向地址.

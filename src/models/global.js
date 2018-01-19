@@ -5,25 +5,23 @@ export default {
   namespace: 'global',
   state: {
     collapsed: false,
-    currentUser: {},
+    currentUser: {
+      name: 'PKAQ',
+      avatar: '',
+      notifyCount: 0
+    },
     notices: [],
     routerData:[],
-    menus: [{
-      name: 'dashboard',
-      icon: 'dashboard',
-      path: 'dashboard',
-    }],
+    menus: [],
   },
   effects: {
     // 获取菜单
-    *fetchMenus({ payload, app }, { put, call }) {
+    *fetchMenus({ payload }, { put, call }) {
       const response = yield call(getUserMenu, payload);
-      const routerData = getRouterData(app, response);
       // 查询数据
       yield put({
         type: 'updateState',
         payload: {
-          routerData,
           menus: response
         },
       });
