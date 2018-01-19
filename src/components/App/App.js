@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "dva";
-import {Spin} from "antd";
+import Loader from '../Loader';
 
 const App = (WrappedComponent) => {
   @connect(state => ({
@@ -16,7 +16,7 @@ const App = (WrappedComponent) => {
       const menus = this.props.global.menus;
 
       return (
-        menus.length === 0 ? <Spin spinning={true}/>:
+        menus.length === 0 ? <Loader fullScreen spinning />:
           <WrappedComponent {...this.props} menus={menus}/>
       )
     }
