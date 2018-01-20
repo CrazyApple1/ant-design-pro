@@ -19,7 +19,6 @@ import pkaq from '../../assets/pkaq.svg';
 
 import themeBlue from '../../core/style/theme-blue.less';
 import themeGreen from '../../core/style/theme-green.less';
-import {getRouterData} from "../common/router";
 import App from "../../components/App/App";
 
 let lastHref;
@@ -165,12 +164,10 @@ export default class BasicLayout extends React.Component {
     });
   };
   render() {
-    console.info("render");
-    console.info(this.props);
     const {
-      currentUser, collapsed, fetchingNotices, notices, routerConfig, match, location, menus
+      currentUser, collapsed, fetchingNotices, notices, routerData, match, location, menus
     } = this.props;
-    const routerData = getRouterData(routerConfig, menus);
+
 
     /**
      * 根据菜单取得重定向地址.
