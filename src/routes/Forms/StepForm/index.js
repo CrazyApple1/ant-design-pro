@@ -5,9 +5,13 @@ import PageHeaderLayout from '../../../core/layouts/PageHeaderLayout';
 import NotFound from '../../Exception/404';
 import { getRoutes } from '../../../core/utils/utils';
 import styles from '../style.less';
+import {connect} from "dva";
 
 const { Step } = Steps;
 
+@connect(({global}) => ({
+  routerData: global.routerData
+}))
 export default class StepForm extends PureComponent {
   getCurrentStep() {
     const { location } = this.props;

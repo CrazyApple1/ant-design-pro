@@ -7,7 +7,7 @@ const Area = Input.TextArea;
 @Form.create()
 export default class OrgDetail extends Component{
   componentDidMount() {
-    console.info("load org detail")
+    console.info("load org detail");
   }
   render() {
     const { getFieldDecorator } = this.props.form;

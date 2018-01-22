@@ -8,6 +8,7 @@ import styles from './index.less';
 import UserLayout from "./core/layouts/UserLayout";
 import BasicLayout from "./core/layouts/BasicLayout";
 import getConfig from './core/common/config';
+import {getUserNav} from "./core/common/config";
 
 const { ConnectedRouter } = routerRedux;
 const { AuthorizedRoute } = Authorized;
@@ -21,10 +22,10 @@ const RouterWrapper = ({ history, app }) => {
     <LocaleProvider locale={zhCN}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/user" render={props => <UserLayout {...props} />} />
+          <Route path="/user" render={props => <UserLayout {...props} routerData = { getUserNav(app)}/>} />
           <AuthorizedRoute
             path="/"
-            render={props => <BasicLayout {...props} routerConfig={getConfig(app)} />}
+            render={props => <BasicLayout {...props} routerConfig = {getConfig(app)} />}
             authority={['admin', 'user']}
             redirectPath="/user/login"
           />

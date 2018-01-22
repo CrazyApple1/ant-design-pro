@@ -20,6 +20,7 @@ import pkaq from '../../assets/pkaq.svg';
 import themeBlue from '../../core/style/theme-blue.less';
 import themeGreen from '../../core/style/theme-green.less';
 import App from "../../components/App/App";
+import * as AppInfo from '../../core/common/AppInfo';
 
 let lastHref;
 const { Content } = Layout;
@@ -168,7 +169,6 @@ export default class BasicLayout extends React.Component {
       currentUser, collapsed, fetchingNotices, notices, routerData, match, location, menus
     } = this.props;
 
-
     /**
      * 根据菜单取得重定向地址.
      */
@@ -266,7 +266,7 @@ export default class BasicLayout extends React.Component {
             }]}
             copyright={
               <div>
-                Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
+                Copyright <Icon type="copyright" /> {AppInfo.copyright}
               </div>
             }
           />

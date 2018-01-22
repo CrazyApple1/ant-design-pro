@@ -330,6 +330,30 @@ const data = [{
   order: 1,
   url: '',
   status: '1',
+},{
+  id: 11,
+  name: '用户',
+  icon: 'book',
+  path: 'user',
+  hideInMenu: true,
+  order: 1,
+  url: '',
+  status: '1',
+  children: [{
+    id: 111,
+    name: '用户登录',
+    path: 'login',
+    order: 1,
+    url: '',
+    status: '1',
+  }, {
+    id: 112,
+    name: '用户注册',
+    path: 'register',
+    order: 1,
+    url: '',
+    status: '1',
+  }],
 }];
 // 获取模块数据
 export function getModule(req, res, u) {

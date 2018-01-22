@@ -8,6 +8,7 @@
 - [x] ~~PinICON~~
 - [x] ~~远程加载菜单~~
 - [x] ~~真·面包屑~~
+- [ ] 采用axios
 
 TIP: 代码里针对namespace和model文件名进行了忽略大小写的处理
 

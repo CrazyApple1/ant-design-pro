@@ -6,6 +6,7 @@ import GlobalFooter from '../../components/GlobalFooter';
 import styles from './UserLayout.less';
 import logo from '../../assets/logo.svg';
 import { getRoutes } from '../utils/utils';
+import * as AppInfo from '../../core/common/AppInfo';
 
 const links = [{
   key: 'help',
@@ -21,39 +22,23 @@ const links = [{
   href: '',
 }];
 
-const copyright = <div>Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品</div>;
+const copyright = <div>Copyright <Icon type="copyright" />{AppInfo.copyRight}</div>;
 
 class UserLayout extends React.PureComponent {
-  getUserNav() {
-    return [{
-        path: '/user/login',
-        name: '用户登录',
-        models: () => ['models/login'],
-        component: () => import('../../routes/User/Login'),
-    },{
-      path: '/user/register',
-      name: '用户注册',
-      models: () => ['models/register'],
-      component: () => import('../../routes/User/Register'),
-    },{
-      path: '/user/register-result',
-      name: '注册结果',
-      models: () => [],
-      component: () => import('../../routes/User/RegisterResult'),
-    }];
-  }
+
   getPageTitle() {
-    const { location } = this.props;
+    const { location, routerData } = this.props;
     const { pathname } = location;
-    const routerData = this.getUserNav();
-    let title = 'Ant Design Pro';
+
+
+    let title = AppInfo.title;
     if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - Ant Design Pro`;
+      title = `${routerData[pathname].name} - ${title}`;
     }
     return title;
   }
   render() {
-    const { match } = this.props;
+    const { match, routerData } = this.props;
     return (
       <DocumentTitle title={this.getPageTitle()}>
         <div className={styles.container}>
@@ -62,10 +47,10 @@ class UserLayout extends React.PureComponent {
               <div className={styles.header}>
                 <Link to="/">
                   <img alt="logo" className={styles.logo} src={logo} />
-                  <span className={styles.title}>Ant Design</span>
+                  <span className={styles.title} />
                 </Link>
               </div>
-              <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+              <div className={styles.desc}>{AppInfo.description}</div>
             </div>
             <Switch>
               {getRoutes(match.path, routerData).map(item =>

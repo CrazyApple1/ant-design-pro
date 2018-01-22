@@ -5,7 +5,9 @@ import { Input } from 'antd';
 import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
 import { getRoutes } from '../../core/utils/utils';
 
-@connect()
+@connect(({global}) => ({
+  routerData: global.routerData
+}))
 export default class SearchList extends Component {
   handleTabChange = (key) => {
     const { dispatch, match } = this.props;
