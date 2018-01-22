@@ -1,94 +1,63 @@
-English | [简体中文](./README.zh-CN.md)
+# PKAQ Design = Ant Design Pro
+** TODO
 
-# Ant Design Pro
+- [ ] 采用tab方式打开新增页面
+- [ ] 导航tab
+- [ ] 拖拽排序
+- [ ] react-intl业务文案国际化
+- [x] ~~主题切换~~
+- [x] ~~PinICON~~
+- [x] ~~远程加载菜单~~
+- [x] ~~真·面包屑~~
+- [ ] 采用axios
 
-[![](https://img.shields.io/travis/ant-design/ant-design-pro/master.svg?style=flat-square)](https://travis-ci.org/ant-design/ant-design-pro) [![Build status](https://ci.appveyor.com/api/projects/status/67fxu2by3ibvqtat/branch/master?svg=true)](https://ci.appveyor.com/project/afc163/ant-design-pro/branch/master)  [![Gitter](https://badges.gitter.im/ant-design/ant-design-pro.svg)](https://gitter.im/ant-design/ant-design-pro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+TIP: 代码里针对namespace和model文件名进行了忽略大小写的处理
 
-An out-of-box UI solution for enterprise applications as a React boilerplate.
+>问题
+- 不支model花式命名：当期版本model的文件名必须与所指定的namespace一致，因为router.js中是通过读取文件名来判断已经注册的model
+  中是否存在该model的，又由于存在namespace的唯一性约束，所以当两者不一致时无法通过此种方式判断对应文件名的model是否已经注册导致异常
+** TODO
+---
+- [ ] 仓库管理
+- [ ] 入库单
+- [ ] 出库单
+- [ ] 调拨单
+- [ ] 库存台帐
+- [ ] 库存盘点
 
-![](https://gw.alipayobjects.com/zos/rmsportal/xEdBqwSzvoSapmnSnYjU.png)
+- [ ] 门店管理
+- [ ] 销售单
+- [ ] 店员管理
+- [ ] 会员管理（指静脉）
 
-- Preview: http://preview.pro.ant.design
-- Home Page: http://pro.ant.design
-- Documentation: http://pro.ant.design/docs/getting-started
-- ChangeLog: http://pro.ant.design/docs/changelog
-- FAQ: http://pro.ant.design/docs/faq
+--- 系统监控
+- [x] ~~SQL监控~~
+- [x] ~~hystrix~~
+- [x] ~~swagger~~
+- [ ] 业务日志
+- [ ] 登录日志
 
-## Translation Recruitment :loudspeaker:
-
-We need your help: https://github.com/ant-design/ant-design-pro/issues/120
-
-## Features
-
-- :gem: **Neat Design**: Follow [Ant Design specification](http://ant.design/)
-- :triangular_ruler: **Common Templates**: Typical templates for enterprise applications
-- :rocket: **State of The Art Development**: Newest development stack of React/dva/antd
-- :iphone: **Responsive**: Designed for varies of screen size
-- :art: **Themeing**: Customizable theme with simple config
-- :globe_with_meridians: **International**: Built-in i18n solution
-- :gear: **Best Practice**: Solid workflow make your code health
-- :1234: **Mock development**: Easy to use mock development solution
-- :white_check_mark: **UI Test**: Fly safely with unit test and e2e test
-
-## Templates
-
-```
-- Dashboard
-  - Analytic
-  - Monitor
-  - Workspace
-- Form
-  - Basic Form
-  - Step Form
-  - Advanced From
-- List
-  - Standard Table
-  - Standard List
-  - Card List
-  - Search List (Project/Applications/Article)
-- Profile
-  - Simple Profile
-  - Advanced Profile
-- Result
-  - Success
-  - Failed
-- Exception
-  - 403
-  - 404
-  - 500
-- User
-  - Login
-  - Register
-  - Register Result
-```
+--- 系统管理
+- [ ] 子系统管理
+- [ ] 系统接口
+- [ ] 菜单管理
+- [ ] 用户管理
+- [ ] 组织（部门）管理
+- [ ] 角色（权限）管理 6表权限RBAC 精确到按钮
+- [ ] 字典管理
 
 ## Usage
-
 ```bash
-$ git clone https://github.com/ant-design/ant-design-pro.git --depth=1
-$ cd ant-design-pro
-$ npm install
-$ npm start         # visit http://localhost:8000
+$ git clone 
+$ yarn install
+$ yarn start         # visit http://localhost:8000
 ```
-
-Or you can use the command tool: [ant-design-pro-cli](https://github.com/ant-design/ant-design-pro-cli)
-
-```bash
-$ npm install ant-design-pro-cli -g
-$ mkdir pro-demo && cd pro-demo
-$ pro new
-```
-
-More instruction at [documentation](http://pro.ant.design/docs/getting-started).
 
 ## Compatibility
-
 Modern browsers and IE11.
 
 ## Contributing
-
 Any Contribution of following ways will be welcome:
-
 - Use Ant Design Pro in your daily work.
 - Submit [issue](http://github.com/ant-design/ant-design-pro/issues) to report bug or ask questions.
 - Propose [pull request](http://github.com/ant-design/ant-design-pro/pulls) to improve our code.
