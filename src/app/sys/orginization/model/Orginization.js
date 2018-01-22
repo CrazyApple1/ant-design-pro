@@ -1,12 +1,12 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
-import { listOrg, deleteOrg, changeStatus } from '../service/Orginization';
+import { getOrg, listOrg, deleteOrg, changeStatus } from '../service/Orginization';
 
 export default modelExtend(model, {
   namespace: 'orginization',
   state: {
     currentItem: {},
-    modalType: 'create',
+    modalType: '',
     selectedRowKeys: [],
     formValues: {},
   },
@@ -19,6 +19,27 @@ export default modelExtend(model, {
         type: 'save',
         payload: response,
       });
+    },
+    // 新增/新增子节点
+    *addOrg({ payload }, { call, put }) {
+      // 有id时为新增下级，加载父级节点相关信息
+      yield put({
+        type: 'updateState',
+        payload: {
+          ...payload
+        }
+      })
+    },
+    // 编辑
+    *editOrg({ payload }, { call, put }){
+      const response = yield call(getOrg, payload);
+      yield put({
+        type: 'updateState',
+        payload: {
+          modalType: 'edit',
+          currentItem: response
+        }
+      })
     },
     // 更改可用状态
     *changeStatus({ payload }, { call, put }) {

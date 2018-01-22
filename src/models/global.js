@@ -1,6 +1,5 @@
 import { queryNotices } from '../services/api';
 import { getUserMenu } from '../core/service/global';
-import {getRouterData} from "../core/common/router";
 export default {
   namespace: 'global',
   state: {

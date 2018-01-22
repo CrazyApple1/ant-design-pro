@@ -2,28 +2,28 @@
 import {getUrlParams} from "./utils";
 
 const data = [{
-  id: 1,
+  id: '1',
   name: '根节点 Ora',
   isLeaf: false,
   parent: '',
   order: 1,
   status: '1',
   children: [{
-    id: 11,
+    id: '11',
     name: '二级节点 - A',
     isLeaf: true,
     parent: '根节点',
     order: 1,
     status: '1',
   }, {
-    id: 12,
+    id: '12',
     name: '二级节点 - B',
     parent: '根节点',
     isLeaf: false,
     order: 2,
     status: '1',
     children: [{
-      id: 121,
+      id: '121',
       name: '三级节点 - A',
       parent: '二级节点 - B',
       order: 1,
@@ -31,7 +31,7 @@ const data = [{
       isLeaf: true,
     }],
   }, {
-    id: 13,
+    id: '13',
     name: '二级节点 - C.',
     parent: '根节点',
     isLeaf: false,
@@ -39,13 +39,13 @@ const data = [{
     status: '1',
     address: 'London No. 1 Lake Park',
     children: [{
-      id: 131,
+      id: '131',
       name: '三级节点 - C',
       isLeaf: false,
       status: '0',
       address: 'London No. 2 Lake Park',
       children: [{
-        id: 1311,
+        id: '1311',
         isLeaf: true,
         status: '0',
         order: 1,
@@ -55,20 +55,55 @@ const data = [{
     }],
   }],
 }, {
-  id: 2,
+  id: '2',
   name: '根节点 - ROOT',
   isLeaf: true,
   parent: '',
   order: 1,
   status: '0',
 }, {
-  id: 3,
+  id: '3',
   name: '根节点 - 333',
   isLeaf: true,
   parent: '',
   order: 1,
   status: '0',
 }];
+
+const orgOne =  {
+    id: '11',
+    code: 'dpart-send',
+    name: '二级节点 - A',
+    isLeaf: true,
+    parent: '根节点',
+    order: 1,
+    description: 'description',
+    status: '1',
+};
+
+export function getOrg(req, res, u) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
+  }
+  let dataSource = [...data];
+
+  const params = getUrlParams(url);
+  // 根据ID获取 mock只搜一级节点做模拟
+  if (params.id) {
+    dataSource = dataSource.filter(data => data.id === params.id);
+  }
+  // 根据parentID获取
+  if (params.parent) {
+    dataSource = {...orgOne} ;
+  }
+
+  if (res && res.json) {
+    res.json(dataSource);
+  } else {
+    return dataSource;
+  }
+}
 // 获取模块数据
 export function listOrg(req, res, u) {
   let url = u;
@@ -123,6 +158,8 @@ export function changeStatus(req, res, b){
 
 }
 export default {
+  getOrg,
+  changeStatus,
   listOrg,
   deleteOrg
 };

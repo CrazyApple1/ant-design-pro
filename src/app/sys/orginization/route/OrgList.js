@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message } from 'antd';
+import { Table, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message, notification } from 'antd';
 import { hasChildren } from '../../../../core/utils/DataHelper';
-
 import styles from './Orginization.less';
 import tableStyle from '../../../../core/style/Table.less';
 import {connect} from "dva";
@@ -15,26 +14,44 @@ const { Search } = { ...Input };
 export default class OrgList extends Component {
   // 加载组织列表
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
+    this.props.dispatch({
       type: 'orginization/listOrg',
     });
   }
   // 新增
   handleAdd = (record) => {
-    const { dispatch } = this.props;
-    dispatch({
+    const id = typeof record === Object? record.parent: '';
+    this.props.dispatch({
+      type: 'orginization/addOrg',
+      payload: {
+        modalType: 'create',
+        parent: id,
+      }
+    });
+  };
+
+  // 编辑
+  handleEdit = (record) => {
+    if(!record.id){
+      notification.error('没有选择记录');
+      return;
+    }
+    this.props.dispatch({
       type: 'orginization/editOrg',
       payload: {
-        parent: record.id,
+        modalType: 'edit',
+        id: record.id,
       }
     });
   };
 
   // 启用/停用
   handleEnable = (record, e, status) => {
-    const { dispatch } = this.props;
-    dispatch({
+    if(!record.id){
+      notification.error('没有选择记录');
+      return;
+    }
+    this.props.dispatch({
       type: 'orginization/changeStatus',
       payload: {
         id: record.id,
@@ -79,10 +96,7 @@ export default class OrgList extends Component {
     // end if/else
   };
 
-  // 编辑
-  handleEdit = () => {
-    console.info('编辑');
-  };
+
   // 搜索
   handleSearch = (val) => {
     const { dispatch } = this.props;
@@ -95,8 +109,7 @@ export default class OrgList extends Component {
   };
   // 行选
   handleSelectRows = (rows) => {
-    const { dispatch } = this.props;
-    dispatch({
+    this.props.dispatch({
       type: 'orginization/updateState',
       payload: { selectedRowKeys: rows },
     });
@@ -127,9 +140,9 @@ export default class OrgList extends Component {
       title: '操作',
       render: (text, record) => (
         <div>
-          <a onClick={e => this.handleEdit(record, e)}>编辑</a>
+          <a onClick={e => this.handleEdit(record)}>编辑</a>
           <Divider type="vertical" />
-          <a onClick={e => this.handleAdd(record, e)}>添加下级</a>
+          <a onClick={e => this.handleAdd(record)}>添加下级</a>
         </div>
       ),
     }, {
@@ -159,7 +172,7 @@ export default class OrgList extends Component {
         <Row gutter={24} type="flex" justify="space-between" className={tableStyle.tableActionBtn}>
           <Col xl={6} lg={6} md={6} sm={6} xs={6}>
             <div>
-              <Button icon="plus" type="primary" onClick={() => this.handleAdd()}>新增</Button>
+              <Button icon="plus" type="primary" onClick={() => this.handleAdd('')}>新增</Button>
               {
                 selectedRowKeys.length > 0 && (
                   <span>

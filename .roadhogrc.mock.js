@@ -9,7 +9,7 @@ import { getNotices } from './mock/notices';
 import {  delay } from 'roadhog-api-doc';
 import { getModule, getUserMenu } from './mock/module';
 import { listRole, listModulebyRoleId, getDictItemByRoleId, listUserByRoleId } from './mock/role';
-import { listOrg, deleteOrg, changeStatus } from './mock/orginization';
+import { getOrg, listOrg, deleteOrg, changeStatus } from './mock/orginization';
 import { listDict, getDict, deleteDictItem, addDictItem } from './mock/dict';
 
 // 是否禁用代理
@@ -72,6 +72,7 @@ const proxy = {
   'GET /dict/listDict': listDict,
   'POST /dict/deleteDictItem': deleteDictItem,
   'POST /dict/addDictItem': addDictItem,
+  'GET /orginization/getOrg': getOrg,
   'GET /orginization/listOrg': listOrg,
   'POST /orginization/deleteOrg': deleteOrg,
   'POST /orginization/changeStatus': changeStatus,

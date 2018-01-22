@@ -11,7 +11,7 @@ export default class Orginization extends Component {
   // 组件加载完成后加载数据
   render() {
     const { dispatch } = this.props;
-    const { data, selectedRowKeys, modalType } = this.props.orginization;
+    const { data, selectedRowKeys, modalType, currentItem  } = this.props.orginization;
 
     const tableProps = {
       dispatch,
@@ -20,6 +20,7 @@ export default class Orginization extends Component {
     };
     const modalProps = {
       dispatch,
+      currentItem,
       modalType,
     };
 
