@@ -77,7 +77,7 @@ const orgOne =  {
     isLeaf: true,
     parent: '根节点',
     order: 1,
-    description: 'description',
+    remark: 'description',
     status: '1',
 };
 
@@ -86,16 +86,16 @@ export function getOrg(req, res, u) {
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     url = req.url; // eslint-disable-line
   }
-  let dataSource = [...data];
+  let dataSource;
 
   const params = getUrlParams(url);
   // 根据ID获取 mock只搜一级节点做模拟
   if (params.id) {
-    dataSource = dataSource.filter(data => data.id === params.id);
+    dataSource = data.filter(data => data.id === params.id);
   }
   // 根据parentID获取
   if (params.parent) {
-    dataSource = {...orgOne} ;
+    dataSource = orgOne ;
   }
 
   if (res && res.json) {

@@ -3,13 +3,14 @@
 
 - [ ] 采用tab方式打开新增页面
 - [ ] 导航tab
+- [ ] 封装treegrid,支持异步加载
 - [ ] 拖拽排序
+- [ ] 采用axios
 - [ ] react-intl业务文案国际化
 - [x] ~~主题切换~~
 - [x] ~~PinICON~~
 - [x] ~~远程加载菜单~~
 - [x] ~~真·面包屑~~
-- [ ] 采用axios
 
 TIP: 代码里针对namespace和model文件名进行了忽略大小写的处理
 

@@ -32,12 +32,17 @@ export default modelExtend(model, {
     },
     // 编辑
     *editOrg({ payload }, { call, put }){
+      console.info("editOrg");
       const response = yield call(getOrg, payload);
+
+      console.info("response");
+      console.info(response);
+
       yield put({
         type: 'updateState',
         payload: {
           modalType: 'edit',
-          currentItem: response
+          currentItem: response[0]
         }
       })
     },

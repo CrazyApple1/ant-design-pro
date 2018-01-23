@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Form, Input, Modal } from 'antd';
+import { Row, Col, Form, Input, Modal, Switch, TreeSelect } from 'antd';
 
 const FormItem = Form.Item;
 const Area = Input.TextArea;
@@ -18,28 +18,42 @@ export default class OrgDetail extends Component{
       }
     })
   };
+
+  handleTreeSelect = () => {
+
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { modalType, currentItem } = this.props;
     const cmView = modalType === 'view';
 
-    console.info(currentItem);
     const formItemLayout = {
-      labelCol: {
-        span: 8
-      },
-      wrapperCol: {
-        span: 14
-      },
+      labelCol: { span: 8 },
+      wrapperCol: { span: 14 },
     };
     const formRowOne = {
-      labelCol: {
-        span: 4
-      },
-      wrapperCol: {
-        span: 19
-      },
+      labelCol: { span: 4 },
+      wrapperCol: { span: 19 },
     };
+
+    const treeData = [{
+      label: 'Node1',
+      value: '0-0',
+      key: '0-0',
+      children: [{
+        label: 'Child Node1',
+        value: '0-0-1',
+        key: '0-0-1',
+      }, {
+        label: 'Child Node2',
+        value: '0-0-2',
+        key: '0-0-2',
+      }],
+    }, {
+      label: 'Node2',
+      value: '0-1',
+      key: '0-1',
+    }];
     return (
       <Modal onCancel={() => this.handleCloseForm()}
              visible={modalType !== ''}
@@ -49,17 +63,15 @@ export default class OrgDetail extends Component{
         {/*第一行*/}
             <Row>
               <Col span={12}>
-                <FormItem label="名称" {...formItemLayout}>
+                <FormItem label="名称" hasFeedback {...formItemLayout}>
                 {getFieldDecorator('name', {
                   initialValue: currentItem.name,
                   rules: [{ required: true, message: '请输入组织名称' }],
-                })(
-                  <Input />
-                )}
+                })(<Input />)}
                 </FormItem>
               </Col>
               <Col span={12}>
-                <FormItem label="编码" {...formItemLayout}>
+                <FormItem label="编码" hasFeedback {...formItemLayout}>
                   {getFieldDecorator('code', {
                     initialValue: currentItem.code,
                     rules: [{
@@ -71,18 +83,25 @@ export default class OrgDetail extends Component{
               </Col>
             </Row>
             {/*第二行*/}
-            <FormItem label="上级节点" {...formRowOne} >
-              {getFieldDecorator('code', {
+            <FormItem label="上级节点" hasFeedback {...formRowOne} >
+              {getFieldDecorator('parent', {
                 initialValue: currentItem.parent,
-                rules: [{
-                  message: '请输入编码',
-                }],
-              })(<Input />)}
+              })(
+                <TreeSelect
+                  dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                  treeData={treeData}
+                  showCheckedStrategy={TreeSelect.SHOW_ALL}
+                  allowClear
+                  placeholder="请选择上级节点（根节点留空）"
+                  treeDefaultExpandAll
+                  onChange={this.handleTreeSelect()}
+                />
+              )}
             </FormItem>
             {/*第三行*/}
             <Row>
               <Col span={12}>
-                <FormItem label="排序" {...formItemLayout} >
+                <FormItem label="排序" hasFeedback {...formItemLayout} >
                   {getFieldDecorator('order', {
                     initialValue: currentItem.order,
                     rules: [{
@@ -92,20 +111,18 @@ export default class OrgDetail extends Component{
                 </FormItem>
               </Col>
               <Col span={12}>
-                <FormItem label="状态" {...formItemLayout} >
+                <FormItem label="状态" hasFeedback {...formItemLayout} >
                   {getFieldDecorator('status', {
-                    initialValue: currentItem.status,
-                    rules: [{
-                      message: '请输入编码',
-                    }],
-                  })(<Input />)}
+                    valuePropName: 'checked',
+                    initialValue: currentItem.status !== '1',
+                  })(<Switch checkedChildren="启用" unCheckedChildren="停用"/>)}
                 </FormItem>
               </Col>
             </Row>
             {/*第四行*/}
-            <FormItem label="备注" {...formRowOne} >
+            <FormItem label="备注" hasFeedback {...formRowOne} >
               {getFieldDecorator('remark', {
-                initialValue: currentItem.description,
+                initialValue: currentItem.remark,
                 rules: [{
                   message: '请输入备注',
                 }],
