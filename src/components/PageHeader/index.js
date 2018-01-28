@@ -42,10 +42,13 @@ export default class PageHeader extends PureComponent {
   // Generated according to props
   conversionFromProps= () => {
     const {
-      breadcrumbList, linkElement = 'a',
+      breadcrumbList, breadcrumbSeparator, linkElement = 'a',
     } = this.props;
     return (
-      <Breadcrumb className={styles.breadcrumb}>
+      <Breadcrumb
+        className={styles.breadcrumb}
+        separator={breadcrumbSeparator}
+      >
         {breadcrumbList.map(item => (
           <Breadcrumb.Item key={item.title}>
             {item.href ? (createElement(linkElement, {
@@ -57,7 +60,7 @@ export default class PageHeader extends PureComponent {
     );
   }
   conversionFromLocation = (routerLocation, breadcrumbNameMap) => {
-    const { linkElement = 'a' } = this.props;
+    const { breadcrumbSeparator, linkElement = 'a' } = this.props;
     // Convert the path to an array
     const pathSnippets = routerLocation.pathname.split('/').filter(i => i);
     // Loop data mosaic routing
@@ -83,7 +86,10 @@ export default class PageHeader extends PureComponent {
       </Breadcrumb.Item>
     );
     return (
-      <Breadcrumb className={styles.breadcrumb}>
+      <Breadcrumb
+        className={styles.breadcrumb}
+        separator={breadcrumbSeparator}
+      >
         {extraBreadcrumbItems}
       </Breadcrumb>
     );
@@ -93,7 +99,7 @@ export default class PageHeader extends PureComponent {
    * Convert parameters into breadcrumbs
    */
   conversionBreadcrumbList = () => {
-    const { breadcrumbList } = this.props;
+    const { breadcrumbList, breadcrumbSeparator } = this.props;
     const { routes, params, routerLocation, breadcrumbNameMap } = this.getBreadcrumbProps();
     if (breadcrumbList && breadcrumbList.length) {
       return this.conversionFromProps();
@@ -107,6 +113,7 @@ export default class PageHeader extends PureComponent {
           routes={routes.filter(route => route.breadcrumbName)}
           params={params}
           itemRender={this.itemRender}
+          separator={breadcrumbSeparator}
         />
       );
     }
