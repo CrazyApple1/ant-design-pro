@@ -22,10 +22,9 @@ const RouterWrapper = ({ history, app }) => {
     <LocaleProvider locale={zhCN}>
       <ConnectedRouter history={history}>
         <Switch>
-          <AuthorizedRoute
+          <Route
             path="/user"
             render={props => <UserLayout {...props} routerData = { getUserNav(app)}/>}
-            redirectPath="/"
           />
           <AuthorizedRoute
             path="/"

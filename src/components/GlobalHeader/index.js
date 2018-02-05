@@ -9,8 +9,6 @@ import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 
-const { Header } = Layout;
-
 export default class GlobalHeader extends PureComponent {
   state = {
     fullscreen: 0,
@@ -87,7 +85,7 @@ export default class GlobalHeader extends PureComponent {
     );
     const noticeData = this.getNoticeData();
     return (
-      <Header className={styles.header}>
+      <div className={styles.header}>
         {isMobile && (
           [
             (
@@ -115,6 +113,15 @@ export default class GlobalHeader extends PureComponent {
               console.log('enter', value); // eslint-disable-line
             }}
           />
+          <Tooltip title="使用文档">
+            <Link
+              target="_blank"
+              to="http://pro.ant.design/docs/getting-started"
+              className={styles.action}
+            >
+              <Icon type="question-circle-o" />
+            </Link>
+          </Tooltip>
           <NoticeIcon
             className={styles.action}
             count={currentUser.notifyCount}
@@ -160,7 +167,7 @@ export default class GlobalHeader extends PureComponent {
             </Dropdown>
           ) : <Spin size="small" style={{ marginLeft: 8 }} />}
         </div>
-      </Header>
+      </div>
     );
   }
 }

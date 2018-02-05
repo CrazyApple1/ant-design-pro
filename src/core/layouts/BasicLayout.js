@@ -17,13 +17,13 @@ import Authorized from '../utils/Authorized';
 import logo from '../../assets/logo.svg';
 import pkaq from '../../assets/pkaq.svg';
 
+const { Content, Header, Footer } = Layout;
 import themeBlue from '../../core/style/theme-blue.less';
 import themeGreen from '../../core/style/theme-green.less';
 import App from "../../components/App/App";
 import * as AppInfo from '../../core/common/AppInfo';
 
 let lastHref;
-const { Content } = Layout;
 const { AuthorizedRoute } = Authorized;
 
 const query = {
@@ -204,18 +204,20 @@ export default class BasicLayout extends React.Component {
           onCollapse={this.handleMenuCollapse}
         />
         <Layout>
-          <GlobalHeader
-            logo={logo}
-            currentUser={currentUser}
-            fetchingNotices={fetchingNotices}
-            notices={notices}
-            collapsed={collapsed}
-            isMobile={this.state.isMobile}
-            onNoticeClear={this.handleNoticeClear}
-            onCollapse={this.handleMenuCollapse}
-            onMenuClick={this.handleMenuClick}
-            onNoticeVisibleChange={this.handleNoticeVisibleChange}
-          />
+          <Header style={{ padding: 0 }}>
+            <GlobalHeader
+              logo={logo}
+              currentUser={currentUser}
+              fetchingNotices={fetchingNotices}
+              notices={notices}
+              collapsed={collapsed}
+              isMobile={this.state.isMobile}
+              onNoticeClear={this.handleNoticeClear}
+              onCollapse={this.handleMenuCollapse}
+              onMenuClick={this.handleMenuClick}
+              onNoticeVisibleChange={this.handleNoticeVisibleChange}
+            />
+          </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
             <Switch>
               {
@@ -247,29 +249,31 @@ export default class BasicLayout extends React.Component {
               </Popover>
             </BackTop>
           </Content>
-          <GlobalFooter
-            links={[{
-              key: 'Pro 首页',
-              title: 'Pro 首页',
-              href: 'http://pro.ant.design',
-              blankTarget: true,
-            }, {
-              key: 'github',
-              title: <Icon type="github" />,
-              href: 'https://github.com/ant-design/ant-design-pro',
-              blankTarget: true,
-            }, {
-              key: 'Ant Design',
-              title: 'Ant Design',
-              href: 'http://ant.design',
-              blankTarget: true,
-            }]}
-            copyright={
-              <div>
-                Copyright <Icon type="copyright" /> {AppInfo.copyright}
-              </div>
-            }
-          />
+          <Footer style={{ padding: 0 }}>
+            <GlobalFooter
+              links={[{
+                key: 'Pro 首页',
+                title: 'Pro 首页',
+                href: 'http://pro.ant.design',
+                blankTarget: true,
+              }, {
+                key: 'github',
+                title: <Icon type="github" />,
+                href: 'https://github.com/ant-design/ant-design-pro',
+                blankTarget: true,
+              }, {
+                key: 'Ant Design',
+                title: 'Ant Design',
+                href: 'http://ant.design',
+                blankTarget: true,
+              }]}
+              copyright={
+                <div>
+                  Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
+                </div>
+              }
+            />
+          </Footer>
         </Layout>
       </Layout>
     );
