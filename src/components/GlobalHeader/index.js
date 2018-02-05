@@ -4,7 +4,6 @@ import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
 import screenfull from 'screenfull';
-import { Link } from 'dva/router';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
@@ -114,13 +113,13 @@ export default class GlobalHeader extends PureComponent {
             }}
           />
           <Tooltip title="使用文档">
-            <Link
+            <a
               target="_blank"
-              to="http://pro.ant.design/docs/getting-started"
+              href="http://pro.ant.design/docs/getting-started"
               className={styles.action}
             >
               <Icon type="question-circle-o" />
-            </Link>
+            </a >
           </Tooltip>
           <NoticeIcon
             className={styles.action}
