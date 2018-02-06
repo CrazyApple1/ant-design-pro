@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message, notification } from 'antd';
+import { Table, Icon, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message, notification } from 'antd';
 import { hasChildren } from '../../../../core/utils/DataHelper';
 import styles from './Orginization.less';
 import tableStyle from '../../../../core/style/Table.less';
@@ -25,6 +25,7 @@ export default class OrgList extends Component {
       type: 'orginization/addOrg',
       payload: {
         modalType: 'create',
+        currentItem: {},
         parent: id,
       }
     });
@@ -130,6 +131,14 @@ export default class OrgList extends Component {
     }, {
       title: '排序',
       dataIndex: 'order',
+      render: (text) => (
+        <div> {text}
+          <Divider type="vertical" />
+          <Icon type="up-square-o" style={{color:"#098FFF",cursor:"pointer"}}/>
+          ·
+          <Icon type="down-square-o" style={{color:"#098FFF",cursor:"pointer"}}/>
+        </div>
+      )
     }, {
       title: '状态',
       dataIndex: 'status',

@@ -5,27 +5,27 @@ const data = [{
   id: '1',
   name: '根节点 Ora',
   isLeaf: false,
-  parent: '',
+  parentName: '',
   order: 1,
   status: '1',
   children: [{
     id: '11',
     name: '二级节点 - A',
     isLeaf: true,
-    parent: '根节点',
+    parentName: '根节点',
     order: 1,
     status: '1',
   }, {
     id: '12',
     name: '二级节点 - B',
-    parent: '根节点',
+    parentName: '根节点',
     isLeaf: false,
     order: 2,
     status: '1',
     children: [{
       id: '121',
       name: '三级节点 - A',
-      parent: '二级节点 - B',
+      parentName: '二级节点 - B',
       order: 1,
       status: '1',
       isLeaf: true,
@@ -33,7 +33,7 @@ const data = [{
   }, {
     id: '13',
     name: '二级节点 - C.',
-    parent: '根节点',
+    parentName: '根节点',
     isLeaf: false,
     order: 2,
     status: '1',
@@ -58,14 +58,14 @@ const data = [{
   id: '2',
   name: '根节点 - ROOT',
   isLeaf: true,
-  parent: '',
+  parentName: '',
   order: 1,
   status: '0',
 }, {
   id: '3',
   name: '根节点 - 333',
   isLeaf: true,
-  parent: '',
+  parentName: '',
   order: 1,
   status: '0',
 }];
@@ -75,7 +75,7 @@ const orgOne =  {
     code: 'dpart-send',
     name: '二级节点 - A',
     isLeaf: true,
-    parent: '根节点',
+    parentName: '根节点',
     order: 1,
     remark: 'description',
     status: '1',
@@ -155,10 +155,37 @@ export function changeStatus(req, res, b){
   } else {
     return dataSource;
   }
+}
+// 添加模块
+export function saveOrg(req, res, b){
+  const body = (b && b.body) || req.body;
+  const { id, name, parent, order, code, remark, status } = body;
+  let itemId = id? Math.random()+0.14:id;
+  let itemStatus = status? '1': '0';
+  const item = {
+    id: itemId,
+    code: code,
+    name: name,
+    isLeaf: true,
+    parentId: parent,
+    parentName: '根节点',
+    order: order,
+    remark: remark,
+    status: itemStatus,
+  };
 
+  let dataSource = [...data];
+  dataSource.push(item);
+
+  if (res && res.json) {
+    res.json(dataSource);
+  } else {
+    return dataSource;
+  }
 }
 export default {
   getOrg,
+  saveOrg,
   changeStatus,
   listOrg,
   deleteOrg

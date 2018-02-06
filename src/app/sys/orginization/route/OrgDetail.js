@@ -10,8 +10,8 @@ export default class OrgDetail extends Component{
   componentDidMount() {
     console.info("load org detail");
   }
+  // 关闭窗口
   handleCloseForm = () => {
-    // 关闭窗口
     this.props.dispatch({
       type: 'orginization/updateState',
       payload: {
@@ -36,6 +36,26 @@ export default class OrgDetail extends Component{
       return <Node title={item.name} key={item.id} value={item.id}/>;
     });
   };
+  // 保存
+  handleSaveClick = () => {
+    const {dispatch, currentItem} = this.props;
+    const {getFieldsValue, validateFields} = this.props.form;
+    validateFields((errors) => {
+      if (errors) {
+        return;
+      }
+      const data = {
+        ...getFieldsValue(),
+        id: currentItem.id,
+      };
+      console.info(data);
+      dispatch({
+        type: 'orginization/saveOrg',
+        payload: data,
+      });
+    });
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { modalType, currentItem, data } = this.props;
@@ -54,6 +74,7 @@ export default class OrgDetail extends Component{
       <Modal onCancel={() => this.handleCloseForm()}
              visible={modalType !== ''}
              width={600}
+             onOk={() => this.handleSaveClick()}
              title={ modalType === 'create'? '新增组织信息': modalType === 'edit'? '编辑组织信息':'查看组织信息'}>
         <Form>
         {/*第一行*/}

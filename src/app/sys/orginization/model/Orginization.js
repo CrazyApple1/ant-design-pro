@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
-import { getOrg, listOrg, deleteOrg, changeStatus } from '../service/Orginization';
+import { message } from 'antd';
+import { saveOrg, getOrg, listOrg, deleteOrg, changeStatus } from '../service/Orginization';
 
 export default modelExtend(model, {
   namespace: 'orginization',
@@ -30,14 +31,9 @@ export default modelExtend(model, {
         }
       })
     },
-    // 编辑
+    // 编辑按钮
     *editOrg({ payload }, { call, put }){
-      console.info("editOrg");
       const response = yield call(getOrg, payload);
-
-      console.info("response");
-      console.info(response);
-
       yield put({
         type: 'updateState',
         payload: {
@@ -45,6 +41,20 @@ export default modelExtend(model, {
           currentItem: response[0]
         }
       })
+    },
+    // 保存一条组织信息
+    *saveOrg({ payload }, { call, put }){
+      const response = yield call(saveOrg, payload);
+      //  关闭窗口 - 提示成功 - 加载数据
+      yield put({
+        type: 'updateState',
+        payload: {
+          modalType: '',
+          currentItem: {},
+          data: response
+        },
+      });
+      message.success('提交成功');
     },
     // 更改可用状态
     *changeStatus({ payload }, { call, put }) {

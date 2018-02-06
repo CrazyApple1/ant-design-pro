@@ -11,9 +11,6 @@ const Area = Input.TextArea;
 }))
 @Form.create()
 export default class DictDetail extends Component {
-  componentDidMount() {
-    console.info("dict detail")
-  }
 
   // 新增
   handleAddClick = (operateType) => {
@@ -52,7 +49,6 @@ export default class DictDetail extends Component {
   };
   // 保存
   handleSaveClick = () => {
-    console.info('save');
     const {dispatch, currentItem} = this.props;
     const {getFieldsValue, validateFields} = this.props.form;
     validateFields((errors) => {
@@ -174,15 +170,15 @@ export default class DictDetail extends Component {
             })(<Input/>)}
           </FormItem>
           {/* TODO 这里对齐有问题 */}
-          <Row gutter={24}>
-            <Col span={8}>
+          <Row>
+            <Col span={12}>
               <FormItem label="排序" labelCol={{span: 6}}>
                 {getFieldDecorator('order', {
                   initialValue: currentItem.order,
                 })(<InputNumber/>)}
               </FormItem>
             </Col>
-            <Col span={8}>
+            <Col span={12}>
               <FormItem label="是否可用" labelCol={{span: 6}}>
                 {getFieldDecorator('enable', {
                   valuePropName: 'checked',

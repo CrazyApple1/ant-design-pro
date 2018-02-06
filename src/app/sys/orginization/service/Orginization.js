@@ -8,6 +8,25 @@ export async function getOrg(params) {
 export async function listOrg(params) {
   return request(`/orginization/listOrg?${stringify(params)}`);
 }
+// 添加一个组织
+export async function saveOrg(params) {
+  return request('/orginization/saveOrg', {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+//调整排序
+export async function updateOrgOrder(params) {
+  return request('/orginization/updateOrgOrder', {
+    method: 'POST',
+    body: {
+      ...params,
+    }
+  });
+}
+// 更改启用状态
 export async function changeStatus(params) {
   return request('/orginization/changeStatus', {
     method: 'POST',
