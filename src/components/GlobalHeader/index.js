@@ -116,6 +116,7 @@ export default class GlobalHeader extends PureComponent {
             <a
               target="_blank"
               href="http://pro.ant.design/docs/getting-started"
+              rel="noopener noreferrer"
               className={styles.action}
             >
               <Icon type="question-circle-o" />

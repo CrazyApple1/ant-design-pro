@@ -203,7 +203,7 @@ export default class BasicLayout extends React.Component {
           isMobile={this.state.isMobile}
           onCollapse={this.handleMenuCollapse}
         />
-        <Layout>
+        <Layout style={{ height: '100vh', overflow: 'scroll' }} >
           <Header style={{ padding: 0 }}>
             <GlobalHeader
               logo={logo}
@@ -269,7 +269,7 @@ export default class BasicLayout extends React.Component {
               }]}
               copyright={
                 <div>
-                  Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
+                  Copyright <Icon type="copyright" /> { AppInfo.copyRight }
                 </div>
               }
             />
