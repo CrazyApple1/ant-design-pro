@@ -19,6 +19,7 @@ export default class Orginization extends Component {
       data,
     };
     const modalProps = {
+      data,
       dispatch,
       currentItem,
       modalType,

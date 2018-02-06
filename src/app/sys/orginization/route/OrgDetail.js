@@ -24,7 +24,7 @@ export default class OrgDetail extends Component{
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { modalType, currentItem } = this.props;
+    const { modalType, currentItem, data } = this.props;
     const cmView = modalType === 'view';
 
     const formItemLayout = {
@@ -89,9 +89,12 @@ export default class OrgDetail extends Component{
               })(
                 <TreeSelect
                   dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                  treeData={treeData}
+                  treeData={data}
                   showCheckedStrategy={TreeSelect.SHOW_ALL}
                   allowClear
+                  showSearch
+                  treeNodeFilterProp="id"
+                  treeNodeLabelProp="name"
                   placeholder="请选择上级节点（根节点留空）"
                   treeDefaultExpandAll
                   onChange={this.handleTreeSelect()}
