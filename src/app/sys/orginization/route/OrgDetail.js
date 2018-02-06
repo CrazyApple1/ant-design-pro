@@ -3,6 +3,7 @@ import { Row, Col, Form, Input, Modal, Switch, TreeSelect } from 'antd';
 
 const FormItem = Form.Item;
 const Area = Input.TextArea;
+const TreeNode = TreeSelect.TreeNode;
 
 @Form.create()
 export default class OrgDetail extends Component{
@@ -22,6 +23,19 @@ export default class OrgDetail extends Component{
   handleTreeSelect = () => {
 
   };
+  // 渲染树节点
+  renderTreeNodes = (data) => {
+    return data.map((item) => {
+      if (item.children) {
+        return (
+          <TreeNode title={item.name} key={item.id} value={item.id}>
+            {this.renderTreeNodes(item.children)}
+          </TreeNode>
+        );
+      }
+      return <Node title={item.name} key={item.id} value={item.id}/>;
+    });
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
     const { modalType, currentItem, data } = this.props;
@@ -36,24 +50,6 @@ export default class OrgDetail extends Component{
       wrapperCol: { span: 19 },
     };
 
-    const treeData = [{
-      label: 'Node1',
-      value: '0-0',
-      key: '0-0',
-      children: [{
-        label: 'Child Node1',
-        value: '0-0-1',
-        key: '0-0-1',
-      }, {
-        label: 'Child Node2',
-        value: '0-0-2',
-        key: '0-0-2',
-      }],
-    }, {
-      label: 'Node2',
-      value: '0-1',
-      key: '0-1',
-    }];
     return (
       <Modal onCancel={() => this.handleCloseForm()}
              visible={modalType !== ''}
@@ -89,7 +85,6 @@ export default class OrgDetail extends Component{
               })(
                 <TreeSelect
                   dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                  treeData={data}
                   showCheckedStrategy={TreeSelect.SHOW_ALL}
                   allowClear
                   showSearch
@@ -98,7 +93,9 @@ export default class OrgDetail extends Component{
                   placeholder="请选择上级节点（根节点留空）"
                   treeDefaultExpandAll
                   onChange={this.handleTreeSelect()}
-                />
+                >
+                  {this.renderTreeNodes(data)}
+                </TreeSelect>
               )}
             </FormItem>
             {/*第三行*/}
