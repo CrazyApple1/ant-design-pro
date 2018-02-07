@@ -141,12 +141,12 @@ export default class OrgList extends Component {
             <Divider type="vertical" />
             {
               0 !== size && index !== 0?
-              <Icon type="up-square-o" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+              <Icon type="up-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
             }
             {0 !== size && index !== 0 &&  index !== (size-1) ? "·" : ""}
             {
               0 !== size && index !== (size-1) ?
-                <Icon type="down-square-o" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+                <Icon type="down-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
             }
           </div>
         )
