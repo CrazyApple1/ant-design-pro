@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Icon, message, BackTop, Popover } from 'antd';
 import DocumentTitle from 'react-document-title';
@@ -268,9 +268,9 @@ export default class BasicLayout extends React.Component {
                 blankTarget: true,
               }]}
               copyright={
-                <div>
+                <Fragment>
                   Copyright <Icon type="copyright" /> { AppInfo.copyRight }
-                </div>
+                </Fragment>
               }
             />
           </Footer>
