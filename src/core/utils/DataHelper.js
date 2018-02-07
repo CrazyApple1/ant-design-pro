@@ -20,3 +20,25 @@ export function filterID(data, id, itemArray){
   })
 }
 
+/**
+ * 获得兄弟节点
+ * @param data
+ * @param targetPid
+ * @returns {Array}
+ */
+export function getNodeBorther(data, targetPid) {
+  let dude = [];
+  if('0' === targetPid || 0 === targetPid || '-' === targetPid){
+    dude = [ ...data ];
+  } else {
+    data.forEach(item => {
+      if (item.id === targetPid) {
+        dude = [...item.children];
+      } else if (item.children) {
+        getNodeBorther(item.children, targetPid);
+      }
+    });
+  }
+  return dude;
+}
+

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Icon, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message, notification } from 'antd';
-import { hasChildren } from '../../../../core/utils/DataHelper';
+import { hasChildren, getNodeBorther } from '../../../../core/utils/DataHelper';
 import styles from './Orginization.less';
 import tableStyle from '../../../../core/style/Table.less';
 import {connect} from "dva";
@@ -131,14 +131,26 @@ export default class OrgList extends Component {
     }, {
       title: '排序',
       dataIndex: 'order',
-      render: (text) => (
-        <div> {text}
-          <Divider type="vertical" />
-          <Icon type="up-square-o" style={{color:"#098FFF",cursor:"pointer"}}/>
-          ·
-          <Icon type="down-square-o" style={{color:"#098FFF",cursor:"pointer"}}/>
-        </div>
-      )
+      render: (text, record) => {
+        const brother = getNodeBorther(this.props.data, record.parentId);
+        const size = brother.length;
+        const index = brother.indexOf(record);
+        return (
+          <div>
+            {text}
+            <Divider type="vertical" />
+            {
+              0 !== size && index !== 0?
+              <Icon type="up-square-o" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+            }
+            {0 !== size && index !== 0 &&  index !== (size-1) ? "·" : ""}
+            {
+              0 !== size && index !== (size-1) ?
+                <Icon type="down-square-o" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+            }
+          </div>
+        )
+      }
     }, {
       title: '状态',
       dataIndex: 'status',

@@ -5,6 +5,7 @@ const data = [{
   id: '1',
   name: '根节点 Ora',
   isLeaf: false,
+  parentId: '0',
   parentName: '',
   order: 1,
   status: '1',
@@ -12,12 +13,14 @@ const data = [{
     id: '11',
     name: '二级节点 - A',
     isLeaf: true,
+    parentId: '1',
     parentName: '根节点',
     order: 1,
     status: '1',
   }, {
     id: '12',
     name: '二级节点 - B',
+    parentId: '1',
     parentName: '根节点',
     isLeaf: false,
     order: 2,
@@ -25,6 +28,7 @@ const data = [{
     children: [{
       id: '121',
       name: '三级节点 - A',
+      parentId: '12',
       parentName: '二级节点 - B',
       order: 1,
       status: '1',
@@ -33,6 +37,7 @@ const data = [{
   }, {
     id: '13',
     name: '二级节点 - C.',
+    parentId: '1',
     parentName: '根节点',
     isLeaf: false,
     order: 2,
@@ -40,12 +45,14 @@ const data = [{
     address: 'London No. 1 Lake Park',
     children: [{
       id: '131',
+      parentId: '13',
       name: '三级节点 - C',
       isLeaf: false,
       status: '0',
       address: 'London No. 2 Lake Park',
       children: [{
         id: '1311',
+        parentId: '131',
         isLeaf: true,
         status: '0',
         order: 1,
@@ -58,6 +65,7 @@ const data = [{
   id: '2',
   name: '根节点 - ROOT',
   isLeaf: true,
+  parentId: '0',
   parentName: '',
   order: 1,
   status: '0',
@@ -65,13 +73,14 @@ const data = [{
   id: '3',
   name: '根节点 - 333',
   isLeaf: true,
+  parentId: '0',
   parentName: '',
   order: 1,
   status: '0',
 }];
 
 const orgOne =  {
-    id: '11',
+    id: 'A11',
     code: 'dpart-send',
     name: '二级节点 - A',
     isLeaf: true,
