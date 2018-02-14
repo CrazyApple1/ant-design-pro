@@ -9,7 +9,7 @@ import { getNotices } from './mock/notices';
 import {  delay } from 'roadhog-api-doc';
 import { getModule, getUserMenu } from './mock/module';
 import { listRole, listModulebyRoleId, getDictItemByRoleId, listUserByRoleId } from './mock/role';
-import { saveOrg, getOrg, listOrg, deleteOrg, changeStatus } from './mock/orginization';
+import { saveOrg, getOrg, listOrg, deleteOrg, changeStatus } from './mock/organization';
 import { listDict, getDict, deleteDictItem, addDictItem } from './mock/dict';
 
 // 是否禁用代理
@@ -72,11 +72,11 @@ const proxy = {
   'GET /dict/listDict': listDict,
   'POST /dict/deleteDictItem': deleteDictItem,
   'POST /dict/addDictItem': addDictItem,
-  'POST /orginization/saveOrg': saveOrg,
-  'GET /orginization/getOrg': getOrg,
-  'GET /orginization/listOrg': listOrg,
-  'POST /orginization/deleteOrg': deleteOrg,
-  'POST /orginization/changeStatus': changeStatus,
+  'POST /organization/saveOrg': saveOrg,
+  'GET /organization/getOrg': getOrg,
+  'GET /organization/listOrg': listOrg,
+  'POST /organization/deleteOrg': deleteOrg,
+  'POST /organization/changeStatus': changeStatus,
   'GET /goods/list': getGoods,
   'POST /goods/list': {
     $params: {

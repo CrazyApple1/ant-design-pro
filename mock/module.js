@@ -44,7 +44,7 @@ const data = [{
       id: 21,
       icon: 'flag',
       name: '组织管理',
-      path: 'orginization',
+      path: 'organization',
       order: 1,
       url: '',
       status: '1',

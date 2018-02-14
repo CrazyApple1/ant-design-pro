@@ -1,10 +1,10 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
 import { message } from 'antd';
-import { saveOrg, getOrg, listOrg, deleteOrg, changeStatus } from '../service/Orginization';
+import { saveOrg, getOrg, listOrg, deleteOrg, changeStatus } from '../service/Organization';
 
 export default modelExtend(model, {
-  namespace: 'orginization',
+  namespace: 'organization',
   state: {
     currentItem: {},
     modalType: '',

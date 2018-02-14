@@ -5,13 +5,13 @@ import OrgDetail from './OrgDetail';
 import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
 
 @connect(state => ({
-  orginization: state.orginization,
+  organization: state.organization,
 }))
-export default class Orginization extends Component {
+export default class organization extends Component {
   // 组件加载完成后加载数据
   render() {
     const { dispatch } = this.props;
-    const { data, selectedRowKeys, modalType, currentItem  } = this.props.orginization;
+    const { data, selectedRowKeys, modalType, currentItem  } = this.props.organization;
 
     const tableProps = {
       dispatch,

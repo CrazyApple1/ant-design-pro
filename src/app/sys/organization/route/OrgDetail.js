@@ -13,7 +13,7 @@ export default class OrgDetail extends Component{
   // 关闭窗口
   handleCloseForm = () => {
     this.props.dispatch({
-      type: 'orginization/updateState',
+      type: 'organization/updateState',
       payload: {
         modalType: ''
       }
@@ -50,7 +50,7 @@ export default class OrgDetail extends Component{
       };
       console.info(data);
       dispatch({
-        type: 'orginization/saveOrg',
+        type: 'organization/saveOrg',
         payload: data,
       });
     });

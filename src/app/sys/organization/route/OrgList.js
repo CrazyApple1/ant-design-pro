@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Icon, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message, notification } from 'antd';
 import { hasChildren, getNodeBorther } from '../../../../core/utils/DataHelper';
-import styles from './Orginization.less';
+import styles from './Organization.less';
 import tableStyle from '../../../../core/style/Table.less';
 import {connect} from "dva";
 
@@ -9,20 +9,20 @@ const { Search } = { ...Input };
 
 // 部门管理列表
 @connect(({ loading }) => ({
-  loading: loading.models.orginization,
+  loading: loading.models.organization,
 }))
 export default class OrgList extends Component {
   // 加载组织列表
   componentDidMount() {
     this.props.dispatch({
-      type: 'orginization/listOrg',
+      type: 'organization/listOrg',
     });
   }
   // 新增
   handleAdd = (record) => {
     const id = typeof record === Object? record.parent: '';
     this.props.dispatch({
-      type: 'orginization/addOrg',
+      type: 'organization/addOrg',
       payload: {
         modalType: 'create',
         currentItem: {},
@@ -38,7 +38,7 @@ export default class OrgList extends Component {
       return;
     }
     this.props.dispatch({
-      type: 'orginization/editOrg',
+      type: 'organization/editOrg',
       payload: {
         modalType: 'edit',
         id: record.id,
@@ -53,7 +53,7 @@ export default class OrgList extends Component {
       return;
     }
     this.props.dispatch({
-      type: 'orginization/changeStatus',
+      type: 'organization/changeStatus',
       payload: {
         id: record.id,
         status: status,
@@ -69,7 +69,7 @@ export default class OrgList extends Component {
       message.error(`错误： [${record.name}] 存在子节点,无法删除.`);
     } else {
       dispatch({
-        type: 'orginization/deleteOrg',
+        type: 'organization/deleteOrg',
         payload: {
           ids: [record.id]
         },callback: () => {
@@ -88,7 +88,7 @@ export default class OrgList extends Component {
       message.error(`错误： [${blockItem}] 存在子节点,无法删除.`);
     } else {
       dispatch({
-        type: 'orginization/deleteOrg',
+        type: 'organization/deleteOrg',
         payload: {
           ids: selectedRowKeys
         }
@@ -102,7 +102,7 @@ export default class OrgList extends Component {
   handleSearch = (val) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'orginization/listOrg',
+      type: 'organization/listOrg',
       payload: {
         name: val
       }
@@ -111,7 +111,7 @@ export default class OrgList extends Component {
   // 行选
   handleSelectRows = (rows) => {
     this.props.dispatch({
-      type: 'orginization/updateState',
+      type: 'organization/updateState',
       payload: { selectedRowKeys: rows },
     });
   };
