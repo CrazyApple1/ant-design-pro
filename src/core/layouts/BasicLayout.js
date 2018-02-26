@@ -26,25 +26,6 @@ import * as AppInfo from '../../core/common/AppInfo';
 let lastHref;
 const { AuthorizedRoute } = Authorized;
 
-/**
- * 根据菜单取得重定向地址.
- */
-const redirectData = [];
-const getRedirect = (item) => {
-  if (item && item.children) {
-    if (item.children[0] && item.children[0].path) {
-      redirectData.push({
-        from: `${item.path}`,
-        to: `${item.children[0].path}`,
-      });
-      item.children.forEach((children) => {
-        getRedirect(children);
-      });
-    }
-  }
-};
-getMenuData().forEach(getRedirect);
-
 const query = {
   'screen-xs': {
     maxWidth: 575,
@@ -196,8 +177,8 @@ export default class BasicLayout extends React.Component {
       if (item && item.children) {
         if (item.children[0] && item.children[0].path) {
           redirectData.push({
-            from: `/${item.path}`,
-            to: `/${item.children[0].path}`,
+            from: `${item.path}`,
+            to: `${item.children[0].path}`,
           });
           item.children.forEach((children) => {
             getRedirect(children);
