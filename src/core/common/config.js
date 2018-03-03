@@ -104,16 +104,16 @@ export default function getConfig(app) {
       },
       '/form/step-form/info': {
 	      name: '分步表单（填写转账信息）',
-	      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step1')),
+	      component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step1')),
    	  },
 	  '/form/step-form/confirm': {
 	     name: '分步表单（确认转账信息）',
-	     component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
+	     component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step2')),
 	  },
 	  '/form/step-form/result': {
 	     name: '分步表单（完成）',
-	     component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
-	  },   
+	     component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step3')),
+	  },
       '/form/advanced-form': {
         component: dynamicWrapper(app, ['models/form'], () => import('../../routes/Forms/AdvancedForm')),
       },
