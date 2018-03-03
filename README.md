@@ -2,6 +2,11 @@
 
 ## 交流QQ群： 83864896
 
+运行前需要安装 
+- git
+- nodejs
+- yarn
+
 ---
 
 TIP: 代码里针对namespace和model文件名进行了忽略大小写的处理
