@@ -26,7 +26,7 @@ export default class organization extends Component {
     };
 
     return (
-      <PageHeaderLayout title="模块信息管理">
+      <PageHeaderLayout title="组织信息管理">
         <OrgList {...tableProps} />
         {'' !== modalType && <OrgDetail {...modalProps} />}
       </PageHeaderLayout>
