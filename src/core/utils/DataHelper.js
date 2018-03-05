@@ -1,7 +1,6 @@
 // 判断是否存在子节点
-
 export function hasChildren(data, idArray) {
-  let itemArray = new Array();
+  let itemArray = [];
   idArray.forEach( id => {
     filterID(data, id, itemArray);
   });

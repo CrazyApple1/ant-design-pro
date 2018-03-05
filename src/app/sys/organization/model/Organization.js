@@ -68,6 +68,8 @@ export default modelExtend(model, {
     *deleteOrg({ payload, callback }, { call, put }) {
       // 查询数据
       const response = yield call(deleteOrg, payload);
+      console.info(response);
+      // 从当前数据对象中找到响应ID记录删除值
       yield put({
         type: 'updateState',
         payload: {
