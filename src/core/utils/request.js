@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../../index';
 
@@ -24,14 +24,12 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  const errortext = codeMessage[response.status] || response.statusText;
-  notification.error({
-    message: `请求错误 ${response.status}: ${response.url}`,
-    description: errortext,
-  });
+
+  const errortext = response.statusText? response.statusText: codeMessage[response.status];
   const error = new Error(errortext);
+  error.url = response.url;
   error.name = response.status;
-  error.response = response;
+  error.response = response.json();
   throw error;
 }
 
@@ -68,14 +66,24 @@ export default function request(url, options) {
   return fetch(url, newOptions)
     .then(checkStatus)
     .then((response) => {
-      if (newOptions.method === 'DELETE' || response.status === 204) {
-        return response.text();
-      }
-      return response.json();
+      // 再判断一下服务器返回的操作状态
+        if (newOptions.method === 'DELETE' || response.status === 204) {
+          return response.text();
+        }
+        return response.json();
     })
     .catch((e) => {
       const { dispatch } = store;
       const status = e.name;
+      const url = e.url;
+
+      Promise.resolve(e.response).then( (r) => {
+        notification.error({
+          message: `请求错误 : ${url}`,
+          description: `${r.statusText}`,
+        });
+      });
+      
       if (status === 401) {
         dispatch({
           type: 'login/logout',
