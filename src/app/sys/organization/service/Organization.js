@@ -40,7 +40,7 @@ export async function deleteOrg(params) {
   return request('/organization/del', {
     method: 'POST',
     body: {
-     ids: [],
+      ...params
     },
   });
 }
