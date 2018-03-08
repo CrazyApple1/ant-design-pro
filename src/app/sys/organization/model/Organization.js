@@ -18,7 +18,7 @@ export default modelExtend(model, {
       const response = yield call(listOrg, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
     },
     // 新增/新增子节点
@@ -74,7 +74,7 @@ export default modelExtend(model, {
         yield put({
           type: 'updateState',
           payload: {
-            data: response,
+            data: response.data,
             selectedRowKeys: []
           },
         });

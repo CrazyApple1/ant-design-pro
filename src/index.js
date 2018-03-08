@@ -13,6 +13,9 @@ import './index.less';
 // 1. Initialize
 const app = dva({
   history: createHistory(),
+  onError: (e,m) => {
+    console.info("error");
+  }
 });
 
 // 2. Plugins

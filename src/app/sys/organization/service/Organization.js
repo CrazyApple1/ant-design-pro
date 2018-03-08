@@ -1,12 +1,13 @@
 import request from '../../../../core/utils/request';
 import {stringify} from "qs";
+import {getNoUndefinedString} from '../../../../core/utils/utils';
 //获取组织信息
 export async function getOrg(params) {
-  return request(`http://localhost:80/organization/get?${stringify(params)}`);
+  return request(`/organization/get?${stringify(params)}`);
 }
 // 加载组织列表
 export async function listOrg(params) {
-  return request(`/organization/list?${stringify(params)}`);
+  return request(`/organization/list/${getNoUndefinedString(params)}`);
 }
 // 添加一个组织
 export async function saveOrg(params) {

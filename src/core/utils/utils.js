@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+// 获取非Undefined字符串
+export function getNoUndefinedString(obj){
+  return obj?obj:'';
+}
 export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
 }

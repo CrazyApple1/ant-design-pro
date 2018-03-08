@@ -64,8 +64,11 @@ export default class OrgList extends Component {
 
   // 删除
   handleDelete = (record) => {
-    const { dispatch } = this.props;
-    if (!record.isLeaf) {
+    const { dispatch, selectedRowKeys, data } = this.props;
+    // 存在子节点的不允许删除
+    const blockItem = hasChildren(data, selectedRowKeys);
+
+    if (!!record.isLeaf || blockItem) {
       message.error(`错误： [${record.name}] 存在子节点,无法删除.`);
     } else {
       dispatch({
@@ -103,9 +106,7 @@ export default class OrgList extends Component {
     const { dispatch } = this.props;
     dispatch({
       type: 'organization/listOrg',
-      payload: {
-        name: val
-      }
+      payload: val
     });
   };
   // 行选
