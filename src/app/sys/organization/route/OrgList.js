@@ -121,8 +121,8 @@ export default class OrgList extends Component {
   render(){
     const { data, selectedRowKeys, loading } =  this.props ;
 
-    const statusMap = ['error', 'success'];
-    const status = ['已停用', '正常'];
+    const statusMap = {'0000':'error','0001':'success'};
+    const status = {'0000':'已停用','0001':'正常'};
 
     const column = [{
       title: '单位/部门名称',
@@ -132,9 +132,9 @@ export default class OrgList extends Component {
       dataIndex: 'parent',
     }, {
       title: '排序',
-      dataIndex: 'order',
+      dataIndex: 'orders',
       render: (text, record) => {
-        const brother = getNodeBorther(this.props.data, record.parentId);
+        const brother = getNodeBorther(this.props.data, record.parentid);
         const size = brother.length;
         const index = brother.indexOf(record);
         return (
@@ -157,6 +157,7 @@ export default class OrgList extends Component {
       title: '状态',
       dataIndex: 'status',
       render: (text) => {
+        console.info(text);
         return <Badge status={statusMap[text]} text={status[text]} />;
       },
     }, {
