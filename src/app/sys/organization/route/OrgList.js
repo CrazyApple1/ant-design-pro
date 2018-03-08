@@ -129,7 +129,7 @@ export default class OrgList extends Component {
       dataIndex: 'name',
     }, {
       title: '所属单位/部门',
-      dataIndex: 'parent',
+      dataIndex: 'parentname',
     }, {
       title: '排序',
       dataIndex: 'orders',
