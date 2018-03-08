@@ -57,6 +57,7 @@ export default class OrgList extends Component {
       payload: {
         id: record.id,
         status: status,
+        record
       }
     })
 
@@ -172,9 +173,9 @@ export default class OrgList extends Component {
       width: 150,
       render: (text, record) => (
         <div>
-          {record.status === '0' ?
-            <a onClick={e => this.handleEnable(record, e, '1')}>启用</a>
-            : <a onClick={e => this.handleEnable(record, e, '0')}>停用</a>}
+          {record.status === '0000' ?
+            <a onClick={e => this.handleEnable(record, e, '0001')}>启用</a>
+            : <a onClick={e => this.handleEnable(record, e, '0000')}>停用</a>}
           <Divider type="vertical" />
           <a onClick={e => this.handleDelete(record, e)}>删除</a>
         </div>
@@ -233,7 +234,7 @@ export default class OrgList extends Component {
           dataSource={data}
           loading={loading}
           rowClassName={(record) => {
-            return record.status === '0' ? styles.disabled : styles.enabled;
+            return record.status === '0000' ? styles.disabled : styles.enabled;
           }}
           rowKey={record => record.id}
           rowSelection={rowSelection}

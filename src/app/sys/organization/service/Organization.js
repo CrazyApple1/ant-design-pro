@@ -9,9 +9,9 @@ export async function getOrg(params) {
 export async function listOrg(params) {
   return request(`/organization/list/${getNoUndefinedString(params)}`);
 }
-// 添加一个组织
-export async function saveOrg(params) {
-  return request('/organization/saveOrg', {
+// 编辑组织信息
+export async function editOrg(params) {
+  return request('/organization/edit', {
     method: 'POST',
     body: {
       ...params,
@@ -25,15 +25,6 @@ export async function updateOrgOrder(params) {
     body: {
       ...params,
     }
-  });
-}
-// 更改启用状态
-export async function changeStatus(params) {
-  return request('/organization/changeStatus', {
-    method: 'POST',
-    body: {
-      ...params,
-    },
   });
 }
 // 根据ID删除组织

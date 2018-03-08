@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { model } from '../../../../core/common/BaseModel';
 import { message } from 'antd';
-import { saveOrg, getOrg, listOrg, deleteOrg, changeStatus } from '../service/Organization';
+import { editOrg, getOrg, listOrg, deleteOrg } from '../service/Organization';
 
 export default modelExtend(model, {
   namespace: 'organization',
@@ -16,10 +16,12 @@ export default modelExtend(model, {
     *listOrg({ payload }, { call, put }) {
       // 查询数据
       const response = yield call(listOrg, payload);
-      yield put({
-        type: 'save',
-        payload: response.data,
-      });
+      if(response && response.data){
+        yield put({
+          type: 'save',
+          payload: response.data,
+        });
+      }
     },
     // 新增/新增子节点
     *addOrg({ payload }, { call, put }) {
@@ -34,13 +36,15 @@ export default modelExtend(model, {
     // 编辑按钮
     *editOrg({ payload }, { call, put }){
       const response = yield call(getOrg, payload);
-      yield put({
-        type: 'updateState',
-        payload: {
-          modalType: 'edit',
-          currentItem: response[0]
-        }
-      })
+      if(response && response.data){
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: 'edit',
+            currentItem: response.data
+          }
+        })
+      }
     },
     // 保存一条组织信息
     *saveOrg({ payload }, { call, put }){
@@ -58,11 +62,14 @@ export default modelExtend(model, {
     },
     // 更改可用状态
     *changeStatus({ payload }, { call, put }) {
-      const response = yield call(changeStatus, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
+      const response = yield call(editOrg, payload);
+      if(response) {
+        payload.record.status = payload.status;
+        yield put({
+          type: 'updateState',
+          currentItem: payload.record
+        });
+      }
     },
     // 删除数据
     *deleteOrg({ payload, callback }, { call, put }) {
