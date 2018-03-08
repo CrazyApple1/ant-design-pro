@@ -45,7 +45,6 @@ export default class OrgList extends Component {
       }
     });
   };
-
   // 启用/停用
   handleEnable = (record, e, status) => {
     if(!record.id){
@@ -60,9 +59,7 @@ export default class OrgList extends Component {
         record
       }
     })
-
   };
-
   // 删除
   handleDelete = (record) => {
     const { dispatch, selectedRowKeys, data } = this.props;
@@ -82,7 +79,6 @@ export default class OrgList extends Component {
       })
     }
   };
-
   // 批量删除
   handleBatchDelete = () => {
     const { dispatch, selectedRowKeys, data } = this.props;
@@ -100,8 +96,6 @@ export default class OrgList extends Component {
     }
     // end if/else
   };
-
-
   // 搜索
   handleSearch = (val) => {
     const { dispatch } = this.props;
@@ -157,7 +151,6 @@ export default class OrgList extends Component {
       title: '状态',
       dataIndex: 'status',
       render: (text) => {
-        console.info(text);
         return <Badge status={statusMap[text]} text={status[text]} />;
       },
     }, {

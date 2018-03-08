@@ -123,7 +123,7 @@ export default class OrgDetail extends Component{
             <Row>
               <Col span={12}>
                 <FormItem label="排序" hasFeedback {...formItemLayout} >
-                  {getFieldDecorator('order', {
+                  {getFieldDecorator('orders', {
                     initialValue: currentItem.order,
                     rules: [{
                       message: '请输入编码',

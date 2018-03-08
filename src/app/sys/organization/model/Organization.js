@@ -48,17 +48,28 @@ export default modelExtend(model, {
     },
     // 保存一条组织信息
     *saveOrg({ payload }, { call, put }){
-      const response = yield call(saveOrg, payload);
-      //  关闭窗口 - 提示成功 - 加载数据
-      yield put({
-        type: 'updateState',
-        payload: {
-          modalType: '',
-          currentItem: {},
-          data: response
-        },
-      });
-      message.success('提交成功');
+      const response = yield call(editOrg, payload);
+      if(response && response.data){
+        //  关闭窗口 - 提示成功 - 加载数据
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: '',
+            currentItem: {},
+            data: response.data
+          },
+        });
+        message.success('操作成功');
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: '',
+            currentItem: {},
+          },
+        });
+        message.success('操作失败');
+      }
     },
     // 更改可用状态
     *changeStatus({ payload }, { call, put }) {
