@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { model } from '../../../../core/common/BaseModel';
+import { model } from 'core/common/BaseModel';
 import { message } from 'antd';
 import { editOrg, getOrg, listOrg, deleteOrg } from '../service/Organization';
 

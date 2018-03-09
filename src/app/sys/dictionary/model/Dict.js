@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { model } from '../../../../core/common/BaseModel';
+import { model } from 'core/common/BaseModel';
 import { list, getById, deleteById, add } from '../service/DictService';
 import {message} from "antd/lib/index";
 

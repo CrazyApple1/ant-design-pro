@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Card } from 'antd';
 import { connect } from "dva";
-import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
+import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 
 import RoleGrid from './RoleGrid';
 import RoleModule from './RoleModule';

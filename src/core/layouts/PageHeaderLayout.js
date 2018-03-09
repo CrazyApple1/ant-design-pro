@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'dva/router';
-import PageHeader from '../../components/PageHeader/index';
+import PageHeader from 'components/PageHeader/index';
 import styles from './PageHeaderLayout.less';
 
 export default ({ children, wrapperClassName, top, ...restProps }) => (

@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { model } from '../../../../core/common/BaseModel';
+import { model } from 'core/common/BaseModel';
 import { list, listModulebyRoleId, getDictItemByRoleId, listUserByRoleId } from '../service/RoleService';
 // 角色授权管理model
 export default modelExtend(model, {

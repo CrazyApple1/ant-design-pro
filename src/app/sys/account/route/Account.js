@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import AccountList from './List';
 import Detail from './Detail';
-import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
+import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 
 import styles from './Account.less';
 

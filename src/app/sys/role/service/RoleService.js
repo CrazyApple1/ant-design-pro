@@ -1,5 +1,5 @@
 import { stringify } from 'qs';
-import request from '../../../../core/utils/request';
+import request from 'core/utils/request';
 
 // 查询权限列表
 export async function list(params) {

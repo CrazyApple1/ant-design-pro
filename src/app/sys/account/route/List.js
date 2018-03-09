@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Table, Alert, Divider } from 'antd';
 import styles from './List.less';
-import { getValue } from '../../../../core/utils/utils';
+import { getValue } from 'core/utils/utils';
 
 class List extends PureComponent {
   // 清除选择

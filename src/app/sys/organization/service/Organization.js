@@ -1,5 +1,5 @@
-import request from '../../../../core/utils/request';
-import {getNoUndefinedString} from '../../../../core/utils/utils';
+import request from 'core/utils/request';
+import {getNoUndefinedString} from 'core/utils/utils';
 //获取组织信息
 export async function getOrg(params) {
   return request(`/organization/get/${getNoUndefinedString(params.id)}`);

@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { queryGoods, removeGoods, addGoods } from '../service/AccountService';
-import { pageModel } from '../../../../core/common/BaseModel';
+import { pageModel } from 'core/common/BaseModel';
 
 export default modelExtend(pageModel, {
   namespace: 'account',

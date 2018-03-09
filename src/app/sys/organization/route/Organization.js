@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import OrgList from './OrgList';
 import OrgDetail from './OrgDetail';
-import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
+import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 
 @connect(state => ({
   organization: state.organization,

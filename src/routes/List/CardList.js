@@ -4,7 +4,7 @@ import { Card, Button, Icon, List } from 'antd';
 
 
 import PageHeaderLayout from '../../core/layouts/PageHeaderLayout';
-import Ellipsis from '../../components/Ellipsis';
+import Ellipsis from 'components/Ellipsis';
 
 import styles from './CardList.less';
 

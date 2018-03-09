@@ -4,7 +4,7 @@ import { Row, Col, Card } from 'antd';
 import DictGrid from './DictGrid';
 import DictDetail from './DictDetail';
 
-import PageHeaderLayout from '../../../../core/layouts/PageHeaderLayout';
+import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 
 @connect(state => ({
   dict: state.dict,

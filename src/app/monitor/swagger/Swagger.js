@@ -1,6 +1,6 @@
 import React from 'react';
-import ExtPage from '../../../components/ExtPage'
-import PageHeaderLayout from '../../../core/layouts/PageHeaderLayout';
+import ExtPage from 'components/ExtPage'
+import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 
 const Swagger = () => {
   return (
