@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Table, Icon, Alert, Popconfirm, Divider, Badge, Button, Card, Input, Row, Col, message, notification } from 'antd';
-import { hasChildren, getNodeBorther } from '../../../../core/utils/DataHelper';
+import { hasChildren, getNodeBorther } from 'core/utils/DataHelper';
 import styles from './Organization.less';
-import tableStyle from '../../../../core/style/Table.less';
+import tableStyle from 'core/style/Table.less';
 import {connect} from "dva";
 
 const { Search } = { ...Input };
