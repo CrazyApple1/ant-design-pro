@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Input, Modal, Switch, TreeSelect } from 'antd';
+import { Row, Col, Form, Input, InputNumber, Modal, Switch, TreeSelect } from 'antd';
 
 const FormItem = Form.Item;
 const Area = Input.TextArea;
@@ -19,7 +19,7 @@ export default class OrgDetail extends Component{
       }
     })
   };
-
+  // 树选择后
   handleTreeSelect = () => {
 
   };
@@ -28,12 +28,12 @@ export default class OrgDetail extends Component{
     return data.map((item) => {
       if (item.children) {
         return (
-          <TreeNode title={item.name} key={item.id} value={item.id}>
+          <TreeNode title={item.name} pathname={item.pathname} key={item.id} value={item.id}>
             {this.renderTreeNodes(item.children)}
           </TreeNode>
         );
       }
-      return <Node title={item.name} key={item.id} value={item.id}/>;
+      return <Node title={item.name} pathname={item.pathname} key={item.id} value={item.id}/>;
     });
   };
   // 保存
@@ -48,6 +48,7 @@ export default class OrgDetail extends Component{
         ...getFieldsValue(),
         id: currentItem.id,
       };
+      data.status = data.status?'0001':'0000';
       console.info(data);
       dispatch({
         type: 'organization/saveOrg',
@@ -101,18 +102,17 @@ export default class OrgDetail extends Component{
             </Row>
             {/*第二行*/}
             <FormItem label="上级节点" hasFeedback {...formRowOne} >
-              {getFieldDecorator('parent', {
-                initialValue: currentItem.parent,
+              {getFieldDecorator('parentid', {
+                initialValue: currentItem.parentid,
               })(
                 <TreeSelect
                   dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                   showCheckedStrategy={TreeSelect.SHOW_ALL}
                   allowClear
                   showSearch
-                  treeNodeFilterProp="id"
-                  treeNodeLabelProp="name"
+                  treeNodeFilterProp="title"
+                  treeNodeLabelProp="pathname"
                   placeholder="请选择上级节点（根节点留空）"
-                  treeDefaultExpandAll
                   onChange={this.handleTreeSelect()}
                 >
                   {this.renderTreeNodes(data)}
@@ -124,18 +124,19 @@ export default class OrgDetail extends Component{
               <Col span={12}>
                 <FormItem label="排序" hasFeedback {...formItemLayout} >
                   {getFieldDecorator('orders', {
-                    initialValue: currentItem.order,
+                    initialValue: currentItem.orders,
                     rules: [{
+                      type: 'number',
                       message: '请输入编码',
                     }],
-                  })(<Input />)}
+                  })(<InputNumber  />)}
                 </FormItem>
               </Col>
               <Col span={12}>
                 <FormItem label="状态" hasFeedback {...formItemLayout} >
                   {getFieldDecorator('status', {
                     valuePropName: 'checked',
-                    initialValue: currentItem.status !== '1',
+                    initialValue: currentItem.status !== '0000',
                   })(<Switch checkedChildren="启用" unCheckedChildren="停用"/>)}
                 </FormItem>
               </Col>
