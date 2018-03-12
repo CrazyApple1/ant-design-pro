@@ -9,7 +9,7 @@ export default modelExtend(model, {
     currentItem: {},
     modalType: '',
     selectedRowKeys: [],
-    formValues: {},
+    formValues: {}
   },
   effects: {
     // 查询
@@ -18,13 +18,13 @@ export default modelExtend(model, {
       const response = yield call(listOrg, payload);
       if(response && response.data){
         yield put({
-          type: 'save',
+          type: 'saveData',
           payload: response.data,
         });
       }
     },
     // 新增/新增子节点
-    *addOrg({ payload }, { call, put }) {
+    *create({ payload }, { call, put }) {
       // 有id时为新增下级，加载父级节点相关信息
       yield put({
         type: 'updateState',
@@ -34,7 +34,7 @@ export default modelExtend(model, {
       })
     },
     // 编辑按钮
-    *editOrg({ payload }, { call, put }){
+    *edit({ payload }, { call, put }){
       const response = yield call(getOrg, payload);
       if(response && response.data){
         yield put({
@@ -47,7 +47,7 @@ export default modelExtend(model, {
       }
     },
     // 保存一条组织信息
-    *saveOrg({ payload }, { call, put }){
+    *save({ payload }, { call, put }){
       const response = yield call(editOrg, payload);
       if(response && response.data){
         //  关闭窗口 - 提示成功 - 加载数据
@@ -83,7 +83,7 @@ export default modelExtend(model, {
       }
     },
     // 删除数据
-    *deleteOrg({ payload, callback }, { call, put }) {
+    *delete({ payload, callback }, { call, put }) {
       // 查询数据
       const response = yield call(deleteOrg, payload);
       // 只有返回成功时才刷新

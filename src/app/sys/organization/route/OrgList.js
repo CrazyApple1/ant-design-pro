@@ -20,9 +20,9 @@ export default class OrgList extends Component {
   }
   // 新增
   handleAdd = (record) => {
-    const id = typeof record === Object? record.parent: '';
+    const id = Object === typeof record ? record.parent : '';
     this.props.dispatch({
-      type: 'organization/addOrg',
+      type: 'organization/create',
       payload: {
         modalType: 'create',
         currentItem: {},
@@ -30,7 +30,6 @@ export default class OrgList extends Component {
       }
     });
   };
-
   // 编辑
   handleEdit = (record) => {
     if(!record.id){
@@ -38,7 +37,7 @@ export default class OrgList extends Component {
       return;
     }
     this.props.dispatch({
-      type: 'organization/editOrg',
+      type: 'organization/edit',
       payload: {
         modalType: 'edit',
         id: record.id,
@@ -70,11 +69,11 @@ export default class OrgList extends Component {
       message.error(`错误： [${record.name}] 存在子节点,无法删除.`);
     } else {
       dispatch({
-        type: 'organization/deleteOrg',
+        type: 'organization/delete',
         payload: {
           ids: [record.id]
         },callback: () => {
-          message.success('操作成功.');
+          message.success('X操作成功.');
         },
       })
     }
@@ -88,7 +87,7 @@ export default class OrgList extends Component {
       message.error(`错误： [${blockItem}] 存在子节点,无法删除.`);
     } else {
       dispatch({
-        type: 'organization/deleteOrg',
+        type: 'organization/delete',
         payload: {
           ids: selectedRowKeys
         }
@@ -111,7 +110,6 @@ export default class OrgList extends Component {
       payload: { selectedRowKeys: rows },
     });
   };
-
   render(){
     const { data, selectedRowKeys, loading } =  this.props ;
 

@@ -22,7 +22,7 @@ export default modelExtend(model, {
     *listRole({ payload }, { call, put }) {
       const response = yield call(list, payload);
       yield put({
-        type: 'save',
+        type: 'saveData',
         payload: response,
       });
     },

@@ -13,7 +13,7 @@ export const model = {
         ...payload,
       };
     },
-    save(state, action) {
+    saveData(state, action) {
       return {
         ...state,
         data: action.payload,

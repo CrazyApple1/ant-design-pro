@@ -20,7 +20,7 @@ export default modelExtend(pageModel, {
       // 查询数据
       const response = yield call(queryGoods, payload);
       yield put({
-        type: 'save',
+        type: 'saveData',
         payload: response,
       });
       // 取消loading
@@ -32,7 +32,7 @@ export default modelExtend(pageModel, {
       const response = yield call(addGoods, payload);
 
       yield put({
-        type: 'save',
+        type: 'saveData',
         payload: response,
       });
 
@@ -47,7 +47,7 @@ export default modelExtend(pageModel, {
       const response = yield call(removeGoods, payload);
 
       yield put({
-        type: 'save',
+        type: 'saveData',
         payload: response,
       });
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Form, Input, InputNumber, Modal, Switch, TreeSelect } from 'antd';
+import {filterTreeByAttr} from "../../../../core/utils/DataHelper";
 
 const FormItem = Form.Item;
 const Area = Input.TextArea;
@@ -8,6 +9,7 @@ const TreeNode = TreeSelect.TreeNode;
 @Form.create()
 export default class OrgDetail extends Component{
   componentDidMount() {
+    // 加载树数据 - 只加载未停用状态的数据
     console.info("load org detail");
   }
   // 关闭窗口
@@ -19,25 +21,26 @@ export default class OrgDetail extends Component{
       }
     })
   };
-  // 树选择后
-  handleTreeSelect = () => {
-
-  };
-  // 渲染树节点
+  // 渲染树节点 - 剔除状态为停用状态(0000)得节点
   renderTreeNodes = (data) => {
     return data.map((item) => {
-      if (item.children) {
-        return (
-          <TreeNode title={item.name} pathname={item.pathname} key={item.id} value={item.id}>
-            {this.renderTreeNodes(item.children)}
-          </TreeNode>
-        );
+      if('0001' === item.status){
+        if (item.children) {
+          return (
+            <TreeNode title={item.name} pathname={item.pathname} key={item.id} value={item.id}>
+              {this.renderTreeNodes(item.children)}
+            </TreeNode>
+          );
+        }
+        return <Node title={item.name} pathname={item.pathname} key={item.id} value={item.id}/>;
+      } else {
+        return null;
       }
-      return <Node title={item.name} pathname={item.pathname} key={item.id} value={item.id}/>;
-    });
+    }).filter( item => item?item:false);
   };
   // 保存
   handleSaveClick = () => {
+    console.info('123--123--123');
     const {dispatch, currentItem} = this.props;
     const {getFieldsValue, validateFields} = this.props.form;
     validateFields((errors) => {
@@ -49,9 +52,8 @@ export default class OrgDetail extends Component{
         id: currentItem.id,
       };
       data.status = data.status?'0001':'0000';
-      console.info(data);
       dispatch({
-        type: 'organization/saveOrg',
+        type: 'organization/save',
         payload: data,
       });
     });
@@ -113,7 +115,6 @@ export default class OrgDetail extends Component{
                   treeNodeFilterProp="title"
                   treeNodeLabelProp="pathname"
                   placeholder="请选择上级节点（根节点留空）"
-                  onChange={this.handleTreeSelect()}
                 >
                   {this.renderTreeNodes(data)}
                 </TreeSelect>
