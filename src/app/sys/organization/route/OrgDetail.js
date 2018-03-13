@@ -40,7 +40,6 @@ export default class OrgDetail extends Component{
   };
   // 保存
   handleSaveClick = () => {
-    console.info('123--123--123');
     const {dispatch, currentItem} = this.props;
     const {getFieldsValue, validateFields} = this.props.form;
     validateFields((errors) => {
