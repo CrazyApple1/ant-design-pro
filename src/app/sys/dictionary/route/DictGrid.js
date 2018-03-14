@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Table, Input, Divider } from 'antd';
+import style from './Dict.less';
 // 字典管理左侧列表树
 const { Search } = { ...Input };
 export default class DictGrid extends PureComponent {
@@ -48,7 +49,7 @@ export default class DictGrid extends PureComponent {
         />
         <Divider dashed />
         <Table
-          style={{ height:640,borderColor:'#F6F5F4',borderWidth:3,borderStyle:'solid' }}
+          className={style.dict_left_tree}
           onRow={(record, index) => ({
                   onClick: () => this.handleOnRowClick(record, index),
                 })}

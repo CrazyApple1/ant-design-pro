@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider} from 'antd';
+import {Card, Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider, Icon} from 'antd';
 import style from './Dict.less';
 import {connect} from "dva";
 
@@ -127,8 +127,8 @@ export default class DictDetail extends Component {
     const titleContent = (
       <div>
         <Button.Group>
-          <Button onClick={() => this.handleAddClick('newDict')}>新增字典项</Button>
-          <Button onClick={() => this.handleAddClick('newItem')}>新增子条目</Button>
+          <Button onClick={() => this.handleAddClick('newDict')} type="primary"><Icon type="book" />新增字典项</Button>
+          <Button onClick={() => this.handleAddClick('newItem')} type="primary">新增子条目<Icon type="file-add" /></Button>
         </Button.Group>
         {operateType !== '' && <Divider type="vertical"/>}
         {operateType !== '' &&
