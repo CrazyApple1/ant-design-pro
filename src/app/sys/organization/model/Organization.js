@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
 import { message } from 'antd';
-import { editOrg, getOrg, listOrg, deleteOrg } from '../service/Organization';
+import { sortOrg, editOrg, getOrg, listOrg, deleteOrg } from '../service/Organization';
 
 export default modelExtend(model, {
   namespace: 'organization',
@@ -21,6 +21,16 @@ export default modelExtend(model, {
           type: 'saveData',
           payload: response.data,
         });
+      }
+    },
+    // 排序
+    *sortOrg({ payload }, { call, put}){
+      const response = yield call(sortOrg, payload);
+      if(response && response.data) {
+        yield put({
+          type: 'saveData',
+          payload: response.data,
+        })
       }
     },
     // 新增/新增子节点

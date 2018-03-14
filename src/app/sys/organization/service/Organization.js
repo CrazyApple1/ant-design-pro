@@ -18,12 +18,10 @@ export async function editOrg(params) {
   });
 }
 //调整排序
-export async function updateOrgOrder(params) {
-  return request('/organization/updateOrgOrder', {
+export async function sortOrg(params) {
+  return request('/organization/sort', {
     method: 'POST',
-    body: {
-      ...params,
-    }
+    body: params,
   });
 }
 // 根据ID删除组织

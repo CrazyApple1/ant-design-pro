@@ -110,6 +110,25 @@ export default class OrgList extends Component {
       payload: { selectedRowKeys: rows },
     });
   };
+
+  //排序操作
+  handleSort = (nodes, index, upOrDown) => {
+    let orginOrders = nodes[index].orders;
+    let targetID = 'up' === upOrDown ? nodes[index-1].id:  nodes[index+1].id;
+    let targetOrders = 'up' === upOrDown ? nodes[index-1].orders:  nodes[index+1].orders;
+    const switchObj = [{
+      id: nodes[index].id,
+      orders: targetOrders
+    },{
+      id: targetID,
+      orders: orginOrders
+    }];
+    this.props.dispatch({
+      type: 'organization/sortOrg',
+      payload: switchObj
+    })
+
+  };
   render(){
     const { data, selectedRowKeys, loading } =  this.props ;
 
@@ -135,12 +154,12 @@ export default class OrgList extends Component {
             <Divider type="vertical" />
             {
               0 !== size && index !== 0?
-              <Icon type="up-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+              <Icon onClick={(e) => this.handleSort(brother, index, 'up')}  type="up-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
             }
             {0 !== size && index !== 0 &&  index !== (size-1) ? "·" : ""}
             {
               0 !== size && index !== (size-1) ?
-                <Icon type="down-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+                <Icon onClick={(e) => this.handleSort(brother, index, 'down')} type="down-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
             }
           </div>
         )

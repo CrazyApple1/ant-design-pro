@@ -27,12 +27,12 @@ export default class OrgDetail extends Component{
       if('0001' === item.status){
         if (item.children) {
           return (
-            <TreeNode title={item.name} pathname={item.pathname} key={item.id} value={item.id}>
+            <TreeNode title={item.name} pathname={item.pathname? item.pathname : item.name} key={item.id} value={item.id}>
               {this.renderTreeNodes(item.children)}
             </TreeNode>
           );
         }
-        return <Node title={item.name} pathname={item.pathname} key={item.id} value={item.id}/>;
+        return <Node title={item.name} pathname={item.pathname? item.pathname : item.name} key={item.id} value={item.id}/>;
       } else {
         return null;
       }
@@ -57,7 +57,7 @@ export default class OrgDetail extends Component{
       });
     });
   };
-
+  // 渲染界面
   render() {
     const { getFieldDecorator } = this.props.form;
     const { modalType, currentItem, data } = this.props;
@@ -113,8 +113,9 @@ export default class OrgDetail extends Component{
                   showSearch
                   treeNodeFilterProp="title"
                   treeNodeLabelProp="pathname"
-                  placeholder="请选择上级节点（根节点留空）"
+                  placeholder="请选择上级节点"
                 >
+                  <Node title="根节点" pathname="根节点" key="0" value="0"/>
                   {this.renderTreeNodes(data)}
                 </TreeSelect>
               )}
