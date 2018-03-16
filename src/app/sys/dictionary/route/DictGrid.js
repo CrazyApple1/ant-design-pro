@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Table, Input, Divider } from 'antd';
+import { Card, Table, Icon, Input } from 'antd';
 import style from './Dict.less';
 // 字典管理左侧列表树
 const { Search } = { ...Input };
+const { Meta } = Card;
+
 export default class DictGrid extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
@@ -32,6 +34,13 @@ export default class DictGrid extends PureComponent {
     });
   };
 
+  renderButton = () => {
+    return <Search
+      placeholder="字典检索"
+      onSearch={value => this.handleOnSearch(value)}
+    />
+  };
+
   render() {
     const { loading, data } = this.props;
 
@@ -41,13 +50,14 @@ export default class DictGrid extends PureComponent {
       dataIndex: 'desc',
     }];
 
+
     return (
       <div>
-        <Search
-          placeholder="字典检索"
-          onSearch={value => this.handleOnSearch(value)}
-        />
-        <Divider dashed />
+        <Card
+          actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]} >
+          类型管理
+        </Card>
+
         <Table
           className={style.dict_left_tree}
           onRow={(record, index) => ({
