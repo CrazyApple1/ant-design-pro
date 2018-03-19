@@ -110,14 +110,9 @@ export default class DictDetail extends Component {
       ),
     }];
 
-    const formItemLayout = {
+    const formRowOne = {
       labelCol: { span: 8 },
       wrapperCol: { span: 14 },
-    };
-
-    const formRowOne = {
-      labelCol: { span: 4 },
-      wrapperCol: { span: 19 },
     };
 
     const extraContent = (
@@ -136,12 +131,11 @@ export default class DictDetail extends Component {
         }
       </div>
     );
-
     return (
       <div>
         <Card bordered={false} title={titleContent} bodyStyle={{padding: '0 32px 0 32px'}} extra={extraContent}/>
         <Divider dashed/>
-        <Form className={style.dict_form_item}>
+        <Form className={style.dict_form_item} layout="inline">
           <FormItem label="编码" {...formRowOne} >
             {
               getFieldDecorator('code', {
@@ -153,7 +147,7 @@ export default class DictDetail extends Component {
               })(<Input disabled={'' !== currentItem.code} />)
             }
           </FormItem>
-          <FormItem label="键名" {...formRowOne}>
+          <FormItem label="编码描述" {...formRowOne}>
             {getFieldDecorator('keyName', {
               initialValue: currentItem.keyName,
               rules: [{
@@ -162,7 +156,7 @@ export default class DictDetail extends Component {
               }],
             })(<Input/>)}
           </FormItem>
-          <FormItem label="键值" {...formRowOne}>
+          <FormItem label="归属分类" {...formRowOne}>
             {getFieldDecorator('keyValue', {
               initialValue: currentItem.keyValue,
               rules: [{
@@ -171,24 +165,7 @@ export default class DictDetail extends Component {
               }],
             })(<Input/>)}
           </FormItem>
-          <Row>
-            <Col span={12}>
-              <FormItem label="排序" {...formItemLayout}>
-                {getFieldDecorator('order', {
-                  initialValue: currentItem.order,
-                })(<InputNumber/>)}
-              </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem label="是否可用" {...formItemLayout}>
-                {getFieldDecorator('enable', {
-                  valuePropName: 'checked',
-                  initialValue: currentItem.enable ? currentItem.enable : true,
-                })(<Switch checkedChildren="启用" unCheckedChildren="停用"/>)}
-              </FormItem>
-            </Col>
-          </Row>
-          <FormItem label="描述" {...formRowOne}>
+          <FormItem label="备注" {...formRowOne}>
             {getFieldDecorator('desc', {
               initialValue: currentItem.desc,
             })(<Area/>)}
