@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env DISABLE_ESLINT=true roadhog dev",
     "start:no-proxy": "cross-env NO_PROXY=true DISABLE_ESLINT=true roadhog dev",
-    "build": "cross-env DISABLE_ESLINT=true roadhog build",
+    "build": "cross-env ESLINT=none roadhog build",
     "site": "roadhog-api-doc static && gh-pages -d dist",
     "analyze": "cross-env ANALYZE=true roadhog build",
     "lint:style": "stylelint \"src/**/*.less\" --syntax less",
@@ -56,7 +56,7 @@
   "devDependencies": {
     "babel-eslint": "^8.1.2",
     "babel-plugin-dva-hmr": "^0.4.1",
-    "babel-plugin-import": "^1.6.3",
+    "babel-plugin-import": "^1.6.7",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "cross-env": "^5.1.1",
     "cross-port-killer": "^1.0.1",
@@ -87,6 +87,9 @@
   "lint-staged": {
     "**/*.{js,jsx}": "lint-staged:js",
     "**/*.less": "stylelint --syntax less"
+  },
+  "engines": {
+    "node" : ">=8.0.0"
   },
   "browserslist": [
     "> 1%",
