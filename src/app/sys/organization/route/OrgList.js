@@ -4,6 +4,7 @@ import { hasChildren, getNodeBorther } from 'core/utils/DataHelper';
 import styles from './Organization.less';
 import tableStyle from 'core/style/Table.less';
 import {connect} from "dva";
+import BizIcon from 'components/BizIcon';
 
 const { Search } = { ...Input };
 
@@ -153,13 +154,14 @@ export default class OrgList extends Component {
             {text}
             <Divider type="vertical" />
             {
-              0 !== size && index !== 0?
-              <Icon onClick={(e) => this.handleSort(brother, index, 'up')}  type="up-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+            0 !== size && index !== (size-1) ?
+              <BizIcon onClick={(e) => this.handleSort(brother, index, 'down')} type="descending" style={{color: "#098FFF", cursor: "pointer"}}/> :
+              <BizIcon type="descending" />
             }
-            {0 !== size && index !== 0 &&  index !== (size-1) ? "·" : ""}
             {
-              0 !== size && index !== (size-1) ?
-                <Icon onClick={(e) => this.handleSort(brother, index, 'down')} type="down-square" style={{color: "#098FFF", cursor: "pointer"}}/> : ""
+              0 !== size && index !== 0?
+                <BizIcon onClick={(e) => this.handleSort(brother, index, 'up')} style={{color: "#098FFF", cursor: "pointer"}} type="ascending"/> :
+                <BizIcon type="ascending"/>
             }
           </div>
         )
