@@ -36,12 +36,12 @@ export default class Dict extends PureComponent {
         <Card>
           <Row gutter={24}>
             {/* 左侧列表 */}
-            <Col xl={6} lg={6} md={6} sm={6} xs={6}>
+            <Col xl={8} lg={8} md={8} sm={8} xs={8}>
               <DictGrid {...DictGridProps} />
             </Col>
             {/* 右-上-字典键值列表 */}
             {/* 右-下-字典键值新增/编辑区域 */}
-            <Col xl={18} lg={18} md={18} sm={18} xs={18}>
+            <Col xl={16} lg={16} md={16} sm={16} xs={16}>
               <DictDetail {...DictDetailProps} />
             </Col>
           </Row>

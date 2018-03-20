@@ -111,51 +111,22 @@ export default class DictDetail extends Component {
     }];
 
     const formRowOne = {
-      labelCol: { span: 8 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 5 },
+      wrapperCol: { span: 15 },
     };
 
     const extraContent = (
-      <Button type="danger" onClick={() => this.handleAddClick()}>删除字典项</Button>
+      <Button type="danger" onClick={() => this.handleAddClick()}>编辑</Button>
     );
 
-    const titleContent = (
-      <div>
-        <Button.Group>
-          <Button onClick={() => this.handleAddClick('newDict')} type="primary"><Icon type="book" />新增字典项</Button>
-          <Button onClick={() => this.handleAddClick('newItem')} type="primary">新增子条目<Icon type="file-add" /></Button>
-        </Button.Group>
-        {operateType !== '' && <Divider type="vertical"/>}
-        {operateType !== '' &&
-        <Button type="primary" onClick={() => this.handleSaveClick()}>保存</Button>
-        }
-      </div>
-    );
     return (
       <div>
-        <Card bordered={false} title={titleContent} bodyStyle={{padding: '0 32px 0 32px'}} extra={extraContent}/>
-        <Divider dashed/>
-        <Form className={style.dict_form_item} layout="inline">
-          <FormItem label="编码" {...formRowOne} >
-            {
-              getFieldDecorator('code', {
-                initialValue: currentItem.code,
-                rules: [{
-                  required: true,
-                  message: '请输入编码',
-                }],
-              })(<Input disabled={'' !== currentItem.code} />)
-            }
-          </FormItem>
-          <FormItem label="编码描述" {...formRowOne}>
-            {getFieldDecorator('keyName', {
-              initialValue: currentItem.keyName,
-              rules: [{
-                required: true,
-                message: '请输入字典项',
-              }],
-            })(<Input/>)}
-          </FormItem>
+        <Row className={style.dict_right_form_title}>
+          <Col span={20}>
+             <Card className={style.dict_right_form} bordered={false} bodyStyle={{padding: '0 0 0 0'}}  title= "分类信息" extra={extraContent}/>
+          </Col>
+        </Row>
+        <Form className={style.dict_form_item} layout="horizontal">
           <FormItem label="归属分类" {...formRowOne}>
             {getFieldDecorator('keyValue', {
               initialValue: currentItem.keyValue,
@@ -165,13 +136,46 @@ export default class DictDetail extends Component {
               }],
             })(<Input/>)}
           </FormItem>
+          {/*第二行*/}
+          <FormItem
+            label="编码" {...formRowOne}>
+            <Col span={10}>
+              <FormItem labelCol={{ span: 0 }} wrapperCol={{ span: 22}} >
+                {
+                  getFieldDecorator('code', {
+                    initialValue: currentItem.code,
+                    rules: [{
+                      required: true,
+                      message: '请输入编码',
+                    }],
+                  })(<Input disabled={'' !== currentItem.code} />)
+                }
+              </FormItem>
+            </Col>
+            <Col span={14}>
+              <FormItem label="描述" labelCol={{ span: 4 }} wrapperCol={{ span: 20}}>
+                {getFieldDecorator('keyName', {
+                  initialValue: currentItem.keyName,
+                  rules: [{
+                    required: true,
+                    message: '请输入字典项',
+                  }],
+                })(<Input/>)}
+              </FormItem>
+            </Col>
+          </FormItem>
           <FormItem label="备注" {...formRowOne}>
             {getFieldDecorator('desc', {
               initialValue: currentItem.desc,
             })(<Area/>)}
           </FormItem>
+
         </Form>
         <Divider/>
+        <Button.Group>
+          <Button onClick={() => this.handleAddClick('newDict')} type="primary"><Icon type="edit" />新增</Button>
+          <Button onClick={() => this.handleAddClick('newItem')} type="danger"><Icon type="delete" />删除</Button>
+        </Button.Group>
         <Table
           rowKey={record => record.id}
           columns={column}

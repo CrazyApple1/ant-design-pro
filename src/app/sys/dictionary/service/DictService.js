@@ -2,8 +2,8 @@ import { stringify } from 'qs';
 import request from 'core/utils/request';
 
 // 查询字典列表
-export async function list(params) {
-  return request(`/dict/listDict?${stringify(params)}`);
+export async function list() {
+  return request('/dict/list');
 }
 
 // 查询字典项

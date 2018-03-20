@@ -12,15 +12,13 @@ export default modelExtend(model, {
     formValues: {},
   },
   effects: {
-    // 搜索
-    *loadDict({ payload }, { call, put }) {
-      yield put({ type: 'showLoading' });
+    // 加载字典分类
+    *listDict({ payload }, { call, put }) {
       const response = yield call(list, payload);
       yield put({
         type: 'saveData',
-        payload: response,
+        payload: response.data,
       });
-      yield put({ type: 'hideLoading' });
     },
     // 加载字典项
     *getDict({ payload }, { call, put }) {

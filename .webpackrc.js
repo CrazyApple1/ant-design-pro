@@ -15,6 +15,10 @@ export default {
     "/organization": {
       "target": "http://localhost/",
       "changeOrigin": true
+    },
+    "/dict/list": {
+      "target": "http://localhost/",
+      "changeOrigin": true
     }
   },
   alias: {
