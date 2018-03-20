@@ -336,6 +336,7 @@ const data = [{
     path: 'register-result',
   }],
 }];
+
 // 获取模块数据
 export function getModule(req, res, u) {
   const dataSource = [...data];
@@ -346,6 +347,7 @@ export function getModule(req, res, u) {
     return dataSource;
   }
 }
+
 export function getUserMenu(req, res, u) {
   const dataSource = [...data];
 
@@ -358,7 +360,7 @@ export function getUserMenu(req, res, u) {
 
 function formatter(data, parentPath = '/', parentAuthority) {
   return data.map((item) => {
-    let { path } = item;
+    let {path} = item;
     if (!isUrl(path)) {
       path = parentPath + item.path;
     }

@@ -1,4 +1,4 @@
-import { stringify } from 'qs';
+import {stringify} from 'qs';
 import request from '../core/utils/request';
 
 export async function queryProjectNotice() {

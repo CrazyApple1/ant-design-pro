@@ -1,4 +1,4 @@
-import { getUrlParams } from './utils';
+import {getUrlParams} from './utils';
 // 树形数据
 const data = [{
   id: 1,
@@ -80,10 +80,11 @@ export function listDict(req, res, u) {
     return dataSource;
   }
 }
+
 // 获取字典项数据
 export function getDict(req, res, u) {
   const returnData = {
-    currentItem: { code: 'base_demo' },
+    currentItem: {code: 'base_demo'},
     dictData: itemData,
   };
   if (res && res.json) {
@@ -96,7 +97,7 @@ export function getDict(req, res, u) {
 // 删除字典项数据
 export function deleteDictItem(req, res, b) {
   const body = (b && b.body) || req.body;
-  const { id } = body;
+  const {id} = body;
 
   let dataSource = [...itemData];
   if (id) {
@@ -113,7 +114,7 @@ export function deleteDictItem(req, res, b) {
 // 添加字典项数据
 export function addDictItem(req, res, u, b) {
   const body = (b && b.body) || req.body;
-  const newRecord = { ...body };
+  const newRecord = {...body};
 
   let dataSource = [...itemData];
 

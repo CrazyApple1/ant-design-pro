@@ -13,7 +13,7 @@ import './index.less';
 // 1. Initialize
 const app = dva({
   history: createHistory(),
-  onError: (e,m) => {
+  onError: (e, m) => {
     console.info("error");
   }
 });

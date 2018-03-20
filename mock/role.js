@@ -30,18 +30,18 @@ const treeData = [{
     title: '系统管理',
     id: '0-0-0',
     children: [
-      { title: '字典管理', id: '0-0-0-0', isLeaf: true, checked: true },
-      { title: '菜单管理', id: '0-0-0-1', isLeaf: true, checked: true },
-      { title: '权限管理', id: '0-0-0-2', isLeaf: true, checked: true },
+      {title: '字典管理', id: '0-0-0-0', isLeaf: true, checked: true},
+      {title: '菜单管理', id: '0-0-0-1', isLeaf: true, checked: true},
+      {title: '权限管理', id: '0-0-0-2', isLeaf: true, checked: true},
     ],
   }, {
     title: '系统监控',
     id: '0-0-1',
     isLeaf: false,
     children: [
-      { title: 'Druid监控', id: '0-0-1-0', isLeaf: true, checked: true },
-      { title: 'Hystrix监控', id: '0-0-1-1', isLeaf: true },
-      { title: 'Swagger', id: '0-0-1-2', isLeaf: true, checked: true },
+      {title: 'Druid监控', id: '0-0-1-0', isLeaf: true, checked: true},
+      {title: 'Hystrix监控', id: '0-0-1-1', isLeaf: true},
+      {title: 'Swagger', id: '0-0-1-2', isLeaf: true, checked: true},
     ],
   }, {
     title: '商品管理',
@@ -53,9 +53,9 @@ const treeData = [{
   id: '0-1',
   isLeaf: false,
   children: [
-    { title: '订单管理', id: '0-1-0-0', isLeaf: true },
-    { title: '物流管理', id: '0-1-0-1', isLeaf: true },
-    { title: '对账管理', id: '0-1-0-2', isLeaf: true },
+    {title: '订单管理', id: '0-1-0-0', isLeaf: true},
+    {title: '物流管理', id: '0-1-0-1', isLeaf: true},
+    {title: '对账管理', id: '0-1-0-2', isLeaf: true},
   ],
 }, {
   title: '库存管理系统',
@@ -72,7 +72,7 @@ const configData = [{
   desc: '这是描述',
   checked: true,
   order: 1,
-},{
+}, {
   id: 2,
   code: 'sysconfig',
   keyName: '数据后台同步',
@@ -80,7 +80,7 @@ const configData = [{
   desc: '这是描述',
   checked: false,
   order: 2,
-},{
+}, {
   id: 3,
   code: 'sysconfig',
   keyName: 'Tab方式新增/编辑',
@@ -99,7 +99,7 @@ const userData = [{
   phone: '186****9871',
   department: '统合部',
   lock: false,
-},{
+}, {
   id: '1',
   username: '刘欢',
   loginName: 'liuhuan',
@@ -108,7 +108,7 @@ const userData = [{
   phone: '186****9871',
   department: '财务部',
   lock: false,
-},{
+}, {
   id: '2',
   username: '曹瑞',
   loginName: 'caorui',
@@ -117,7 +117,7 @@ const userData = [{
   phone: '186****9871',
   department: '销售部',
   lock: false,
-},{
+}, {
   id: '3',
   username: '孙策',
   loginName: 'sunce',
@@ -126,7 +126,7 @@ const userData = [{
   phone: '186****9871',
   department: '统合部',
   lock: true,
-},{
+}, {
   id: '4',
   username: '钟会',
   loginName: 'zhonghui',
@@ -136,6 +136,7 @@ const userData = [{
   department: '统合部',
   lock: false,
 }];
+
 // 获取权限列表数据
 export function listRole(req, res, u) {
   const dataSource = [...data];
@@ -145,10 +146,11 @@ export function listRole(req, res, u) {
     return dataSource;
   }
 }
+
 // 根据权限组获取绑定的模块数据
 export function listModulebyRoleId(req, res, u) {
   const dataSource = [...treeData];
-  const checked =  ['0-0-0-0','0-0-0-1','0-0-0-2','0-0-1-0','0-0-1-1','0-0-1-2','0-2'];
+  const checked = ['0-0-0-0', '0-0-0-1', '0-0-0-2', '0-0-1-0', '0-0-1-1', '0-0-1-2', '0-2'];
 
   const result = {
     data: dataSource,
@@ -170,9 +172,10 @@ export function getDictItemByRoleId(req, res, u) {
     return configData;
   }
 }
+
 // 获取用户列表
 export function listUserByRoleId(req, res, u) {
-  const checked = ['0','1','4'];
+  const checked = ['0', '1', '4'];
   const result = {
     data: userData,
     checked,
@@ -184,6 +187,7 @@ export function listUserByRoleId(req, res, u) {
     return result;
   }
 }
+
 export default {
   listRole,
   listModulebyRoleId,

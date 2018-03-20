@@ -1,4 +1,4 @@
-import { getUrlParams } from './utils';
+import {getUrlParams} from './utils';
 
 // mock tableListDataSource
 let tableListDataSource = [];
@@ -82,7 +82,7 @@ export function postGoods(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, key, name, category, code, unit, spec, qrcode, description } = body;
+  const {method, key, name, category, code, unit, spec, qrcode, description} = body;
 
   switch (method) {
     /* eslint no-case-declarations:0 */

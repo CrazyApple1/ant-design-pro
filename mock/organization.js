@@ -79,15 +79,15 @@ const data = [{
   status: '0',
 }];
 
-const orgOne =  {
-    id: 'A11',
-    code: 'dpart-send',
-    name: '二级节点 - A',
-    isLeaf: true,
-    parentName: '根节点',
-    order: 1,
-    remark: 'description',
-    status: '1',
+const orgOne = {
+  id: 'A11',
+  code: 'dpart-send',
+  name: '二级节点 - A',
+  isLeaf: true,
+  parentName: '根节点',
+  order: 1,
+  remark: 'description',
+  status: '1',
 };
 
 export function getOrg(req, res, u) {
@@ -104,7 +104,7 @@ export function getOrg(req, res, u) {
   }
   // 根据parentID获取
   if (params.parent) {
-    dataSource = orgOne ;
+    dataSource = orgOne;
   }
 
   if (res && res.json) {
@@ -113,6 +113,7 @@ export function getOrg(req, res, u) {
     return dataSource;
   }
 }
+
 // 获取模块数据
 export function listOrg(req, res, u) {
   let url = u;
@@ -132,12 +133,13 @@ export function listOrg(req, res, u) {
     return dataSource;
   }
 }
+
 // 删除组织
 export function deleteOrg(req, res, b) {
 
   const body = (b && b.body) || req.body;
-  const { ids } = body;
-  if(data.length>2){
+  const {ids} = body;
+  if (data.length > 2) {
     data.pop();
   }
   if (res && res.json) {
@@ -146,14 +148,15 @@ export function deleteOrg(req, res, b) {
     return data;
   }
 }
+
 // 修改状态
-export function changeStatus(req, res, b){
+export function changeStatus(req, res, b) {
   const body = (b && b.body) || req.body;
-  const { id, status } = body;
+  const {id, status} = body;
 
   let dataSource = [...data];
   dataSource = dataSource.map(data => {
-    if(id === data.id){
+    if (id === data.id) {
       data.status = status;
     }
     return data;
@@ -165,12 +168,13 @@ export function changeStatus(req, res, b){
     return dataSource;
   }
 }
+
 // 添加模块
-export function saveOrg(req, res, b){
+export function saveOrg(req, res, b) {
   const body = (b && b.body) || req.body;
-  const { id, name, parent, order, code, remark, status } = body;
-  let itemId = id? Math.random()+0.14:id;
-  let itemStatus = status? '1': '0';
+  const {id, name, parent, order, code, remark, status} = body;
+  let itemId = id ? Math.random() + 0.14 : id;
+  let itemStatus = status ? '1' : '0';
   const item = {
     id: itemId,
     code: code,
@@ -192,6 +196,7 @@ export function saveOrg(req, res, b){
     return dataSource;
   }
 }
+
 export default {
   getOrg,
   saveOrg,
