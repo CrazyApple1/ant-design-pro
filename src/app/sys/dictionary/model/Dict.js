@@ -1,14 +1,12 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
-import { listDict, getDict, deleteDict, add } from '../service/DictService';
-import {message} from "antd/lib/index";
+import { listDict, getDict, deleteDict, editDict, deleteDictItem } from '../service/DictService';
 
 export default modelExtend(model, {
   namespace: 'dict',
   state: {
     currentItem: {},
     operateType: '',
-    dictData: [],
     formValues: {},
   },
   effects: {
@@ -54,29 +52,22 @@ export default modelExtend(model, {
         });
       }
     },
-    // 新增字典项
-    *addDictItem({ payload }, { call, put }) {
-      const response = yield call(add, payload);
-      yield put({
-        type: 'updateState',
-        payload: {
-          currentItem: {},
-          dictData: response,
-        },
-      });
-    },
-    *submit() {
-      message.success('提交成功');
+    // 新增/编辑字典项
+    *editDict({ payload }, { call, put }) {
+      const response = yield call(editDict, payload);
+      if (response){
+        yield put({
+          type: 'updateState',
+          payload: {
+            operateType: ''
+          },
+        });
+      }
     },
     *deleteDictItem({ payload }, { call, put }) {
-      const response = yield call(deleteById, payload);
-      yield put({
-        type: 'updateState',
-        payload: {
-          dictData: response,
-          currentItem: {},
-        },
-      });
+      const response = yield call(deleteDictItem, payload);
+      const id = payload.id;
+      currentItem.items = currentItem.items.filter( i => id !== i.id);
     },
   },
 });

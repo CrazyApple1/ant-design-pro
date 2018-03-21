@@ -40,8 +40,10 @@ export default class DictGrid extends PureComponent {
       },
     })
   };
+
   render() {
-    const { loading,  data } = this.props;
+    const { loading, data } = this.props;
+
 
     const column = [{
       dataIndex: 'code',

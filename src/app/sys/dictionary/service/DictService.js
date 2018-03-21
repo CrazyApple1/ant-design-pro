@@ -4,20 +4,21 @@ import {getNoUndefinedString} from 'core/utils/utils';
 export async function listDict() {
   return request('/dict/list');
 }
-
-// 查询字典项
+// 查询字典分类
 export async function getDict(params) {
   return request(`/dict/get/${getNoUndefinedString(params.id)}`);
 }
-
-// 删除字典项
+// 删除字典分类
 export async function deleteDict(params) {
   return request(`/dict/del/${getNoUndefinedString(params.id)}`);
 }
-
-// 新增/编辑字典项
-export async function add(params) {
-  return request('/dict/addDictItem', {
+// 删除字典项
+export async function deleteDictItem(params) {
+  return request(`/dictItem/del/${getNoUndefinedString(params.id)}`);
+}
+// 新增/编辑字典分类
+export async function editDict(params) {
+  return request('/dict/edit', {
     method: 'POST',
     body: {
       ...params,

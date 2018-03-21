@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Card, Input, Badge, Button, Table, Form, Row, Col, Switch, InputNumber, Divider, Icon} from 'antd';
+import {Card, Input, Badge, Button, Table, Form, Row, Col, Select , Divider, Icon} from 'antd';
 import style from './Dict.less';
 import {connect} from "dva";
 
 const FormItem = Form.Item;
 const Area = Input.TextArea;
+const Option = Select.Option;
 
 @connect(({loading}) => ({
   submitting: loading.effects['dict/submit'],
@@ -40,7 +41,7 @@ export default class DictDetail extends Component {
     form.resetFields();
   };
   // 字典类目编辑
-  handleTypeEditClick = (operateType) => {
+  handleTypeEditClick = () => {
       this.props.dispatch({
         type: 'dict/updateState',
         payload: {
@@ -60,7 +61,7 @@ export default class DictDetail extends Component {
     });
   };
   // 保存
-  handleSaveClick = () => {
+  handleTypeSaveClick = () => {
     const {dispatch, currentItem} = this.props;
     const {getFieldsValue, validateFields} = this.props.form;
     validateFields((errors) => {
@@ -71,14 +72,12 @@ export default class DictDetail extends Component {
         ...getFieldsValue(),
         id: currentItem.id,
       };
-
       dispatch({
-        type: 'dict/addDictItem',
+        type: 'dict/editDict',
         payload: data,
       });
     });
   };
-
   // 删除事件
   handleDeleteClick = (record) => {
     const {dispatch} = this.props;
@@ -89,9 +88,10 @@ export default class DictDetail extends Component {
   };
 
   render() {
-    const { dictData, currentItem, operateType } = this.props;
+    const { currentItem, operateType, data } = this.props;
     const { getFieldDecorator } = this.props.form;
-
+    // 获得根分类
+    const options = !!data? data.map( i => <Option key={i.id}>{i.name}</Option>) : '';
     const column = [{
       title: 'Key',
       dataIndex: 'keyName',
@@ -100,7 +100,7 @@ export default class DictDetail extends Component {
       dataIndex: 'keyValue',
     }, {
       title: '排序',
-      dataIndex: 'order',
+      dataIndex: 'orders',
     }, {
       title: '是否可用',
       dataIndex: 'enable',
@@ -109,8 +109,8 @@ export default class DictDetail extends Component {
           <Badge status="success" text="正常"/> : <Badge status="error" text="停用"/>;
       },
     }, {
-      title: '描述',
-      dataIndex: 'desc',
+      title: '备注',
+      dataIndex: 'remark',
     }, {
       title: '操作',
       render: (text, record) => (
@@ -123,20 +123,21 @@ export default class DictDetail extends Component {
     }];
 
     const formRowOne = {
-      labelCol: { span: 5 },
-      wrapperCol: { span: 15 },
+      labelCol: { span: 4 },
+      wrapperCol: { span: 20 },
     };
-
     const extraContent = (
-      <Button type={'itemEdit' === operateType? 'primary':'danger'} onClick={() => this.handleTypeEditClick()}>{
-        'itemEdit' === operateType? '保存':'编辑'
-      }</Button>
+      !!currentItem.id?
+      'itemEdit' === operateType?
+        <Button type='primary' onClick={() => this.handleTypeSaveClick()}>保存</Button> :
+        <Button type='danger' onClick={() => this.handleTypeEditClick()}>编辑</Button>
+       : ''
     );
 
     return (
       <div>
         <Row className={style.dict_right_form_title}>
-          <Col span={20}>
+          <Col span={24}>
              <Card className={style.dict_right_form} bordered={false} bodyStyle={{padding: '0 0 0 0'}}  title= "分类信息" extra={extraContent}/>
           </Col>
         </Row>
@@ -148,7 +149,10 @@ export default class DictDetail extends Component {
                 required: true,
                 message: '请输入键值',
               }],
-            })(<Input disabled = {'itemEdit' !== operateType || currentItem.parentid === "0"} />)}
+            })(
+              <Select disabled = {'itemEdit' !== operateType || currentItem.parentid === "0"}>
+                {options}
+              </Select>)}
           </FormItem>
           {/*第二行*/}
           <FormItem
@@ -186,14 +190,11 @@ export default class DictDetail extends Component {
 
         </Form>
         <Divider/>
-        <Button.Group>
-          <Button onClick={() => this.handleAddClick('newDict')} type="primary"><Icon type="edit" />新增</Button>
-          <Button onClick={() => this.handleAddClick('newItem')} type="danger"><Icon type="delete" />删除</Button>
-        </Button.Group>
+        <Button onClick={() => this.handleAddClick('newDict')} type="primary"><Icon type="edit" />新增</Button>
         <Table
           rowKey={record => record.id}
           columns={column}
-          dataSource={dictData}
+          dataSource={currentItem.items}
           pagination={false}
           size="small"
         />
