@@ -11,13 +11,8 @@ export async function getDict(params) {
 }
 
 // 删除字典项
-export async function deleteById(params) {
-  return request('/dict/deleteDictItem', {
-    method: 'POST',
-    body: {
-      ...params,
-    },
-  });
+export async function deleteDict(params) {
+  return request(`/dict/del/${getNoUndefinedString(params.id)}`);
 }
 
 // 新增/编辑字典项

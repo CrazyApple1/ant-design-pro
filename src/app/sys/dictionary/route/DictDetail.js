@@ -148,7 +148,7 @@ export default class DictDetail extends Component {
                 required: true,
                 message: '请输入键值',
               }],
-            })(<Input disabled = {'itemEdit' !== operateType } />)}
+            })(<Input disabled = {'itemEdit' !== operateType || currentItem.parentid === "0"} />)}
           </FormItem>
           {/*第二行*/}
           <FormItem

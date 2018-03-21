@@ -23,16 +23,6 @@ export default modelExtend(model, {
         });
       }
     },
-    // 排序
-    *sortOrg({ payload }, { call, put}){
-      const response = yield call(sortOrg, payload);
-      if(response && response.data) {
-        yield put({
-          type: 'saveData',
-          payload: response.data,
-        })
-      }
-    },
     // 新增/新增子节点
     *create({ payload }, { call, put }) {
       // 有id时为新增下级，加载父级节点相关信息

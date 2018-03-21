@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Card, Table, Icon, Input, Tooltip } from 'antd';
+import { Card, Table, Icon, Popconfirm , Tooltip } from 'antd';
 import style from './Dict.less';
 import {connect} from "dva";
+import {message} from "antd/lib/index";
 // 字典管理左侧列表树
-const { Search } = { ...Input };
 
 @connect(({ loading }) => ({
   loading: loading.models.dict,
@@ -27,25 +27,21 @@ export default class DictGrid extends PureComponent {
       payload: { id: record.id },
     });
   };
-
-  // 搜索事件
-  handleOnSearch = (val) => {
+  // 字典删除
+  handleDelete = (record) => {
     const { dispatch } = this.props;
+    // 存在子节点的不允许删除
     dispatch({
-      type: 'dict/loadDict',
-      payload: { filter: val },
-    });
+      type: 'dict/deleteDict',
+      payload: {
+        id: record.id
+      },callback: () => {
+        message.success('操作成功.');
+      },
+    })
   };
-
-  renderButton = () => {
-    return <Search
-      placeholder="字典检索"
-      onSearch={value => this.handleOnSearch(value)}
-    />
-  };
-
   render() {
-    const { loading, data } = this.props;
+    const { loading,  data } = this.props;
 
     const column = [{
       dataIndex: 'code',
@@ -53,21 +49,22 @@ export default class DictGrid extends PureComponent {
     }, {
       dataIndex: 'name',
       title: '分类描述'
+    },{
+      title: '',
+      render: (text, record) => (
+        // 根分类不可进行删除
+        "0" === record.parentid?"":<a onClick={e => this.handleDelete(record)}><Icon type="delete" /></a>
+      ),
     }];
-
-    const rowSelection = {
-      type: 'checkbox'
-    };
 
     return (
       <div>
         <Table
           indentSize = {5}
-          rowSelection = {rowSelection}
           className={style.dict_left_tree}
           title = {() => {
-            return <Card actions={[<Tooltip placement="bottom" title="新建分类"><Icon type="plus" /></Tooltip>,
-                                  <Tooltip placement="bottom" title="删除分类"><Icon type="minus-circle-o" /></Tooltip>]} >
+            return <Card actions={[<Tooltip placement="bottom" title="新建分类"><Icon type="edit" /></Tooltip>,
+                                  <div> </div>]} >
                       类型选择
                    </Card>
           }}

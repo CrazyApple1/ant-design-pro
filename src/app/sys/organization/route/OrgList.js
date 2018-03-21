@@ -74,7 +74,7 @@ export default class OrgList extends Component {
         payload: {
           ids: [record.id]
         },callback: () => {
-          message.success('X操作成功.');
+          message.success('操作成功.');
         },
       })
     }

@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
-import { listDict, getDict, deleteById, add } from '../service/DictService';
+import { listDict, getDict, deleteDict, add } from '../service/DictService';
 import {message} from "antd/lib/index";
 
 export default modelExtend(model, {
@@ -30,6 +30,29 @@ export default modelExtend(model, {
           operateType: ''
         },
       });
+    },
+    *deleteDict({ payload, callback }, { call, put }) {
+      const response = yield call(deleteDict, payload);
+      // 只有返回成功时才刷新
+      if(response && response.success){
+        // 从当前数据对象中找到响应ID记录删除值
+        yield put({
+          type: 'updateState',
+          payload: {
+            data: response.data,
+          },
+        });
+        if(callback) {
+          callback();
+        }
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            loading: { global: false}
+          },
+        });
+      }
     },
     // 新增字典项
     *addDictItem({ payload }, { call, put }) {
