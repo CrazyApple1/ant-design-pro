@@ -39,12 +39,24 @@ export default class DictDetail extends Component {
     });
     form.resetFields();
   };
+  // 字典类目编辑
+  handleTypeEditClick = (operateType) => {
+      this.props.dispatch({
+        type: 'dict/updateState',
+        payload: {
+          operateType: 'itemEdit',
+        }
+      })
+  };
   // 编辑事件
   handleEditClick = (record) => {
     const {dispatch} = this.props;
     dispatch({
       type: 'dict/updateState',
-      payload: {currentItem: record},
+      payload: {
+        currentItem: record,
+        operateType: 'itemEdit'
+      },
     });
   };
   // 保存
@@ -116,7 +128,9 @@ export default class DictDetail extends Component {
     };
 
     const extraContent = (
-      <Button type="danger" onClick={() => this.handleAddClick()}>编辑</Button>
+      <Button type={'itemEdit' === operateType? 'primary':'danger'} onClick={() => this.handleTypeEditClick()}>{
+        'itemEdit' === operateType? '保存':'编辑'
+      }</Button>
     );
 
     return (
@@ -128,13 +142,13 @@ export default class DictDetail extends Component {
         </Row>
         <Form className={style.dict_form_item} layout="horizontal">
           <FormItem label="归属分类" {...formRowOne}>
-            {getFieldDecorator('keyValue', {
-              initialValue: currentItem.keyValue,
+            {getFieldDecorator('parentid', {
+              initialValue: currentItem.parentid,
               rules: [{
                 required: true,
                 message: '请输入键值',
               }],
-            })(<Input/>)}
+            })(<Input disabled = {'itemEdit' !== operateType } />)}
           </FormItem>
           {/*第二行*/}
           <FormItem
@@ -148,26 +162,26 @@ export default class DictDetail extends Component {
                       required: true,
                       message: '请输入编码',
                     }],
-                  })(<Input disabled={'' !== currentItem.code} />)
+                  })(<Input disabled = {'itemEdit' !== operateType } />)
                 }
               </FormItem>
             </Col>
             <Col span={14}>
               <FormItem label="描述" labelCol={{ span: 4 }} wrapperCol={{ span: 20}}>
-                {getFieldDecorator('keyName', {
-                  initialValue: currentItem.keyName,
+                {getFieldDecorator('name', {
+                  initialValue: currentItem.name,
                   rules: [{
                     required: true,
                     message: '请输入字典项',
                   }],
-                })(<Input/>)}
+                })(<Input disabled = {'itemEdit' !== operateType } />)}
               </FormItem>
             </Col>
           </FormItem>
           <FormItem label="备注" {...formRowOne}>
-            {getFieldDecorator('desc', {
-              initialValue: currentItem.desc,
-            })(<Area/>)}
+            {getFieldDecorator('remark', {
+              initialValue: currentItem.remark,
+            })(<Area disabled = {'itemEdit' !== operateType } />)}
           </FormItem>
 
         </Form>

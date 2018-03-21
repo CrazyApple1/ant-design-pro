@@ -1,14 +1,13 @@
-import { stringify } from 'qs';
 import request from 'core/utils/request';
-
+import {getNoUndefinedString} from 'core/utils/utils';
 // 查询字典列表
-export async function list() {
+export async function listDict() {
   return request('/dict/list');
 }
 
 // 查询字典项
-export async function getById(params) {
-  return request(`/dict/getDict?${stringify(params)}`);
+export async function getDict(params) {
+  return request(`/dict/get/${getNoUndefinedString(params.id)}`);
 }
 
 // 删除字典项

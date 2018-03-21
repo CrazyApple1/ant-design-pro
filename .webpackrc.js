@@ -16,7 +16,7 @@ export default {
       "target": "http://localhost/",
       "changeOrigin": true
     },
-    "/dict/list": {
+    "/dict": {
       "target": "http://localhost/",
       "changeOrigin": true
     }

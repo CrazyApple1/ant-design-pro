@@ -18,7 +18,7 @@ export default class DictGrid extends PureComponent {
   // 行点击事件
   handleOnRowClick = (record) => {
     // 根节点不加载
-    if (record.parent === 0) {
+    if (record.parentid === 0) {
       return;
     }
     const { dispatch } = this.props;

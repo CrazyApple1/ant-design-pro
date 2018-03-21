@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
-import { list, getById, deleteById, add } from '../service/DictService';
+import { listDict, getDict, deleteById, add } from '../service/DictService';
 import {message} from "antd/lib/index";
 
 export default modelExtend(model, {
@@ -14,7 +14,7 @@ export default modelExtend(model, {
   effects: {
     // 加载字典分类
     *listDict({ payload }, { call, put }) {
-      const response = yield call(list, payload);
+      const response = yield call(listDict, payload);
       yield put({
         type: 'saveData',
         payload: response.data,
@@ -22,10 +22,13 @@ export default modelExtend(model, {
     },
     // 加载字典项
     *getDict({ payload }, { call, put }) {
-      const response = yield call(getById, payload);
+      const response = yield call(getDict, payload);
       yield put({
         type: 'updateState',
-        payload: response,
+        payload: {
+          currentItem: response.data,
+          operateType: ''
+        },
       });
     },
     // 新增字典项
