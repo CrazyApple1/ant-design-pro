@@ -126,11 +126,12 @@ export default class DictDetail extends Component {
       labelCol: { span: 4 },
       wrapperCol: { span: 20 },
     };
+
     const extraContent = (
-      !!currentItem.id?
-      'itemEdit' === operateType?
-        <Button type='primary' onClick={() => this.handleTypeSaveClick()}>保存</Button> :
-        <Button type='danger' onClick={() => this.handleTypeEditClick()}>编辑</Button>
+      'itemCreate' === operateType || !!currentItem.id?
+      'itemView' === operateType?
+        <Button type='danger' onClick={() => this.handleTypeEditClick()}>编辑</Button> :
+        <Button type='primary' onClick={() => this.handleTypeSaveClick()}>保存</Button>
        : ''
     );
 
@@ -150,7 +151,7 @@ export default class DictDetail extends Component {
                 message: '请输入键值',
               }],
             })(
-              <Select disabled = {'itemEdit' !== operateType || currentItem.parentid === "0"}>
+              <Select disabled = {'' === operateType || currentItem.parentid === "0"}>
                 {options}
               </Select>)}
           </FormItem>
@@ -166,7 +167,7 @@ export default class DictDetail extends Component {
                       required: true,
                       message: '请输入编码',
                     }],
-                  })(<Input disabled = {'itemEdit' !== operateType } />)
+                  })(<Input disabled = {'' === operateType } />)
                 }
               </FormItem>
             </Col>
@@ -178,19 +179,20 @@ export default class DictDetail extends Component {
                     required: true,
                     message: '请输入字典项',
                   }],
-                })(<Input disabled = {'itemEdit' !== operateType } />)}
+                })(<Input disabled = {'' === operateType } />)}
               </FormItem>
             </Col>
           </FormItem>
           <FormItem label="备注" {...formRowOne}>
             {getFieldDecorator('remark', {
               initialValue: currentItem.remark,
-            })(<Area disabled = {'itemEdit' !== operateType } />)}
+            })(<Area disabled = {'' === operateType } />)}
           </FormItem>
 
         </Form>
         <Divider/>
-        <Button onClick={() => this.handleAddClick('newDict')} type="primary"><Icon type="edit" />新增</Button>
+        <Card className={style.dict_right_form} bordered={false} bodyStyle={{padding: '0 0 0 0'}}  title= "字典项"
+              extra={<Button onClick={() => this.handleAddClick('newDict')} type="primary"><Icon type="edit" />新增</Button>}/>
         <Table
           rowKey={record => record.id}
           columns={column}

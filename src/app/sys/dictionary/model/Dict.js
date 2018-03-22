@@ -25,7 +25,7 @@ export default modelExtend(model, {
         type: 'updateState',
         payload: {
           currentItem: response.data,
-          operateType: ''
+          operateType: payload.operateType
         },
       });
     },
@@ -55,19 +55,40 @@ export default modelExtend(model, {
     // 新增/编辑字典项
     *editDict({ payload }, { call, put }) {
       const response = yield call(editDict, payload);
-      if (response){
+      if (response && response.data){
         yield put({
           type: 'updateState',
           payload: {
+            data: response.data,
             operateType: ''
           },
         });
       }
     },
+    // 删除一条字典项
     *deleteDictItem({ payload }, { call, put }) {
       const response = yield call(deleteDictItem, payload);
       const id = payload.id;
-      currentItem.items = currentItem.items.filter( i => id !== i.id);
+      yield put({
+        type: 'removeDictItem',
+        payload: {
+          id: id
+        }
+      })
     },
   },
+  reducers: {
+    // 移除已删除得数据项
+    removeDictItem(state, action) {
+      let currentItem = state.currentItem;
+      const id = action.payload.id;
+      const items = currentItem.items.filter( i => id !== i.id);
+      return {
+        ...state,
+        currentItem: {
+          items: items
+        }
+      };
+    },
+  }
 });

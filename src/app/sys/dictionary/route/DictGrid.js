@@ -24,7 +24,10 @@ export default class DictGrid extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'dict/getDict',
-      payload: { id: record.id },
+      payload: {
+        id: record.id,
+        operateType: 'itemView',
+      },
     });
   };
   // 字典删除
@@ -40,10 +43,18 @@ export default class DictGrid extends PureComponent {
       },
     })
   };
-
+  // 新增
+  handleAddClick = () => {
+    this.props.dispatch({
+      type: 'dict/updateState',
+      payload: {
+        operateType: 'itemCreate',
+        currentItem: {}
+      },
+    });
+  };
   render() {
     const { loading, data } = this.props;
-
 
     const column = [{
       dataIndex: 'code',
@@ -65,7 +76,9 @@ export default class DictGrid extends PureComponent {
           indentSize = {5}
           className={style.dict_left_tree}
           title = {() => {
-            return <Card actions={[<Tooltip placement="bottom" title="新建分类"><Icon type="edit" /></Tooltip>,
+            return <Card actions={[<Tooltip placement="bottom" title="新建分类">
+                                      <Icon type="edit" onClick={ e => this.handleAddClick() } />
+                                  </Tooltip>,
                                   <div> </div>]} >
                       类型选择
                    </Card>
