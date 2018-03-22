@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
-import { listDict, getDict, deleteDict, editDict, deleteDictItem } from '../service/DictService';
+import { listDict, getDict, deleteDict, editDict, deleteDictItem, checkUnique } from '../service/DictService';
 
 export default modelExtend(model, {
   namespace: 'dict',
@@ -8,8 +8,19 @@ export default modelExtend(model, {
     currentItem: {},
     operateType: '',
     formValues: {},
+    codeUnique: true
   },
   effects: {
+    // 校验编码唯一性
+    *checkUnique({ payload }, { call, put }){
+      const response = yield call(checkUnique, payload);
+      yield put({
+        type: 'updateState',
+        payload: {
+          codeUnique: response.success
+        }
+      })
+    },
     // 加载字典分类
     *listDict({ payload }, { call, put }) {
       const response = yield call(listDict, payload);

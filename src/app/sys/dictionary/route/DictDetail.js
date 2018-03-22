@@ -12,7 +12,28 @@ const Option = Select.Option;
 }))
 @Form.create()
 export default class DictDetail extends Component {
+  // 校验编码唯一性
+  checkUnique = (rule, value, callback) => {
+    const { getFieldValue } = this.props.form;
+    const { currentItem, codeUnique } = this.props;
 
+    const code = getFieldValue("code");
+    const id = currentItem.id;
+
+    this.props.dispatch({
+      type: 'dict/checkUnique',
+      payload: {
+        id: id,
+        code: code
+      }
+    }).then(()=>{
+      if(!codeUnique){
+        return callback("已存在该编码");
+      } else {
+        return callback();
+      }
+    });
+  };
   // 新增
   handleAddClick = (operateType) => {
     const {dispatch, currentItem, form } = this.props;
@@ -25,17 +46,6 @@ export default class DictDetail extends Component {
       type: 'dict/updateState',
       payload: {
         operateType: operateType,
-        currentItem: {
-          keyName: '',
-          keyValue: '',
-          desc: '',
-          order: 1,
-          id: '',
-          code: code,
-          parent: currentItem.parent,
-          enable: true,
-        },
-        dictData: [],
       },
     });
     form.resetFields();
@@ -143,12 +153,12 @@ export default class DictDetail extends Component {
           </Col>
         </Row>
         <Form className={style.dict_form_item} layout="horizontal">
-          <FormItem label="归属分类" {...formRowOne}>
+          <FormItem label="归属分类" {...formRowOne} style={{ marginBottom: 6 }}>
             {getFieldDecorator('parentid', {
               initialValue: currentItem.parentid,
               rules: [{
                 required: true,
-                message: '请输入键值',
+                message: '请选择归属分类',
               }],
             })(
               <Select disabled = {'' === operateType || currentItem.parentid === "0"}>
@@ -156,22 +166,24 @@ export default class DictDetail extends Component {
               </Select>)}
           </FormItem>
           {/*第二行*/}
-          <FormItem
-            label="编码" {...formRowOne}>
-            <Col span={10}>
-              <FormItem labelCol={{ span: 0 }} wrapperCol={{ span: 22}} >
+          <FormItem  wrapperCol={{ span: 24}} style={{ marginBottom: 30 }}>
+            <Col span={12}>
+              <FormItem label="编码" labelCol={{ span: 8 }} wrapperCol={{ span: 16}} >
                 {
                   getFieldDecorator('code', {
                     initialValue: currentItem.code,
+                    validateTrigger: 'onBlur',
                     rules: [{
                       required: true,
-                      message: '请输入编码',
+                      message: '请输入编码'
+                    },{
+                      validator: this.checkUnique
                     }],
                   })(<Input disabled = {'' === operateType } />)
                 }
               </FormItem>
             </Col>
-            <Col span={14}>
+            <Col span={12}>
               <FormItem label="描述" labelCol={{ span: 4 }} wrapperCol={{ span: 20}}>
                 {getFieldDecorator('name', {
                   initialValue: currentItem.name,

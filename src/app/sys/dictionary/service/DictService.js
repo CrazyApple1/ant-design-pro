@@ -8,6 +8,15 @@ export async function listDict() {
 export async function getDict(params) {
   return request(`/dict/get/${getNoUndefinedString(params.id)}`);
 }
+// 校验编码唯一性
+export async function checkUnique(params){
+  return request('/dict/checkUnique', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
 // 删除字典分类
 export async function deleteDict(params) {
   return request(`/dict/del/${getNoUndefinedString(params.id)}`);
