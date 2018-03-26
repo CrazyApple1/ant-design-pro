@@ -1,34 +1,19 @@
 import pathToRegexp from 'path-to-regexp';
 
 // 获取菜单路径对象
-function getFlatMenuData(menus, breadCrumb) {
+function getFlatMenuData(menus) {
   let keys = {};
 
   menus.forEach((item) => {
-    let bread = [];
-
-    if (breadCrumb){
-      bread = breadCrumb.concat();
-    }
-
-    if(!item.hideInBreadcrumb){
-      bread.push({
-        name: item.name,
-        url: item.path,
-        icon: item.icon,
-      });
-    }
     if (item.children) {
       keys[item.path] = {
         ...item,
-        breadcrumb: bread
       };
 
-      keys = { ...keys, ...getFlatMenuData(item.children, bread) };
+      keys = { ...keys, ...getFlatMenuData(item.children) };
     } else {
       keys[item.path] = {
-        ...item ,
-        breadcrumb: bread
+        ...item
       };
     }
   });

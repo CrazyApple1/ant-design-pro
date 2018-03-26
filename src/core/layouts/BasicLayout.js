@@ -26,6 +26,25 @@ import * as AppInfo from '../../core/common/AppInfo';
 let lastHref;
 const { AuthorizedRoute, check } = Authorized;
 
+/**
+ * 获取面包屑映射
+ * @param {Object} menuData 菜单配置
+ * @param {Object} routerData 路由配置
+ */
+const getBreadcrumbNameMap = (menuData, routerData) => {
+  const result = {};
+  const childResult = {};
+  for (const i of menuData) {
+    if (!routerData[i.path]) {
+      result[i.path] = i;
+    }
+    if (i.children) {
+      Object.assign(childResult, getBreadcrumbNameMap(i.children, routerData));
+    }
+  }
+  return Object.assign({}, routerData, result, childResult);
+};
+
 const query = {
   'screen-xs': {
     maxWidth: 575,
@@ -70,10 +89,10 @@ export default class BasicLayout extends React.Component {
     isMobile,
   };
   getChildContext() {
-    const { location, routerData } = this.props;
+    const { location, routerData, menus } = this.props;
     return {
       location,
-      breadcrumbNameMap: routerData,
+      breadcrumbNameMap: getBreadcrumbNameMap(menus, routerData),
     };
   }
   componentDidMount() {

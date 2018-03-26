@@ -7,8 +7,7 @@ import Authorized from './core/utils/Authorized';
 import styles from './index.less';
 import UserLayout from "./core/layouts/UserLayout";
 import BasicLayout from "./core/layouts/BasicLayout";
-import getConfig from './core/common/config';
-import {getUserNav} from "./core/common/config";
+import getConfig, {getUserNav} from './core/common/config';
 
 const {ConnectedRouter} = routerRedux;
 const {AuthorizedRoute} = Authorized;

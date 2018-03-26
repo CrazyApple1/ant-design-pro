@@ -37,7 +37,7 @@ export default class PageHeader extends PureComponent {
       params: this.props.params || this.context.params,
       routerLocation: this.props.location || this.context.location,
       breadcrumbNameMap:
-        this.props.breadcrumbNameMap || this.context.breadcrumbNameMap,
+      this.props.breadcrumbNameMap || this.context.breadcrumbNameMap,
     };
   };
   // Generated according to props
@@ -53,12 +53,12 @@ export default class PageHeader extends PureComponent {
           <Breadcrumb.Item key={item.title}>
             {item.href
               ? createElement(
-                  linkElement,
-                  {
-                    [linkElement === 'a' ? 'href' : 'to']: item.href,
-                  },
-                  item.title,
-                )
+                linkElement,
+                {
+                  [linkElement === 'a' ? 'href' : 'to']: item.href,
+                },
+                item.title,
+              )
               : item.title}
           </Breadcrumb.Item>
         ))}
@@ -198,16 +198,16 @@ export default class PageHeader extends PureComponent {
           </div>
         </div>
         {tabList &&
-          tabList.length && (
-            <Tabs
-              className={styles.tabs}
-              {...activeKeyProps}
-              onChange={this.onChange}
-              tabBarExtraContent={tabBarExtraContent}
-            >
-              {tabList.map(item => <TabPane tab={item.tab} key={item.key} />)}
-            </Tabs>
-          )}
+        tabList.length && (
+          <Tabs
+            className={styles.tabs}
+            {...activeKeyProps}
+            onChange={this.onChange}
+            tabBarExtraContent={tabBarExtraContent}
+          >
+            {tabList.map(item => <TabPane tab={item.tab} key={item.key} />)}
+          </Tabs>
+        )}
       </div>
     );
   }
