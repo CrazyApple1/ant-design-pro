@@ -145,6 +145,24 @@ const data = [{
       status: '1',
     },
   ],
+},{
+  id: 10001,
+  name: '零售管理',
+  icon: 'shopping-cart',
+  path: 'sale',
+  order: 1,
+  url: '',
+  status: '1',
+  children: [
+    {
+      id: 100011,
+      name: '零售开单',
+      path: 'billing',
+      order: 1,
+      url: '',
+      status: '1',
+    },
+  ],
 }, {
   id: 5,
   name: '表单页',

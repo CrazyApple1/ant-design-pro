@@ -83,6 +83,10 @@ export default function getConfig(app) {
         name: '商品信息',
         component: dynamicWrapper(app, ['app/goods/model/Goods'], () => import('../../app/goods/route/Goods')),
       },
+      '/sale/billing': {
+      name: '零售开单',
+      component: dynamicWrapper(app, ['app/sale/model/Sale'], () => import('../../app/sale/route/Sale')),
+      },
       '/sys/organization': {
         name: '组织管理',
         component: dynamicWrapper(app, ['app/sys/organization/model/Organization'], () => import('../../app/sys/organization/route/Organization')),
