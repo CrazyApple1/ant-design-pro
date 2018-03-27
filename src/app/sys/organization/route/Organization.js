@@ -11,7 +11,7 @@ export default class organization extends Component {
   // 组件加载完成后加载数据
   render() {
     const { dispatch } = this.props;
-    const { data, selectedRowKeys, modalType, currentItem  } = this.props.organization;
+    const { data, selectedRowKeys, modalType, currentItem } = this.props.organization;
 
     const tableProps = {
       dispatch,
@@ -33,4 +33,3 @@ export default class organization extends Component {
     );
   }
 }
-

@@ -16,15 +16,11 @@ const formItemLayout = {
 const detail = ({
   item,
   onOk,
-  form: {
-    getFieldDecorator,
-    validateFields,
-    getFieldsValue,
-  },
+  form: { getFieldDecorator, validateFields, getFieldsValue },
   ...modalProps
 }) => {
   const handleOk = () => {
-    validateFields((errors) => {
+    validateFields(errors => {
       if (errors) {
         return;
       }
@@ -41,29 +37,32 @@ const detail = ({
     onOk: handleOk,
   };
 
-
   return (
     <Modal {...modalOpts}>
       <Form layout="horizontal">
         <FormItem label="名称" hasFeedback {...formItemLayout}>
           {getFieldDecorator('name', {
             initialValue: item.name,
-            rules: [{
+            rules: [
+              {
                 required: true,
                 message: '请输入商品名称',
-            }],
+              },
+            ],
           })(<Input />)}
         </FormItem>
         <FormItem label="分类" hasFeedback {...formItemLayout}>
           {getFieldDecorator('category', {
             initialValue: item.category,
-            rules: [{
+            rules: [
+              {
                 required: true,
                 message: '请选择商品分类',
-            }],
+              },
+            ],
           })(
             <Select hasFeedback {...formItemLayout}>
-              <Option value="toy" >玩具</Option>
+              <Option value="toy">玩具</Option>
               <Option value="omament">饰品</Option>
               <Option value="Yiminghe">工艺品</Option>
             </Select>
@@ -72,19 +71,21 @@ const detail = ({
         <FormItem label="编码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('code', {
             initialValue: item.code,
-            rules: [{
+            rules: [
+              {
                 message: '请输入正确的编码(仅限数字)',
-            }],
-          })(
-            <Input />
-          )}
+              },
+            ],
+          })(<Input />)}
         </FormItem>
         <FormItem label="单位" hasFeedback {...formItemLayout}>
           {getFieldDecorator('unit', {
             initialValue: item.unit,
-            rules: [{
+            rules: [
+              {
                 required: true,
-            }],
+              },
+            ],
           })(
             <Select hasFeedback {...formItemLayout}>
               <Option value="0001">件</Option>
@@ -96,18 +97,22 @@ const detail = ({
         <FormItem label="装箱规格" hasFeedback {...formItemLayout}>
           {getFieldDecorator('spec', {
             initialValue: item.spec,
-            rules: [{
+            rules: [
+              {
                 type: 'number',
                 message: '请输入正确的装箱规格(仅限数字)',
-            }],
+              },
+            ],
           })(<InputNumber />)}
         </FormItem>
         <FormItem label="条码" hasFeedback {...formItemLayout}>
           {getFieldDecorator('qrcode', {
             initialValue: item.qrcode,
-            rules: [{
+            rules: [
+              {
                 message: '请输入正确的条码(仅限数字)',
-            }],
+              },
+            ],
           })(<Input />)}
         </FormItem>
       </Form>

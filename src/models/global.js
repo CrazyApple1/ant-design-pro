@@ -1,5 +1,5 @@
-import {queryNotices} from '../services/api';
-import {getUserMenu} from '../core/service/global';
+import { queryNotices } from '../services/api';
+import { getUserMenu } from '../core/service/global';
 
 export default {
   namespace: 'global',
@@ -8,7 +8,7 @@ export default {
     currentUser: {
       name: 'PKAQ',
       avatar: '',
-      notifyCount: 0
+      notifyCount: 0,
     },
     notices: [],
     routerData: [],
@@ -16,17 +16,17 @@ export default {
   },
   effects: {
     // 获取菜单
-    * fetchMenus({payload}, {put, call}) {
+    *fetchMenus({ payload }, { put, call }) {
       const response = yield call(getUserMenu, payload);
       // 查询数据
       yield put({
         type: 'updateState',
         payload: {
-          menus: response
+          menus: response,
         },
       });
     },
-    * fetchNotices(_, {call, put}) {
+    *fetchNotices(_, { call, put }) {
       const data = yield call(queryNotices);
       yield put({
         type: 'saveNotices',
@@ -37,7 +37,7 @@ export default {
         payload: data.length,
       });
     },
-    * clearNotices({payload}, {put, select}) {
+    *clearNotices({ payload }, { put, select }) {
       yield put({
         type: 'saveClearedNotices',
         payload,
@@ -51,25 +51,25 @@ export default {
   },
 
   reducers: {
-    updateState(state, {payload}) {
+    updateState(state, { payload }) {
       return {
         ...state,
         ...payload,
       };
     },
-    changeLayoutCollapsed(state, {payload}) {
+    changeLayoutCollapsed(state, { payload }) {
       return {
         ...state,
         collapsed: payload,
       };
     },
-    saveNotices(state, {payload}) {
+    saveNotices(state, { payload }) {
       return {
         ...state,
         notices: payload,
       };
     },
-    saveClearedNotices(state, {payload}) {
+    saveClearedNotices(state, { payload }) {
       return {
         ...state,
         notices: state.notices.filter(item => item.type !== payload),
@@ -78,9 +78,9 @@ export default {
   },
 
   subscriptions: {
-    setup({history, dispatch}) {
+    setup({ history, dispatch }) {
       // Subscribe history(url) change, trigger `load` action if pathname is `/`
-      return history.listen(({pathname, search}) => {
+      return history.listen(({ pathname, search }) => {
         if (typeof window.ga !== 'undefined') {
           window.ga('send', 'pageview', pathname + search);
         }

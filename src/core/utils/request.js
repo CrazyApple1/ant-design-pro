@@ -25,7 +25,7 @@ function checkStatus(response) {
     return response;
   }
 
-  const errortext = response.statusText? response.statusText: codeMessage[response.status];
+  const errortext = response.statusText ? response.statusText : codeMessage[response.status];
   const error = new Error(errortext);
   error.url = response.url;
   error.name = response.status;
@@ -65,19 +65,19 @@ export default function request(url, options) {
   //TODO 需要处理返回200但success为false的情况
   return fetch(url, newOptions)
     .then(checkStatus)
-    .then((response) => {
+    .then(response => {
       // 再判断一下服务器返回的操作状态
-        if (newOptions.method === 'DELETE' || response.status === 204) {
-          return response.text();
-        }
-        return response.json();
+      if (newOptions.method === 'DELETE' || response.status === 204) {
+        return response.text();
+      }
+      return response.json();
     })
-    .catch((e) => {
+    .catch(e => {
       const { dispatch } = store;
       const status = e.name;
       const url = e.url;
 
-      Promise.resolve(e.response).then( (r) => {
+      Promise.resolve(e.response).then(r => {
         notification.error({
           message: `请求错误 : ${url}`,
           description: `${r.statusText}`,

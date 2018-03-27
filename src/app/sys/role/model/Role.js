@@ -1,6 +1,11 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
-import { list, listModulebyRoleId, getDictItemByRoleId, listUserByRoleId } from '../service/RoleService';
+import {
+  list,
+  listModulebyRoleId,
+  getDictItemByRoleId,
+  listUserByRoleId,
+} from '../service/RoleService';
 // 角色授权管理model
 export default modelExtend(model, {
   namespace: 'role',
@@ -33,7 +38,7 @@ export default modelExtend(model, {
         type: 'updateState',
         payload: {
           currentItem: payload.currentItem,
-          moduleData: {...response},
+          moduleData: { ...response },
           operateType: payload.operateType,
         },
       });
@@ -57,10 +62,10 @@ export default modelExtend(model, {
         type: 'updateState',
         payload: {
           currentItem: payload.currentItem,
-          userData: {...response},
+          userData: { ...response },
           operateType: payload.operateType,
         },
       });
-    }
-  }
+    },
+  },
 });

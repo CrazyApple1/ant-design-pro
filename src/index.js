@@ -14,8 +14,8 @@ import './index.less';
 const app = dva({
   history: createHistory(),
   onError: (e, m) => {
-    console.info("error");
-  }
+    console.info('error');
+  },
 });
 
 // 2. Plugins
@@ -32,4 +32,4 @@ app.router(require('./router').default);
 // 5. Start
 app.start('#root');
 
-export default app._store;  // eslint-disable-line
+export default app._store; // eslint-disable-line

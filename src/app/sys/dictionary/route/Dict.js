@@ -15,7 +15,15 @@ export default class Dict extends PureComponent {
   }
   render() {
     const { dispatch } = this.props;
-    const { currentItem, data, loading, operateType, codeUnique } = this.props.dict;
+    const {
+      currentItem,
+      itemOperateType,
+      data,
+      loading,
+      operateType,
+      codeUnique,
+      itemValues,
+    } = this.props.dict;
 
     const DictGridProps = {
       dispatch,
@@ -30,6 +38,8 @@ export default class Dict extends PureComponent {
       loading,
       data,
       operateType,
+      itemOperateType,
+      itemValues,
     };
 
     return (

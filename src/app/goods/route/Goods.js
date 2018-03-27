@@ -26,7 +26,7 @@ export default class Goods extends PureComponent {
   }
 
   // 树节点选择
-  onSelect = (selectedKeys) => {
+  onSelect = selectedKeys => {
     const { dispatch } = this.props;
     const values = {
       category: selectedKeys[0],
@@ -64,7 +64,7 @@ export default class Goods extends PureComponent {
     });
   };
   // 搜索事件
-  handleSearch = (e) => {
+  handleSearch = e => {
     e.preventDefault();
 
     const { dispatch, form } = this.props;
@@ -126,22 +126,22 @@ export default class Goods extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="商品名称">
-              {getFieldDecorator('name')(
-                <Input placeholder="请输入" />
-              )}
+              {getFieldDecorator('name')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="商品编码">
-              {getFieldDecorator('code')(
-                <Input placeholder="请输入" />
-              )}
+              {getFieldDecorator('code')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
+              <Button type="primary" htmlType="submit">
+                查询
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
+                重置
+              </Button>
             </span>
           </Col>
         </Row>
@@ -152,8 +152,14 @@ export default class Goods extends PureComponent {
   // 渲染界面
   render() {
     const { dispatch } = this.props;
-    const { loading, data, selectedRowKeys,
-      modalVisible, modalType, currentItem } = this.props.goods;
+    const {
+      loading,
+      data,
+      selectedRowKeys,
+      modalVisible,
+      modalType,
+      currentItem,
+    } = this.props.goods;
 
     const listPops = {
       dispatch,
@@ -194,9 +200,7 @@ export default class Goods extends PureComponent {
           <Col xl={18} lg={24} md={24} sm={24} xs={24}>
             <Card bordered={false}>
               <div className={styles.goodsInfoList}>
-                <div className={styles.goodsInfoListForm}>
-                  {this.renderSimpleForm()}
-                </div>
+                <div className={styles.goodsInfoListForm}>{this.renderSimpleForm()}</div>
                 <div className={styles.goodsInfoListOperator}>
                   <Button
                     icon="plus"
@@ -205,15 +209,17 @@ export default class Goods extends PureComponent {
                   >
                     新增商品
                   </Button>
-                  {
-                    selectedRowKeys.length > 0 && (
-                      <span>
-                        <Popconfirm title="确定要删除所选商品吗?" placement="top" onConfirm={() => this.handleRemoveClick}>
-                          <Button>删除商品</Button>
-                        </Popconfirm>
-                      </span>
-                    )
-                  }
+                  {selectedRowKeys.length > 0 && (
+                    <span>
+                      <Popconfirm
+                        title="确定要删除所选商品吗?"
+                        placement="top"
+                        onConfirm={() => this.handleRemoveClick}
+                      >
+                        <Button>删除商品</Button>
+                      </Popconfirm>
+                    </span>
+                  )}
                 </div>
                 <GoodsList {...listPops} />
               </div>

@@ -7,7 +7,7 @@ export default {
     switchTheme(state, { payload }) {
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     },
   },

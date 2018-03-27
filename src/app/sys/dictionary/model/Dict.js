@@ -1,25 +1,35 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
-import { listDict, getDict, deleteDict, editDict, deleteDictItem, checkUnique } from '../service/DictService';
+import {
+  listDict,
+  getDict,
+  deleteDict,
+  deleteDictItem,
+  editDict,
+  editDictItem,
+  checkUnique,
+} from '../service/DictService';
 
 export default modelExtend(model, {
   namespace: 'dict',
   state: {
     currentItem: {},
     operateType: '',
+    itemOperateType: '',
+    itemValues: {},
     formValues: {},
-    codeUnique: true
+    codeUnique: true,
   },
   effects: {
     // 校验编码唯一性
-    *checkUnique({ payload }, { call, put }){
+    *checkUnique({ payload }, { call, put }) {
       const response = yield call(checkUnique, payload);
       yield put({
         type: 'updateState',
         payload: {
-          codeUnique: response.success
-        }
-      })
+          codeUnique: response.success,
+        },
+      });
     },
     // 加载字典分类
     *listDict({ payload }, { call, put }) {
@@ -36,42 +46,57 @@ export default modelExtend(model, {
         type: 'updateState',
         payload: {
           currentItem: response.data,
-          operateType: payload.operateType
+          operateType: payload.operateType,
         },
       });
     },
+    // 新增/编辑字典分类
+    *editDict({ payload }, { call, put }) {
+      const response = yield call(editDict, payload);
+      if (response && response.data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            data: response.data,
+            operateType: '',
+            itemValues: {},
+          },
+        });
+      }
+    },
+    // 新增/编辑字典项
+    *editDictItem({ payload }, { call, put }) {
+      const response = yield call(editDictItem, payload);
+      if (response) {
+        yield put({
+          type: 'updateDictItem',
+          payload: {
+            itemForm : {...payload},
+            itemOperateType: '',
+          },
+        });
+      }
+    },
+    // 删除字典分类
     *deleteDict({ payload, callback }, { call, put }) {
       const response = yield call(deleteDict, payload);
       // 只有返回成功时才刷新
-      if(response && response.success){
-        // 从当前数据对象中找到响应ID记录删除值
+      if (response && response.success) {
+        // 从当前数据对象中找到相应ID记录删除值
         yield put({
           type: 'updateState',
           payload: {
             data: response.data,
           },
         });
-        if(callback) {
+        if (callback) {
           callback();
         }
       } else {
         yield put({
           type: 'updateState',
           payload: {
-            loading: { global: false}
-          },
-        });
-      }
-    },
-    // 新增/编辑字典项
-    *editDict({ payload }, { call, put }) {
-      const response = yield call(editDict, payload);
-      if (response && response.data){
-        yield put({
-          type: 'updateState',
-          payload: {
-            data: response.data,
-            operateType: ''
+            loading: { global: false },
           },
         });
       }
@@ -83,23 +108,34 @@ export default modelExtend(model, {
       yield put({
         type: 'removeDictItem',
         payload: {
-          id: id
-        }
-      })
+          id: id,
+        },
+      });
     },
   },
   reducers: {
+    // 更新字典项
+    updateDictItem(state, action) {
+      let currentItem = state.currentItem;
+      currentItem.items.push(action.payload.itemForm);
+
+      return {
+        ...state,
+        itemOperateType: action.payload.itemOperateType,
+        currentItem:  currentItem
+      };
+    },
     // 移除已删除得数据项
     removeDictItem(state, action) {
       let currentItem = state.currentItem;
       const id = action.payload.id;
-      const items = currentItem.items.filter( i => id !== i.id);
+      const items = currentItem.items.filter(i => id !== i.id);
       return {
         ...state,
         currentItem: {
-          items: items
-        }
+          items: items,
+        },
       };
     },
-  }
+  },
 });

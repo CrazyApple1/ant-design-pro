@@ -1,11 +1,11 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import styles from './index.less'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import styles from './index.less';
 
 export default class Page extends Component {
   render() {
-    const {className, children, inner = false} = this.props;
+    const { className, children, inner = false } = this.props;
 
     return (
       <div
@@ -15,7 +15,7 @@ export default class Page extends Component {
       >
         {children}
       </div>
-    )
+    );
   }
 }
 

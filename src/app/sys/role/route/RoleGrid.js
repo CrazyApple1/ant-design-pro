@@ -18,63 +18,66 @@ export default class RoleGrid extends PureComponent {
       payload: {
         id: record.id,
         currentItem: record,
-        operateType: operate
-      }
-    })
+        operateType: operate,
+      },
+    });
   };
 
   render() {
     const { data, loading } = this.props;
 
-    const column = [{
-      title: '角色名称',
-      dataIndex: 'roleName'
-    },{
-      title: '角色编码',
-      dataIndex: 'roleCode'
-    },{
-      title: '上级角色',
-      dataIndex: 'parentName'
-    },{
-      title: '模块授权',
-      render: (text, record) => (
-        <div>
-          <a onClick={(e) => this.handleEditClick(record, 'Module')}>
-            <Icon type="bars" />
-            模块授权
-          </a>
-        </div>
-      ),
-    },{
-      title: '用户授权',
-      render: (text, record) => (
-        <div>
-          <a onClick={() => this.handleEditClick(record, 'User')}>
-            <Icon type="usergroup-add" />
-            用户授权
-          </a>
-        </div>
-      ),
-    },{
-      title: '配置授权',
-      render: (text, record) => (
-        <div>
-          <a onClick={(e) => this.handleEditClick(record, 'Config')}>
-            <Icon type="setting" />
-            配置授权
-          </a>
-        </div>
-      ),
-    }];
+    const column = [
+      {
+        title: '角色名称',
+        dataIndex: 'roleName',
+      },
+      {
+        title: '角色编码',
+        dataIndex: 'roleCode',
+      },
+      {
+        title: '上级角色',
+        dataIndex: 'parentName',
+      },
+      {
+        title: '模块授权',
+        render: (text, record) => (
+          <div>
+            <a onClick={e => this.handleEditClick(record, 'Module')}>
+              <Icon type="bars" />
+              模块授权
+            </a>
+          </div>
+        ),
+      },
+      {
+        title: '用户授权',
+        render: (text, record) => (
+          <div>
+            <a onClick={() => this.handleEditClick(record, 'User')}>
+              <Icon type="usergroup-add" />
+              用户授权
+            </a>
+          </div>
+        ),
+      },
+      {
+        title: '配置授权',
+        render: (text, record) => (
+          <div>
+            <a onClick={e => this.handleEditClick(record, 'Config')}>
+              <Icon type="setting" />
+              配置授权
+            </a>
+          </div>
+        ),
+      },
+    ];
 
     return (
       <div>
-        <Table dataSource={data}
-               columns={column}
-               loading={loading}
-               rowKey={record => record.id}
-        />
+        <Table dataSource={data} columns={column} loading={loading} rowKey={record => record.id} />
       </div>
-    )
+    );
   }
 }

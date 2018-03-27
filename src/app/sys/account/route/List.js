@@ -10,7 +10,7 @@ class List extends PureComponent {
   };
 
   // 行选事件
-  handleSelectRows = (rows) => {
+  handleSelectRows = rows => {
     const { dispatch } = this.props;
     dispatch({
       type: 'account/updateState',
@@ -19,7 +19,7 @@ class List extends PureComponent {
   };
 
   // 删除事件
-  handleDeleteClick = (selectKey) => {
+  handleDeleteClick = selectKey => {
     const { dispatch } = this.props;
     dispatch({
       type: 'account/remove',
@@ -28,7 +28,7 @@ class List extends PureComponent {
   };
 
   // 编辑事件
-  handleEditClick = (record) => {
+  handleEditClick = record => {
     const { dispatch } = this.props;
 
     dispatch({
@@ -78,11 +78,7 @@ class List extends PureComponent {
       {
         title: '帐号',
         dataIndex: 'category',
-        render: val => (
-          <div style={{ textAlign: 'center' }}>
-            {val}
-          </div>
-        ),
+        render: val => <div style={{ textAlign: 'center' }}>{val}</div>,
       },
       {
         title: '编码',
@@ -129,7 +125,7 @@ class List extends PureComponent {
     const rowSelectionProps = {
       fixed: true,
       selectedRowKeys,
-      onChange: (selectedKeys) => {
+      onChange: selectedKeys => {
         this.handleSelectRows(selectedKeys);
       },
     };
@@ -137,12 +133,14 @@ class List extends PureComponent {
       <div className={styles.standardTable}>
         <div className={styles.tableAlert}>
           <Alert
-            message={(
+            message={
               <div>
                 已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>清空选择</a>
+                <a onClick={this.cleanSelectedKeys} style={{ marginLeft: 24 }}>
+                  清空选择
+                </a>
               </div>
-            )}
+            }
             type="info"
             showIcon
           />

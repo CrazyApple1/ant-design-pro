@@ -9,14 +9,14 @@ export default modelExtend(model, {
     currentItem: {},
     modalType: '',
     selectedRowKeys: [],
-    formValues: {}
+    formValues: {},
   },
   effects: {
     // 查询
     *listOrg({ payload }, { call, put }) {
       // 查询数据
       const response = yield call(listOrg, payload);
-      if(response && response.data){
+      if (response && response.data) {
         yield put({
           type: 'saveData',
           payload: response.data,
@@ -29,34 +29,34 @@ export default modelExtend(model, {
       yield put({
         type: 'updateState',
         payload: {
-          ...payload
-        }
-      })
+          ...payload,
+        },
+      });
     },
     // 编辑按钮
-    *edit({ payload }, { call, put }){
+    *edit({ payload }, { call, put }) {
       const response = yield call(getOrg, payload);
-      if(response && response.data){
+      if (response && response.data) {
         yield put({
           type: 'updateState',
           payload: {
             modalType: 'edit',
-            currentItem: response.data
-          }
-        })
+            currentItem: response.data,
+          },
+        });
       }
     },
     // 保存一条组织信息
-    *save({ payload }, { call, put }){
+    *save({ payload }, { call, put }) {
       const response = yield call(editOrg, payload);
-      if(response && response.data){
+      if (response && response.data) {
         //  关闭窗口 - 提示成功 - 加载数据
         yield put({
           type: 'updateState',
           payload: {
             modalType: '',
             currentItem: {},
-            data: response.data
+            data: response.data,
           },
         });
         message.success('操作成功');
@@ -74,11 +74,11 @@ export default modelExtend(model, {
     // 更改可用状态
     *changeStatus({ payload }, { call, put }) {
       const response = yield call(editOrg, payload);
-      if(response) {
+      if (response) {
         payload.record.status = payload.status;
         yield put({
           type: 'updateState',
-          currentItem: payload.record
+          currentItem: payload.record,
         });
       }
     },
@@ -87,23 +87,23 @@ export default modelExtend(model, {
       // 查询数据
       const response = yield call(deleteOrg, payload);
       // 只有返回成功时才刷新
-      if(response && response.success){
+      if (response && response.success) {
         // 从当前数据对象中找到响应ID记录删除值
         yield put({
           type: 'updateState',
           payload: {
             data: response.data,
-            selectedRowKeys: []
+            selectedRowKeys: [],
           },
         });
-        if(callback) {
+        if (callback) {
           callback();
         }
       } else {
         yield put({
           type: 'updateState',
           payload: {
-            loading: { global: false}
+            loading: { global: false },
           },
         });
       }

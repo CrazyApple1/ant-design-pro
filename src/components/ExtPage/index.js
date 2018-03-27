@@ -1,12 +1,13 @@
 import React from 'react';
 // 引入三方页面
-const ExtPage = ({ url, height}) => {
+const ExtPage = ({ url, height }) => {
   return (
-    <iframe src={url}
-            width="100%"
-            frameBorder={0}
-            sandbox="allow-scripts"
-            height={height && height !== '' ? height : "100%"}
+    <iframe
+      src={url}
+      width="100%"
+      frameBorder={0}
+      sandbox="allow-scripts"
+      height={height && height !== '' ? height : '100%'}
     />
   );
 };

@@ -4,7 +4,7 @@ import pathToRegexp from 'path-to-regexp';
 function getFlatMenuData(menus) {
   let keys = {};
 
-  menus.forEach((item) => {
+  menus.forEach(item => {
     if (item.children) {
       keys[item.path] = {
         ...item,
@@ -13,7 +13,7 @@ function getFlatMenuData(menus) {
       keys = { ...keys, ...getFlatMenuData(item.children) };
     } else {
       keys[item.path] = {
-        ...item
+        ...item,
       };
     }
   });
@@ -21,7 +21,6 @@ function getFlatMenuData(menus) {
 }
 // 获取路由配置
 export const getRouterData = (routerConfig, menus) => {
-
   const menuData = getFlatMenuData(menus);
   //  返回附加了name和authority的routerData
 
@@ -29,7 +28,7 @@ export const getRouterData = (routerConfig, menus) => {
   // eg. {name,authority ...routerConfig }
   const routerData = {};
   // The route matches the menu
-  Object.keys(routerConfig).forEach((path) => {
+  Object.keys(routerConfig).forEach(path => {
     // Regular match item name
     // eg.  router /user/:id === /user/chen
     const pathRegexp = pathToRegexp(path);

@@ -1,5 +1,5 @@
 import request from 'core/utils/request';
-import {getNoUndefinedString} from 'core/utils/utils';
+import { getNoUndefinedString } from 'core/utils/utils';
 // 查询字典列表
 export async function listDict() {
   return request('/dict/list');
@@ -9,7 +9,7 @@ export async function getDict(params) {
   return request(`/dict/get/${getNoUndefinedString(params.id)}`);
 }
 // 校验编码唯一性
-export async function checkUnique(params){
+export async function checkUnique(params) {
   return request('/dict/checkUnique', {
     method: 'POST',
     body: {
@@ -28,6 +28,15 @@ export async function deleteDictItem(params) {
 // 新增/编辑字典分类
 export async function editDict(params) {
   return request('/dict/edit', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+// 新增/编辑字典项
+export async function editDictItem(params) {
+  return request('/dictItem/edit', {
     method: 'POST',
     body: {
       ...params,

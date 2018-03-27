@@ -18,10 +18,10 @@ import logo from '../../assets/logo.svg';
 import pkaq from '../../assets/pkaq.svg';
 
 const { Content, Header, Footer } = Layout;
-import themeBlue from '../../core/style/theme-blue.less';
-import themeGreen from '../../core/style/theme-green.less';
-import App from "components/App/App";
-import * as AppInfo from '../../core/common/AppInfo';
+import themeBlue from 'core/style/theme-blue.less';
+import themeGreen from 'core/style/theme-green.less';
+import App from 'components/App/App';
+import * as AppInfo from 'core/common/AppInfo';
 
 let lastHref;
 const { AuthorizedRoute, check } = Authorized;
@@ -67,11 +67,11 @@ const query = {
 };
 
 let isMobile;
-enquireScreen((b) => {
+enquireScreen(b => {
   isMobile = b;
 });
 @App
-@connect(({ theme, loading, global })  => ({
+@connect(({ theme, loading, global }) => ({
   loading,
   theme,
   currentUser: global.currentUser,
@@ -96,7 +96,7 @@ export default class BasicLayout extends React.Component {
     };
   }
   componentDidMount() {
-    enquireScreen((mobile) => {
+    enquireScreen(mobile => {
       this.setState({
         isMobile: mobile,
       });
@@ -107,7 +107,7 @@ export default class BasicLayout extends React.Component {
   }
   // 页面title
   getPageTitle(routerData) {
-    const { location, } = this.props;
+    const { location } = this.props;
     const { pathname } = location;
     let title = 'Ant Design Pro';
     if (routerData[pathname] && routerData[pathname].name) {
@@ -138,19 +138,20 @@ export default class BasicLayout extends React.Component {
     } else {
       const { routerData } = this.props;
       // get the first authorized route path in routerData
-      const authorizedPath = Object.keys(routerData).find(item =>
-        check(routerData[item].authority, item) && item !== '/');
+      const authorizedPath = Object.keys(routerData).find(
+        item => check(routerData[item].authority, item) && item !== '/'
+      );
       return authorizedPath;
     }
     return redirect;
   };
-  handleMenuCollapse = (collapsed) => {
+  handleMenuCollapse = collapsed => {
     this.props.dispatch({
       type: 'global/changeLayoutCollapsed',
       payload: collapsed,
     });
   };
-  handleNoticeClear = (type) => {
+  handleNoticeClear = type => {
     message.success(`清空了${type}`);
     this.props.dispatch({
       type: 'global/clearNotices',
@@ -158,7 +159,6 @@ export default class BasicLayout extends React.Component {
     });
   };
   handleMenuClick = ({ key }) => {
-
     if (key === 'triggerError') {
       this.props.dispatch(routerRedux.push('/exception/trigger'));
       return;
@@ -169,7 +169,7 @@ export default class BasicLayout extends React.Component {
       });
     }
   };
-  handleNoticeVisibleChange = (visible) => {
+  handleNoticeVisibleChange = visible => {
     if (visible) {
       this.props.dispatch({
         type: 'global/fetchNotices',
@@ -183,27 +183,34 @@ export default class BasicLayout extends React.Component {
     this.props.dispatch({
       type: 'theme/switchTheme',
       payload: {
-        theme: theme === themeBlue? themeGreen : (theme === null? themeBlue : null)
-      }
+        theme: theme === themeBlue ? themeGreen : theme === null ? themeBlue : null,
+      },
     });
   };
   render() {
     const {
-      currentUser, collapsed, fetchingNotices, notices, routerData, match, location, menus
+      currentUser,
+      collapsed,
+      fetchingNotices,
+      notices,
+      routerData,
+      match,
+      location,
+      menus,
     } = this.props;
 
     /**
      * 根据菜单取得重定向地址.
      */
     const redirectData = [];
-    const getRedirect = (item) => {
+    const getRedirect = item => {
       if (item && item.children) {
         if (item.children[0] && item.children[0].path) {
           redirectData.push({
             from: `${item.path}`,
             to: `${item.children[0].path}`,
           });
-          item.children.forEach((children) => {
+          item.children.forEach(children => {
             getRedirect(children);
           });
         }
@@ -226,7 +233,7 @@ export default class BasicLayout extends React.Component {
           isMobile={this.state.isMobile}
           onCollapse={this.handleMenuCollapse}
         />
-        <Layout style={{ height: '100vh', overflow: 'scroll' }} >
+        <Layout style={{ height: '100vh', overflow: 'scroll' }}>
           <Header style={{ padding: 0 }}>
             <GlobalHeader
               logo={logo}
@@ -243,56 +250,54 @@ export default class BasicLayout extends React.Component {
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
             <Switch>
-              {
-                redirectData.map(item =>
-                  <Redirect key={item.from} exact from={item.from} to={item.to} />
-                )
-              }
-              {
-                getRoutes(match.path, routerData).map(item =>
-                  (
-                    <AuthorizedRoute
-                      key={item.key}
-                      path={item.path}
-                      component={item.component}
-                      exact={item.exact}
-                      authority={item.authority}
-                      redirectPath="/exception/403"
-                    />
-                  )
-                )
-              }
+              {redirectData.map(item => (
+                <Redirect key={item.from} exact from={item.from} to={item.to} />
+              ))}
+              {getRoutes(match.path, routerData).map(item => (
+                <AuthorizedRoute
+                  key={item.key}
+                  path={item.path}
+                  component={item.component}
+                  exact={item.exact}
+                  authority={item.authority}
+                  redirectPath="/exception/403"
+                />
+              ))}
               <Redirect exact from="/" to={bashRedirect} />
               <Route render={NotFound} />
             </Switch>
             {/* pkaq pin icon*/}
-            <BackTop visibilityHeight={ -1 }>
+            <BackTop visibilityHeight={-1}>
               <Popover content="Hi jack" trigger="hover" onClick={() => this.changeTheme()}>
-                <img src={pkaq} alt="pkaq" style={{ height:60,width:60 }} />
+                <img src={pkaq} alt="pkaq" style={{ height: 60, width: 60 }} />
               </Popover>
             </BackTop>
           </Content>
           <Footer style={{ padding: 0 }}>
             <GlobalFooter
-              links={[{
-                key: 'Pro 首页',
-                title: 'Pro 首页',
-                href: 'http://pro.ant.design',
-                blankTarget: true,
-              }, {
-                key: 'github',
-                title: <Icon type="github" />,
-                href: 'https://github.com/ant-design/ant-design-pro',
-                blankTarget: true,
-              }, {
-                key: 'Ant Design',
-                title: 'Ant Design',
-                href: 'http://ant.design',
-                blankTarget: true,
-              }]}
+              links={[
+                {
+                  key: 'Pro 首页',
+                  title: 'Pro 首页',
+                  href: 'http://pro.ant.design',
+                  blankTarget: true,
+                },
+                {
+                  key: 'github',
+                  title: <Icon type="github" />,
+                  href: 'https://github.com/ant-design/ant-design-pro',
+                  blankTarget: true,
+                },
+                {
+                  key: 'Ant Design',
+                  title: 'Ant Design',
+                  href: 'http://ant.design',
+                  blankTarget: true,
+                },
+              ]}
               copyright={
                 <Fragment>
-                  Copyright <Icon type="copyright" /> { AppInfo.copyRight }
+                  Copyright <Icon type="copyright" /> {AppInfo.copyRight}
                 </Fragment>
               }
             />
@@ -310,4 +315,3 @@ export default class BasicLayout extends React.Component {
     );
   }
 }
-

@@ -30,6 +30,8 @@ $ git clone
 $ yarn install
 $ yarn start         # visit http://localhost:8000
 ```
+// 格式化代码
+yarn run prettier
 
 ## Compatibility
 Modern browsers and IE11.

@@ -1,5 +1,5 @@
 import request from 'core/utils/request';
-import {getNoUndefinedString} from 'core/utils/utils';
+import { getNoUndefinedString } from 'core/utils/utils';
 //获取组织信息
 export async function getOrg(params) {
   return request(`/organization/get/${getNoUndefinedString(params.id)}`);
@@ -14,7 +14,7 @@ export async function editOrg(params) {
     method: 'POST',
     body: {
       ...params,
-    }
+    },
   });
 }
 //调整排序
@@ -29,7 +29,7 @@ export async function deleteOrg(params) {
   return request('/organization/del', {
     method: 'POST',
     body: {
-      ...params
+      ...params,
     },
   });
 }

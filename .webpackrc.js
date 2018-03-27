@@ -26,8 +26,8 @@ export default {
     }
   },
   alias: {
-    'core': path.resolve(__dirname, 'src/core'),
-    'components': path.resolve(__dirname, 'src/components/'),
+    core: path.resolve(__dirname, 'src/core'),
+    components: path.resolve(__dirname, 'src/components/'),
   },
   ignoreMomentLocale: true,
   theme: './src/theme.js',

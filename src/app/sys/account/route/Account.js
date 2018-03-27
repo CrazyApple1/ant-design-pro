@@ -26,7 +26,7 @@ export default class Account extends PureComponent {
   }
 
   // 树节点选择
-  onSelect = (selectedKeys) => {
+  onSelect = selectedKeys => {
     const { dispatch } = this.props;
     const values = {
       category: selectedKeys[0],
@@ -64,7 +64,7 @@ export default class Account extends PureComponent {
     });
   };
   // 搜索事件
-  handleSearch = (e) => {
+  handleSearch = e => {
     e.preventDefault();
 
     const { dispatch, form } = this.props;
@@ -126,22 +126,22 @@ export default class Account extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="帐号">
-              {getFieldDecorator('account_no')(
-                <Input placeholder="输入帐号搜索" />
-              )}
+              {getFieldDecorator('account_no')(<Input placeholder="输入帐号搜索" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="用户名称">
-              {getFieldDecorator('account_name')(
-                <Input placeholder="输入用户名称搜索" />
-              )}
+              {getFieldDecorator('account_name')(<Input placeholder="输入用户名称搜索" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
+              <Button type="primary" htmlType="submit">
+                查询
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
+                重置
+              </Button>
             </span>
           </Col>
         </Row>
@@ -152,8 +152,14 @@ export default class Account extends PureComponent {
   // 渲染界面
   render() {
     const { dispatch } = this.props;
-    const { loading, data, selectedRowKeys,
-      modalVisible, modalType, currentItem } = this.props.account;
+    const {
+      loading,
+      data,
+      selectedRowKeys,
+      modalVisible,
+      modalType,
+      currentItem,
+    } = this.props.account;
 
     const listPops = {
       dispatch,
@@ -193,25 +199,26 @@ export default class Account extends PureComponent {
           <Col xl={18} lg={18} md={18} sm={18} xs={18}>
             <Card bordered={false}>
               <div className={styles.goodsInfoList}>
-                <div className={styles.goodsInfoListForm}>
-                  {this.renderSimpleForm()}
-                </div>
+                <div className={styles.goodsInfoListForm}>{this.renderSimpleForm()}</div>
                 <div className={styles.goodsInfoListOperator}>
                   <Button
                     icon="plus"
                     type="primary"
                     onClick={() => this.handleModalVisible(true, 'create')}
-                  >新增用户
+                  >
+                    新增用户
                   </Button>
-                  {
-                    selectedRowKeys.length > 0 && (
-                      <span>
-                        <Popconfirm title="确定要删除所选用户吗?" placement="top" onConfirm={this.handleRemoveClick}>
-                          <Button>删除用户</Button>
-                        </Popconfirm>
-                      </span>
-                    )
-                  }
+                  {selectedRowKeys.length > 0 && (
+                    <span>
+                      <Popconfirm
+                        title="确定要删除所选用户吗?"
+                        placement="top"
+                        onConfirm={this.handleRemoveClick}
+                      >
+                        <Button>删除用户</Button>
+                      </Popconfirm>
+                    </span>
+                  )}
                 </div>
                 <AccountList {...listPops} />
               </div>

@@ -12,4 +12,4 @@ export default modelExtend(model, {
   effects: {
     // 查询
   },
-})
+});
