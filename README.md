@@ -7,6 +7,12 @@
 - nodejs
 - yarn
 
+需要补充得知识
+ - [es6语法](http://es6.ruanyifeng.com)
+ - [react入门](http://www.ruanyifeng.com/blog/2015/03/react.html)
+ - [react redux入门] (http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html)
+ - [react router入门] (http://www.ruanyifeng.com/blog/2016/05/react_router.html?utm_source=tool.lu)
+ - [saga入门] (https://www.jianshu.com/p/89ed2a01a3db)
 ---
 
 TIP: - 代码里针对namespace和model文件名进行了忽略大小写的处理
