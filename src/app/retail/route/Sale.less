@@ -1,13 +1,4 @@
 @import "../../../core/style/common";
-.h {
-  height: 100px;
-  overflow-y: visible;
-}
-.hh {
-  border: #098FFF 1px solid;
-  min-height: 0;
-  height: 100px;
-}
 .input_20 {
   width: 50%;
 }
@@ -18,8 +9,17 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.fullHeightCol {
+  min-height: ~"calc(100vh - 240px)";
+  position: relative;
+}
+.listHeight {
+  min-height: ~"calc(100vh - 300px)";
+  position: relative;
+}
 // 网格
-.left_col  {
+.left_col {
+  .fullHeightCol;
   background: #F0F2F4;
   padding: 5px;
 }
@@ -43,6 +43,7 @@
   height: 60px;
 }
 .total {
+  color: #fefefe;
   height: 100%;
   display: flex;
   align-items: center;
@@ -62,4 +63,13 @@
   .flex_centerall;
   padding: 5px;
   background: #098FFF;
+}
+.checkOutBtn {
+  height: 100%;
+  width: 100%;
+  margin: 3px;
+}
+.removeBtn {
+  .redFont;
+  cursor: pointer;
 }

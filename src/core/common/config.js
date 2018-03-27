@@ -83,9 +83,9 @@ export default function getConfig(app) {
         name: '商品信息',
         component: dynamicWrapper(app, ['app/goods/model/Goods'], () => import('../../app/goods/route/Goods')),
       },
-      '/sale/billing': {
+      '/retail/sale': {
       name: '零售开单',
-      component: dynamicWrapper(app, ['app/sale/model/Sale'], () => import('../../app/sale/route/Sale')),
+      component: dynamicWrapper(app, ['app/retail/model/Sale'], () => import('../../app/retail/route/Sale')),
       },
       '/sys/organization': {
         name: '组织管理',
@@ -110,14 +110,14 @@ export default function getConfig(app) {
 	      name: '分步表单（填写转账信息）',
 	      component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step1')),
    	  },
-	  '/form/step-form/confirm': {
-	     name: '分步表单（确认转账信息）',
-	     component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step2')),
-	  },
-	  '/form/step-form/result': {
-	     name: '分步表单（完成）',
-	     component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step3')),
-	  },
+      '/form/step-form/confirm': {
+         name: '分步表单（确认转账信息）',
+         component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step2')),
+      },
+      '/form/step-form/result': {
+         name: '分步表单（完成）',
+         component: dynamicWrapper(app, ['form'], () => import('../../routes/Forms/StepForm/Step3')),
+      },
       '/form/advanced-form': {
         component: dynamicWrapper(app, ['models/form'], () => import('../../routes/Forms/AdvancedForm')),
       },

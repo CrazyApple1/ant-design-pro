@@ -19,6 +19,10 @@ export default {
     "/dict": {
       "target": "http://localhost/",
       "changeOrigin": true
+    },
+    "/sale": {
+      "target": "http://localhost/",
+      "changeOrigin": true
     }
   },
   alias: {

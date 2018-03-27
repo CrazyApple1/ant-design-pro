@@ -149,7 +149,7 @@ const data = [{
   id: 10001,
   name: '零售管理',
   icon: 'shopping-cart',
-  path: 'sale',
+  path: 'retail',
   order: 1,
   url: '',
   status: '1',
@@ -157,7 +157,7 @@ const data = [{
     {
       id: 100011,
       name: '零售开单',
-      path: 'billing',
+      path: 'sale',
       order: 1,
       url: '',
       status: '1',
