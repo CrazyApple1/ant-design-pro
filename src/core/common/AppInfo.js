@@ -1,3 +1,6 @@
-export const title = 'PKAQ Design';
-export const copyRight = ' 2018 PKAQ 体验技术部出品 ';
-export const description = 'power by Ant Design';
+module.exports = {
+  url: 'http://localhost',
+  copyRight: '2018 PKAQ',
+  title: 'PKAQ Design',
+  description: 'Power by PKAQ'
+};
