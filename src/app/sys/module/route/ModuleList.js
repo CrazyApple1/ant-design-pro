@@ -149,7 +149,7 @@ export default class OrgList extends Component {
   };
   render() {
     const { data, selectedRowKeys, loading } = this.props;
-
+    console.info(data);
     const statusMap = { '0000': 'error', '0001': 'success' };
     const status = { '0000': '已停用', '0001': '正常' };
 
@@ -160,6 +160,9 @@ export default class OrgList extends Component {
       }, {
         title: '图标',
         dataIndex: 'icon',
+        render: (text, record) => (
+          <Icon type={text} />
+        )
       }, {
         title: '上级模块',
         dataIndex: 'parentname',
@@ -228,7 +231,6 @@ export default class OrgList extends Component {
     ];
 
     const rowSelection = {
-      fixed: true,
       selectedRowKeys,
       onChange: selectedKeys => {
         this.handleSelectRows(selectedKeys);
