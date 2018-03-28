@@ -104,6 +104,12 @@ export default function getConfig(app) {
         import('../../app/sys/organization/route/Organization')
       ),
     },
+    '/sys/module': {
+      name: '模块管理',
+      component: dynamicWrapper(app, ['app/sys/module/model/Module'], () =>
+        import('../../app/sys/module/route/Module')
+      ),
+    },
     '/sys/account': {
       name: '用户管理',
       component: dynamicWrapper(app, ['app/sys/account/model/Account'], () =>

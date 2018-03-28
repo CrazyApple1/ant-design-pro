@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styles from './index.less';
 
+/**
+ * 内页100%高度
+ */
 export default class Page extends Component {
   render() {
     const { className, children, inner = false } = this.props;

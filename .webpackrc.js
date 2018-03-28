@@ -23,6 +23,10 @@ export default {
     "/sale": {
       "target": "http://localhost/",
       "changeOrigin": true
+    },
+    "/module": {
+      "target": "http://localhost/",
+      "changeOrigin": true
     }
   },
   alias: {

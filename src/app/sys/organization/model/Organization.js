@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
 import { message } from 'antd';
-import { sortOrg, editOrg, getOrg, listOrg, deleteOrg } from '../service/Organization';
+import { editOrg, getOrg, listOrg, deleteOrg } from '../service/Organization';
 
 export default modelExtend(model, {
   namespace: 'organization',

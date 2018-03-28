@@ -1,5 +1,6 @@
 import { queryNotices } from '../services/api';
 import { getUserMenu } from '../core/service/global';
+import {moudleFormatter} from "../core/utils/DataHelper";
 
 export default {
   namespace: 'global',
@@ -18,13 +19,15 @@ export default {
     // 获取菜单
     *fetchMenus({ payload }, { put, call }) {
       const response = yield call(getUserMenu, payload);
-      // 查询数据
-      yield put({
-        type: 'updateState',
-        payload: {
-          menus: response,
-        },
-      });
+      if(response && response.data){
+        // 查询数据
+        yield put({
+          type: 'updateState',
+          payload: {
+            menus: moudleFormatter(response.data),
+          },
+        });
+      }
     },
     *fetchNotices(_, { call, put }) {
       const data = yield call(queryNotices);
