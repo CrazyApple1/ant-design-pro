@@ -104,6 +104,7 @@ export default class DictDetail extends Component {
 
     const itemProps = {
       dispatch,
+      itemList: currentItem.items,
       mainId: currentItem.id,
       itemOperateType,
       itemValues,
@@ -132,7 +133,7 @@ export default class DictDetail extends Component {
         title: '是否可用',
         dataIndex: 'enable',
         render: (text, record) => {
-          return record.enable ? (
+          return record.status === '0001' ? (
             <Badge status="success" text="正常" />
           ) : (
             <Badge status="error" text="停用" />

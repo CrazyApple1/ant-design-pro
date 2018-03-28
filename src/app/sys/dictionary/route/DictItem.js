@@ -7,7 +7,19 @@ const FormItem = Form.Item;
 @Form.create()
 export default class DictItem extends React.PureComponent {
   // 校验key唯一
-  checkUnique = () => {};
+  checkUnique = (r, value, callback) => {
+    const { itemList, itemValues } = this.props;
+
+    const exist = itemList.find(v => {
+      return value === v.keyName && v.id !== itemValues.id;
+    });
+
+    if (exist) {
+      return callback('字典项已存在');
+    } else {
+      return callback();
+    }
+  };
   // 保存子表
   handleSubmit = () => {
     const { getFieldsValue, validateFields } = this.props.form;
@@ -60,7 +72,8 @@ export default class DictItem extends React.PureComponent {
           <FormItem label="字典项" {...formRowOne} style={{ marginBottom: 5 }}>
             {getFieldDecorator('keyName', {
               initialValue: itemValues.keyName,
-              rules: [{ required: true, message: '请输入Key' }],
+              validateTrigger: 'onBlur',
+              rules: [{ required: true, message: '请输入Key' }, {validator: this.checkUnique},],
             })(<Input />)}
           </FormItem>
           <FormItem label="字典值" {...formRowOne} style={{ marginBottom: 5 }}>

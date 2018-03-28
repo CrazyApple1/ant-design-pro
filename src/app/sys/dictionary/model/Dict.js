@@ -67,11 +67,12 @@ export default modelExtend(model, {
     // 新增/编辑字典项
     *editDictItem({ payload }, { call, put }) {
       const response = yield call(editDictItem, payload);
-      if (response) {
+      console.info(response);
+      if (response && response.data) {
         yield put({
           type: 'updateDictItem',
           payload: {
-            itemForm : {...payload},
+            formItem : response.data,
             itemOperateType: '',
           },
         });
@@ -117,24 +118,35 @@ export default modelExtend(model, {
     // 更新字典项
     updateDictItem(state, action) {
       let currentItem = state.currentItem;
-      currentItem.items.push(action.payload.itemForm);
+      // 更新/新增字典项列表
+      const exist = currentItem.items.find((v, i, array) => {
+        if (v.id === action.payload.formItem.id){
+          array[i] = action.payload.formItem;
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      if(!exist) {
+        currentItem.items.push(action.payload.formItem);
+      }
 
       return {
         ...state,
         itemOperateType: action.payload.itemOperateType,
-        currentItem:  currentItem
+        currentItem:  currentItem,
+        itemValues: {}
       };
     },
     // 移除已删除得数据项
     removeDictItem(state, action) {
       let currentItem = state.currentItem;
       const id = action.payload.id;
-      const items = currentItem.items.filter(i => id !== i.id);
+      currentItem.items = currentItem.items.filter(i => id !== i.id);
       return {
         ...state,
-        currentItem: {
-          items: items,
-        },
+        currentItem,
       };
     },
   },
