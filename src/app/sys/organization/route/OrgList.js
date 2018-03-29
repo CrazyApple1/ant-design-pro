@@ -86,7 +86,7 @@ export default class OrgList extends Component {
       dispatch({
         type: 'organization/delete',
         payload: {
-          ids: [record.id],
+          param: [record.id],
         },
         callback: () => {
           message.success('操作成功.');
@@ -105,7 +105,7 @@ export default class OrgList extends Component {
       dispatch({
         type: 'organization/delete',
         payload: {
-          ids: selectedRowKeys,
+          param: selectedRowKeys,
         },
       });
     }

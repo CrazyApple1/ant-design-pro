@@ -6,7 +6,6 @@ const ExtPage = ({ url, height }) => {
       src={url}
       width="100%"
       frameBorder={0}
-      sandbox="allow-scripts"
       height={height && height !== '' ? height : '100%'}
     />
   );

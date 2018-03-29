@@ -7,10 +7,10 @@ const Area = Input.TextArea;
 const TreeNode = TreeSelect.TreeNode;
 
 @Form.create()
-export default class OrgDetail extends Component {
+export default class ModuleDetail extends Component {
   componentDidMount() {
     // 加载树数据 - 只加载未停用状态的数据
-    console.info('load org detail');
+    console.info('load module detail');
   }
   // 关闭窗口
   handleCloseForm = () => {
@@ -100,29 +100,31 @@ export default class OrgDetail extends Component {
       >
         <Form>
           {/*第一行*/}
-          <Row>
-            <Col span={12}>
-              <FormItem label="名称" hasFeedback {...formItemLayout}>
-                {getFieldDecorator('name', {
-                  initialValue: currentItem.name,
-                  rules: [{ required: true, message: '请输入模块名称' }],
-                })(<Input />)}
-              </FormItem>
-            </Col>
-            <Col span={12}>
-              <FormItem label="编码" hasFeedback {...formItemLayout}>
-                {getFieldDecorator('code', {
-                  initialValue: currentItem.code,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请输入编码',
-                    },
-                  ],
-                })(<Input />)}
-              </FormItem>
-            </Col>
-          </Row>
+          <FormItem label="名称" hasFeedback {...formRowOne}>
+            {getFieldDecorator('name', {
+              initialValue: currentItem.name,
+              rules: [{ required: true, message: '请输入模块名称' }],
+            })(<Input />)}
+          </FormItem>
+          <FormItem label="path" hasFeedback {...formRowOne}>
+            {getFieldDecorator('path', {
+              initialValue: currentItem.path,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入path',
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
+          <FormItem label="icon" hasFeedback {...formRowOne}>
+            {getFieldDecorator('icon', {
+              initialValue: currentItem.icon,
+              rules: [{
+                  message: '模块图标',
+                }],
+            })(<Input />)}
+          </FormItem>
           {/*第二行*/}
           <FormItem label="上级节点" hasFeedback {...formRowOne}>
             {getFieldDecorator('parentid', {
@@ -151,7 +153,7 @@ export default class OrgDetail extends Component {
                   rules: [
                     {
                       type: 'number',
-                      message: '请输入编码',
+                      message: '显示顺序',
                     },
                   ],
                 })(<InputNumber />)}

@@ -1,7 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
 import { message } from 'antd';
-import { editOrg, getOrg, listOrg, deleteOrg } from '../service/Module';
+import { editModule, getModule, listModule, deleteModule } from '../service/Module';
 
 export default modelExtend(model, {
   namespace: 'module',
@@ -13,9 +13,9 @@ export default modelExtend(model, {
   },
   effects: {
     // 查询
-    *listOrg({ payload }, { call, put }) {
+    *listModule({ payload }, { call, put }) {
       // 查询数据
-      const response = yield call(listOrg, payload);
+      const response = yield call(listModule, payload);
       if (response && response.data) {
         yield put({
           type: 'saveData',
@@ -35,7 +35,7 @@ export default modelExtend(model, {
     },
     // 编辑按钮
     *edit({ payload }, { call, put }) {
-      const response = yield call(getOrg, payload);
+      const response = yield call(getModule, payload);
       if (response && response.data) {
         yield put({
           type: 'updateState',
@@ -48,7 +48,7 @@ export default modelExtend(model, {
     },
     // 保存一条模块信息
     *save({ payload }, { call, put }) {
-      const response = yield call(editOrg, payload);
+      const response = yield call(editModule, payload);
       if (response && response.data) {
         //  关闭窗口 - 提示成功 - 加载数据
         yield put({
@@ -73,7 +73,7 @@ export default modelExtend(model, {
     },
     // 更改可用状态
     *changeStatus({ payload }, { call, put }) {
-      const response = yield call(editOrg, payload);
+      const response = yield call(editModule, payload);
       if (response) {
         payload.record.status = payload.status;
         yield put({
@@ -85,7 +85,7 @@ export default modelExtend(model, {
     // 删除数据
     *delete({ payload, callback }, { call, put }) {
       // 查询数据
-      const response = yield call(deleteOrg, payload);
+      const response = yield call(deleteModule, payload);
       // 只有返回成功时才刷新
       if (response && response.success) {
         // 从当前数据对象中找到响应ID记录删除值

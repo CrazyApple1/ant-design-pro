@@ -26,11 +26,11 @@ const { Search } = { ...Input };
 @connect(({ loading }) => ({
   loading: loading.models.module,
 }))
-export default class OrgList extends Component {
+export default class ModuleList extends Component {
   // 加载模块列表
   componentDidMount() {
     this.props.dispatch({
-      type: 'module/listOrg',
+      type: 'module/listModule',
     });
   }
   // 新增
@@ -86,7 +86,7 @@ export default class OrgList extends Component {
       dispatch({
         type: 'module/delete',
         payload: {
-          ids: [record.id],
+          param: [record.id],
         },
         callback: () => {
           message.success('操作成功.');
@@ -105,7 +105,7 @@ export default class OrgList extends Component {
       dispatch({
         type: 'module/delete',
         payload: {
-          ids: selectedRowKeys,
+          param: selectedRowKeys,
         },
       });
     }
@@ -115,7 +115,7 @@ export default class OrgList extends Component {
   handleSearch = val => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'module/listOrg',
+      type: 'module/listModule',
       payload: val,
     });
   };
@@ -143,7 +143,7 @@ export default class OrgList extends Component {
       },
     ];
     this.props.dispatch({
-      type: 'module/sortOrg',
+      type: 'module/sortModule',
       payload: switchObj,
     });
   };
@@ -163,6 +163,9 @@ export default class OrgList extends Component {
         render: (text, record) => (
           <Icon type={text} />
         )
+      },{
+        title: 'Path',
+        dataIndex: 'path'
       }, {
         title: '上级模块',
         dataIndex: 'parentname',
