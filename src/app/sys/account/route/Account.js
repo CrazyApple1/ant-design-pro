@@ -4,7 +4,7 @@ import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } 
 import AccountList from './List';
 import Detail from './Detail';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
-
+import Page from 'components/Page'
 import styles from './Account.less';
 
 const FormItem = Form.Item;
@@ -187,9 +187,9 @@ export default class Account extends PureComponent {
         });
       },
     };
-
     return (
       <PageHeaderLayout title="用户信息管理">
+        <Page inner>
         <Row gutter={24}>
           {/* 左侧树 */}
           <Col xl={6} lg={6} md={6} sm={6} xs={6}>
@@ -227,6 +227,7 @@ export default class Account extends PureComponent {
         </Row>
         {/* 新增窗口 */}
         {modalVisible && <Detail {...modalProps} />}
+        </Page>
       </PageHeaderLayout>
     );
   }
