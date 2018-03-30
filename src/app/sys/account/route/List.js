@@ -8,7 +8,6 @@ class List extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleSelectRows([]);
   };
-
   // 行选事件
   handleSelectRows = rows => {
     const { dispatch } = this.props;
@@ -67,7 +66,7 @@ class List extends PureComponent {
   };
 
   render() {
-    const { selectedRowKeys, data: { list, pagination }, loading } = this.props;
+    const { selectedRowKeys, loading } = this.props;
 
     const columns = [
       {
@@ -119,7 +118,6 @@ class List extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
-      ...pagination,
     };
 
     const rowSelectionProps = {
@@ -150,9 +148,7 @@ class List extends PureComponent {
           bordered
           rowKey={record => record.key}
           rowSelection={rowSelectionProps}
-          dataSource={list}
           columns={columns}
-          pagination={paginationProps}
           onSelectRow={this.handleSelectRows}
           onChange={this.handleListChange}
         />

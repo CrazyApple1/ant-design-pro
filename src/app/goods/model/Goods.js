@@ -55,14 +55,5 @@ export default modelExtend(pageModel, {
 
       if (callback) callback();
     },
-  },
-
-  reducers: {
-    showModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: true };
-    },
-    hideModal(state) {
-      return { ...state, modalVisible: false };
-    },
-  },
+  }
 });

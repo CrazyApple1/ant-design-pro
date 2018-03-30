@@ -4,7 +4,8 @@ import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } 
 import AccountList from './List';
 import Detail from './Detail';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
-import Page from 'components/Page'
+import Page from 'components/Page';
+import { getTreeNode } from  'core/utils/DataHelper';
 import styles from './Account.less';
 
 const FormItem = Form.Item;
@@ -94,25 +95,29 @@ export default class Account extends PureComponent {
       },
     });
   };
-
+  // 渲染树节点
+  renderTreeNodes(data) {
+   return data.map(item => {
+      if (item.children) {
+        return (
+          <TreeNode title={item.name} key={item.id} value={item.id} >
+            {this.renderTreeNodes(item.children)}
+          </TreeNode>
+        );
+      }
+      return ( <TreeNode title={item.name} key={item.id} value={item.id} /> );
+    })
+  }
   // 左侧树
   renderCategoryTree() {
+    const { orgData } = this.props.account;
     return (
-      <Card bordered={false}>
+      <Card bordered={false} className={styles.redBorder}>
         <div className={styles.goodsInfoCategory}>
           <Icon type="tags" />归属部门
         </div>
         <Tree showLine defaultExpandedKeys={['021']} onSelect={this.onSelect}>
-          <TreeNode title="parent 1" key="0">
-            <TreeNode title="parent 1-0" key="01">
-              <TreeNode title="leaf" key="012" />
-              <TreeNode title="leaf" key="014" />
-            </TreeNode>
-          </TreeNode>
-          <TreeNode title="parent 1-2" key="03">
-            <TreeNode title="leaf" key="031" />
-            <TreeNode title="leaf" key="032" />
-          </TreeNode>
+          {this.renderTreeNodes(orgData)}
         </Tree>
       </Card>
     );
@@ -187,12 +192,13 @@ export default class Account extends PureComponent {
         });
       },
     };
+
     return (
       <PageHeaderLayout title="用户信息管理">
-        <Page inner>
-        <Row gutter={24}>
+        <Page inner className={styles.pageWrapper}>
+        <Row gutter={24} className={styles.flex_stretch}>
           {/* 左侧树 */}
-          <Col xl={6} lg={6} md={6} sm={6} xs={6}>
+          <Col xl={6} lg={6} md={6} sm={6} xs={6} className={styles.fullHeightCol}>
             {this.renderCategoryTree()}
           </Col>
           {/* 右侧列表 */}

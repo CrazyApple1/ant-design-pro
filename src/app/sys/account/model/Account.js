@@ -1,10 +1,12 @@
 import modelExtend from 'dva-model-extend';
 import { queryGoods, removeGoods, addGoods } from '../service/AccountService';
+import { listOrgByAttr } from '../../organization/service/Organization';
 import { pageModel } from 'core/common/BaseModel';
 
 export default modelExtend(pageModel, {
   namespace: 'account',
   state: {
+    orgData: [],
     currentItem: {},
     modalVisible: false,
     modalType: 'create',
@@ -15,16 +17,19 @@ export default modelExtend(pageModel, {
   effects: {
     // 查询
     *fetch({ payload }, { call, put }) {
-      // loading
-      yield put({ type: 'showLoading' });
       // 查询数据
-      const response = yield call(queryGoods, payload);
+      const userData = yield call(queryGoods, payload);
+      const treeData = yield call(listOrgByAttr, {status:'0001'});
+      console.info(treeData);
       yield put({
-        type: 'saveData',
-        payload: response,
+        type: 'updateState',
+        payload: {
+          data: {
+            list: userData.data
+          },
+          orgData: treeData.data
+        },
       });
-      // 取消loading
-      yield put({ type: 'hideLoading' });
     },
     // 新增
     *add({ payload, callback }, { call, put }) {
