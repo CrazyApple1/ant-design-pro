@@ -117,7 +117,7 @@ export default class Sale extends PureComponent {
         dataIndex: 'price',
         render: (text, record) => {
           const id = record.id;
-          return getFieldDecorator(id)(<InputNumber onBlur={() => this.priceChange()} />);
+          return getFieldDecorator(id)(<InputNumber min={0} onBlur={() => this.priceChange()} />);
         },
       },
       {

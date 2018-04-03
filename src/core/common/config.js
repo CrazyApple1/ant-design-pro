@@ -98,6 +98,12 @@ export default function getConfig(app) {
         import('../../app/retail/route/Sale')
       ),
     },
+    '/instock/instock': {
+      name: '采购入库单',
+      component: dynamicWrapper(app, ['app/instock/model/Instock'], () =>
+        import('../../app/instock/route/Instock')
+      ),
+    },
     '/sys/organization': {
       name: '组织管理',
       component: dynamicWrapper(app, ['app/sys/organization/model/Organization'], () =>
