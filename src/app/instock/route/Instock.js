@@ -3,8 +3,8 @@ import moment from 'moment';
 import { connect } from 'dva';
 import { Row, Col, Form, Table, Input, InputNumber, Button, Card, DatePicker, Divider} from 'antd';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
-import style from './Instock.less';
-import {Fragment} from "react";
+import style from './style.less';
+import TableForm from "./TableForm";
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -19,6 +19,19 @@ export default class Instock extends PureComponent {
   componentDidMount() {
     console.info('instock loaded');
   }
+  handleSave = () => {
+    const { getFieldsValue, validateFields } = this.props.form;
+
+    validateFields(errors => {
+      if (errors) {
+        return;
+      }
+      const data = {
+        ...getFieldsValue(),
+      };
+      console.info(data);
+    });
+  };
   // 表单保存
   // 子表新增
   // 编辑
@@ -27,42 +40,6 @@ export default class Instock extends PureComponent {
   render() {
     const { getFieldDecorator } = this.props.form;
 
-    const columns = [
-      {
-        title: '品名',
-        dataIndex: 'name',
-      },
-      {
-        title: '单位',
-        dataIndex: 'unit',
-      },
-      {
-        title: '数量',
-        dataIndex: 'num',
-      },
-      {
-        title: '入库单价',
-        dataIndex: 'price',
-        render: (text, record) => {
-          const id = record.id;
-          return getFieldDecorator(id)(<InputNumber onBlur={() => this.priceChange()} />);
-        },
-      },
-      {
-        title: '总价',
-        dataIndex: 'subtotal',
-        render: (text, record) => {
-          const id = record.id;
-          return getFieldDecorator(id)(<InputNumber onBlur={() => this.priceChange()} />);
-        },
-      },
-      {
-        title: '操作',
-        render: (text, record) => {
-          return '编辑 | 删除';
-        },
-      },
-    ];
     const formRowOne = {
       labelCol: { span: 6 },
       wrapperCol: { span: 18 },
@@ -75,7 +52,7 @@ export default class Instock extends PureComponent {
             <div>
               <Button> 挂单 </Button>
               <Divider type="vertical"/>
-              <Button type="primary"> 保存 </Button>
+              <Button type="primary" onClick={() => this.handleSave()}> 保存 </Button>
             </div>
           )}>
           {/*顶部已选列表*/}
@@ -91,7 +68,7 @@ export default class Instock extends PureComponent {
                 <Col span={6}>
                   <FormItem label="承运人" {...formRowOne}>
                     {getFieldDecorator('shiped_person', {
-                    })(<Input disabled/>)}
+                    })(<Input />)}
                   </FormItem>
                 </Col>
                 <Col span={6}>
@@ -113,18 +90,9 @@ export default class Instock extends PureComponent {
               </Row>
             </Card>
             <Card title="入库明细" extra={<Button icon="file-excel" type="danger"> 导入 </Button>}>
-              <Table
-                columns={columns}
-                pagination={false}
-                rowKey={record => record.id}
-              />
-            <Button
-              style={{ width: '100%', marginTop: 16, marginBottom: 8 }}
-              type="dashed"
-              icon="plus"
-            >
-              新增明细
-            </Button>
+              {getFieldDecorator('lines', {
+                initialValue: [],
+              })(<TableForm />)}
           </Card>
         </Form>
       </PageHeaderLayout>

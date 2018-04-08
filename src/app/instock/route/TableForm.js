@@ -65,6 +65,7 @@ export default class TableForm extends PureComponent {
     const newData = this.state.data.map(item => ({ ...item }));
     const target = this.getRowByKey(key, newData);
     if (target) {
+      console.info(e);
       target[fieldName] = e.target.value;
       this.setState({ data: newData });
     }
@@ -155,9 +156,9 @@ export default class TableForm extends PureComponent {
         render: (text, record) => {
           if (record.editable) {
             return (
-              <InputNumber
+              <Input
                 value={text}
-                min={0}
+                type="number"
                 onChange={e => this.handleFieldChange(e, 'num', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
                 placeholder="数量"
@@ -174,8 +175,9 @@ export default class TableForm extends PureComponent {
         render: (text, record) => {
           if (record.editable) {
             return (
-              <InputNumber
+              <Input
                 value={text}
+                type="number"
                 onChange={e => this.handleFieldChange(e, 'price', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
                 placeholder="入库单价"
@@ -192,8 +194,9 @@ export default class TableForm extends PureComponent {
         render: (text, record) => {
           if (record.editable) {
             return (
-              <InputNumber
+              <Input
                 value={text}
+                type="number"
                 onChange={e => this.handleFieldChange(e, 'subtotal', record.key)}
                 onKeyPress={e => this.handleKeyPress(e, record.key)}
                 placeholder="单项合计"
