@@ -65,7 +65,6 @@ export default class TableForm extends PureComponent {
     const newData = this.state.data.map(item => ({ ...item }));
     const target = this.getRowByKey(key, newData);
     if (target) {
-      console.info(e);
       target[fieldName] = e.target.value;
       this.setState({ data: newData });
     }

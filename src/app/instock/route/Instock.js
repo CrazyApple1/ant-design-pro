@@ -29,6 +29,11 @@ export default class Instock extends PureComponent {
       const data = {
         ...getFieldsValue(),
       };
+      // 保存
+      this.props.dispatch({
+        type: 'instock/saveInstock',
+        payload:  data
+      });
       console.info(data);
     });
   };
@@ -90,7 +95,7 @@ export default class Instock extends PureComponent {
               </Row>
             </Card>
             <Card title="入库明细" extra={<Button icon="file-excel" type="danger"> 导入 </Button>}>
-              {getFieldDecorator('lines', {
+              {getFieldDecorator('line', {
                 initialValue: [],
               })(<TableForm />)}
           </Card>
