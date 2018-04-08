@@ -27,6 +27,10 @@ export default {
     "/module": {
       "target": "http://localhost/",
       "changeOrigin": true
+    },
+    "/instock": {
+      "target": "http://localhost/",
+      "changeOrigin": true
     }
   },
   alias: {
