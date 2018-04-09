@@ -29,10 +29,10 @@ export default class Account extends PureComponent {
   onSelect = selectedKeys => {
     const { dispatch } = this.props;
     const values = {
-      category: selectedKeys[0],
+      deptId: selectedKeys[0],
     };
     dispatch({
-      type: 'account/fetch',
+      type: 'account/fetchUser',
       payload: values,
     });
   };
@@ -114,7 +114,7 @@ export default class Account extends PureComponent {
         <div className={styles.goodsInfoCategory}>
           <Icon type="tags" />归属部门
         </div>
-        <Tree showLine defaultExpandedKeys={['021']} onSelect={this.onSelect}>
+        <Tree showLine onSelect={this.onSelect}>
           {this.renderTreeNodes(orgData)}
         </Tree>
       </Card>
