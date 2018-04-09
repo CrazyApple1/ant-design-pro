@@ -155,7 +155,7 @@ export default class List extends PureComponent {
           loading={loading}
           bordered
           dataSource={list}
-          rowKey={record => record.key}
+          rowKey={record => record.id}
           rowSelection={rowSelectionProps}
           columns={columns}
           onSelectRow={this.handleSelectRows}

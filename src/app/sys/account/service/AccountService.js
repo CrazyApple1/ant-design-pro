@@ -15,3 +15,13 @@ export async function delUser(params) {
     },
   });
 }
+
+// 切换锁定状态
+export async function lockUser(params) {
+  return request('/account/lock', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}

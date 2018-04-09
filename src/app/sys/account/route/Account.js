@@ -46,13 +46,14 @@ export default class Account extends PureComponent {
     });
   };
   // 解锁/锁定
-  handleLockSwitch = (lock) => {
+  handleLockSwitch = (status) => {
     const {  account: { selectedRowKeys } } = this.props;
+    console.info(selectedRowKeys);
     this.props.dispatch({
-      type: 'account/switchLock',
+      type: 'account/lockSwitch',
       payload: {
         param: selectedRowKeys,
-        lock
+        status
       }
     })
   };
@@ -134,12 +135,16 @@ export default class Account extends PureComponent {
     return (
       <div>
         <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增用户</Button>
-        <Button icon="lock" type="normal" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(true)}>锁定</Button>
-        <Button icon="unlock" type="danger" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(false)}>解锁</Button>
+          {selectedRowKeys.length > 0 && (
+              <Button icon="lock" type="normal" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(1)}>锁定</Button>
+          )}
+          {selectedRowKeys.length > 0 && (
+              <Button icon="unlock" type="danger" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(0)}>解锁</Button>
+          )}
           {selectedRowKeys.length > 0 && (
             <span>
               <Popconfirm title="确定要删除所选用户吗?" placement="top" onConfirm={this.handleRemoveClick}>
-                <Button>删除用户</Button>
+                <Button style={{ marginLeft: 8 }} type="danger" icon="remove">删除用户</Button>
               </Popconfirm>
             </span>
           )}

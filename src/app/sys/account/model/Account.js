@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { listUser, delUser } from '../service/AccountService';
+import { listUser, delUser, lockUser } from '../service/AccountService';
 import { listOrgByAttr } from '../../organization/service/Organization';
 import { pageModel } from 'core/common/BaseModel';
 
@@ -50,9 +50,13 @@ export default modelExtend(pageModel, {
         type: 'saveData',
         payload: response,
       });
-
-
       if (callback) callback();
+    },
+    // 切换锁定状态
+    *lockSwitch({ payload }, { call, put }){
+      const response = yield call(lockUser, payload);
+      if (response && response.success) {
+      }
     },
     // 删除
     *remove({ payload, callback }, { call, put }) {
