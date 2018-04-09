@@ -41,26 +41,31 @@ export default class Account extends PureComponent {
     const { form, dispatch } = this.props;
     form.resetFields();
     dispatch({
-      type: 'account/fetch',
+      type: 'account/fetchUser',
       payload: {},
     });
   };
+  // 解锁/锁定
+  handleLockSwitch = (lock) => {
+    const {  account: { selectedRowKeys } } = this.props;
+    this.props.dispatch({
+      type: 'account/switchLock',
+      payload: {
+        param: selectedRowKeys,
+        lock
+      }
+    })
+  };
   // 删除事件
   handleRemoveClick = () => {
-    const { dispatch, goods: { selectedRowKeys } } = this.props;
+    const { dispatch, account: { selectedRowKeys } } = this.props;
     if (!selectedRowKeys) return;
 
     dispatch({
       type: 'account/remove',
       payload: {
-        key: selectedRowKeys,
-      },
-      callback: () => {
-        dispatch({
-          type: 'account/updateState',
-          payload: { selectedRowKeys: [] },
-        });
-      },
+        param: selectedRowKeys,
+      }
     });
   };
   // 搜索事件
@@ -123,6 +128,10 @@ export default class Account extends PureComponent {
 
   // 简单搜索条件
   renderSimpleForm() {
+    const {
+      selectedRowKeys
+    } = this.props.account;
+
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -154,30 +163,31 @@ export default class Account extends PureComponent {
             </Button>
             <Button
               icon="lock"
-              type="primary"
+              type="normal"
               style={{ marginLeft: 8 }}
-              onClick={() => this.handleModalVisible(true, 'create')}
+              onClick={() => this.handleLockSwitch(true)}
             >
               锁定
             </Button>
             <Button
-              type="unlock"
+              icon="unlock"
+              type="danger"
               style={{ marginLeft: 8 }}
-              onClick={() => this.handleModalVisible(true, 'create')}
+              onClick={() => this.handleLockSwitch(false)}
             >
               解锁
             </Button>
-            {/*{selectedRowKeys.length > 0 && (*/}
-              {/*<span>*/}
-                      {/*<Popconfirm*/}
-                        {/*title="确定要删除所选用户吗?"*/}
-                        {/*placement="top"*/}
-                        {/*onConfirm={this.handleRemoveClick}*/}
-                      {/*>*/}
-                        {/*<Button>删除用户</Button>*/}
-                      {/*</Popconfirm>*/}
-                    {/*</span>*/}
-            {/*)}*/}
+            {selectedRowKeys.length > 0 && (
+              <span>
+                      <Popconfirm
+                        title="确定要删除所选用户吗?"
+                        placement="top"
+                        onConfirm={this.handleRemoveClick}
+                      >
+                        <Button>删除用户</Button>
+                      </Popconfirm>
+                    </span>
+            )}
           </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>

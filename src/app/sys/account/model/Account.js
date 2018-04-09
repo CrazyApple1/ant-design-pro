@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { listUser } from '../service/AccountService';
+import { listUser, delUser } from '../service/AccountService';
 import { listOrgByAttr } from '../../organization/service/Organization';
 import { pageModel } from 'core/common/BaseModel';
 
@@ -56,14 +56,18 @@ export default modelExtend(pageModel, {
     },
     // 删除
     *remove({ payload, callback }, { call, put }) {
-     // const response = yield call(removeGoods, payload);
-
-      yield put({
-        type: 'saveData',
-        payload: response,
-      });
-
-
+     const response = yield call(delUser, payload);
+      if (response && response.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            data: {
+              list:  response.data
+            },
+            selectedRowKeys: [],
+          },
+        });
+      }
       if (callback) callback();
     },
   },
