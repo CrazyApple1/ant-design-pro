@@ -15,12 +15,23 @@ export default modelExtend(pageModel, {
     formValues: {},
   },
   effects: {
+    // 右侧按条件查询
+    *fetchUser({ payload }, { call, put}){
+      const userData = yield call(listUser, payload);
+      yield put({
+        type: 'updateState',
+        payload: {
+          data: {
+            list: userData.data
+          },
+        },
+      });
+    },
     // 查询
     *fetch({ payload }, { call, put }) {
       // 查询数据
       const userData = yield call(listUser, payload);
       const treeData = yield call(listOrgByAttr, {status:'0001'});
-      console.info(userData);
       yield put({
         type: 'updateState',
         payload: {

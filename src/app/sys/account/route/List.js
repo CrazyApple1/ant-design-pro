@@ -84,7 +84,7 @@ export default class List extends PureComponent {
         sorter: true,
       },{
         title: '帐号',
-        dataIndex: 'category',
+        dataIndex: 'account',
         render: val => <div style={{ textAlign: 'center' }}>{val}</div>,
       },{
         title: '手机',

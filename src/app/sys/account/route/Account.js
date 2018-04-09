@@ -76,9 +76,8 @@ export default class Account extends PureComponent {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-
       dispatch({
-        type: 'account/fetch',
+        type: 'account/fetchUser',
         payload: values,
       });
     });
@@ -130,13 +129,55 @@ export default class Account extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="帐号">
-              {getFieldDecorator('account_no')(<Input placeholder="输入帐号搜索" />)}
+              {getFieldDecorator('account')(<Input placeholder="输入帐号搜索" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="用户名称">
-              {getFieldDecorator('account_name')(<Input placeholder="输入用户名称搜索" />)}
+            <FormItem label="姓名">
+              {getFieldDecorator('name')(<Input placeholder="输入用户名称搜索" />)}
             </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="手机">
+              {getFieldDecorator('tel')(<Input placeholder="输入手机号搜索" />)}
+            </FormItem>
+          </Col>
+          </Row>
+          <Row>
+          <Col md={16}>
+            <Button
+              icon="plus"
+              type="primary"
+              onClick={() => this.handleModalVisible(true, 'create')}
+            >
+              新增用户
+            </Button>
+            <Button
+              icon="lock"
+              type="primary"
+              style={{ marginLeft: 8 }}
+              onClick={() => this.handleModalVisible(true, 'create')}
+            >
+              锁定
+            </Button>
+            <Button
+              type="unlock"
+              style={{ marginLeft: 8 }}
+              onClick={() => this.handleModalVisible(true, 'create')}
+            >
+              解锁
+            </Button>
+            {/*{selectedRowKeys.length > 0 && (*/}
+              {/*<span>*/}
+                      {/*<Popconfirm*/}
+                        {/*title="确定要删除所选用户吗?"*/}
+                        {/*placement="top"*/}
+                        {/*onConfirm={this.handleRemoveClick}*/}
+                      {/*>*/}
+                        {/*<Button>删除用户</Button>*/}
+                      {/*</Popconfirm>*/}
+                    {/*</span>*/}
+            {/*)}*/}
           </Col>
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
@@ -205,26 +246,6 @@ export default class Account extends PureComponent {
             <Card bordered={false}>
               <div className={styles.goodsInfoList}>
                 <div className={styles.goodsInfoListForm}>{this.renderSimpleForm()}</div>
-                <div className={styles.goodsInfoListOperator}>
-                  <Button
-                    icon="plus"
-                    type="primary"
-                    onClick={() => this.handleModalVisible(true, 'create')}
-                  >
-                    新增用户
-                  </Button>
-                  {selectedRowKeys.length > 0 && (
-                    <span>
-                      <Popconfirm
-                        title="确定要删除所选用户吗?"
-                        placement="top"
-                        onConfirm={this.handleRemoveClick}
-                      >
-                        <Button>删除用户</Button>
-                      </Popconfirm>
-                    </span>
-                  )}
-                </div>
                 <AccountList {...listPops} />
               </div>
             </Card>

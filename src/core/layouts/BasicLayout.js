@@ -6,7 +6,7 @@ import { connect } from 'dva';
 import { Route, Redirect, Switch, routerRedux } from 'dva/router';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
-import { enquireScreen } from 'enquire-js';
+import { enquireScreen, unenquireScreen } from 'enquire-js';
 import NProgress from 'nprogress';
 import GlobalHeader from 'components/GlobalHeader';
 import GlobalFooter from 'components/GlobalFooter';
@@ -96,7 +96,7 @@ export default class BasicLayout extends React.Component {
     };
   }
   componentDidMount() {
-    enquireScreen(mobile => {
+    this.enquireHandler = enquireScreen(mobile => {
       this.setState({
         isMobile: mobile,
       });
@@ -105,9 +105,11 @@ export default class BasicLayout extends React.Component {
       type: 'user/fetchCurrent',
     });
   }
-  // 页面title
-  getPageTitle(routerData) {
-    const { location } = this.props;
+  componentWillUnmount(){
+    unenquireScreen(this.enquireHandler);
+  }
+  getPageTitle() {
+    const { routerData, location } = this.props;
     const { pathname } = location;
     let title = 'Ant Design Pro';
     if (routerData[pathname] && routerData[pathname].name) {
