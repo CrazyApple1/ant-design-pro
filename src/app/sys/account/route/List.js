@@ -2,8 +2,13 @@ import React, { PureComponent } from 'react';
 import { Table, Alert, Divider } from 'antd';
 import styles from './List.less';
 import { getValue } from 'core/utils/utils';
+import {connect} from "dva";
+// 部门管理列表
+@connect(({ loading }) => ({
+  loading: loading.models.account,
+}))
+export default class List extends PureComponent {
 
-class List extends PureComponent {
   // 清除选择
   cleanSelectedKeys = () => {
     this.handleSelectRows([]);
@@ -66,25 +71,26 @@ class List extends PureComponent {
   };
 
   render() {
-    const { selectedRowKeys, loading } = this.props;
+    const { list, selectedRowKeys, loading } = this.props;
 
     const columns = [
-      {
-        title: '姓名',
-        dataIndex: 'name',
-        sorter: true,
-      },
-      {
-        title: '帐号',
-        dataIndex: 'category',
-        render: val => <div style={{ textAlign: 'center' }}>{val}</div>,
-      },
       {
         title: '编码',
         dataIndex: 'code',
         sorter: true,
-      },
-      {
+      },{
+        title: '姓名',
+        dataIndex: 'name',
+        sorter: true,
+      },{
+        title: '帐号',
+        dataIndex: 'category',
+        render: val => <div style={{ textAlign: 'center' }}>{val}</div>,
+      },{
+        title: '手机',
+        dataIndex: 'tel',
+        render: val => <div style={{ textAlign: 'center' }}>{val}</div>,
+      },{
         title: '性别',
         dataIndex: 'spec',
       },
@@ -121,7 +127,6 @@ class List extends PureComponent {
     };
 
     const rowSelectionProps = {
-      fixed: true,
       selectedRowKeys,
       onChange: selectedKeys => {
         this.handleSelectRows(selectedKeys);
@@ -146,6 +151,7 @@ class List extends PureComponent {
         <Table
           loading={loading}
           bordered
+          dataSource={list}
           rowKey={record => record.key}
           rowSelection={rowSelectionProps}
           columns={columns}
@@ -156,5 +162,3 @@ class List extends PureComponent {
     );
   }
 }
-
-export default List;

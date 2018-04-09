@@ -25,7 +25,6 @@ export default class Account extends PureComponent {
       type: 'account/fetch',
     });
   }
-
   // 树节点选择
   onSelect = selectedKeys => {
     const { dispatch } = this.props;
@@ -169,7 +168,7 @@ export default class Account extends PureComponent {
     const listPops = {
       dispatch,
       loading,
-      data,
+      list: data.list,
       selectedRowKeys,
     };
 
