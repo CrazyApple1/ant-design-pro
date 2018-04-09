@@ -6,7 +6,14 @@
   .fullHeightCol;
   background-color: transparent;
 }
-
+// card 标题区0边距
+.noPadding {
+  :global {
+    .ant-card-head-title,.ant-card-extra {
+      padding: 0;
+    }
+  }
+}
 .goodsInfoList {
   .goodsInfoListOperator {
     margin-bottom: 16px;

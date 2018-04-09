@@ -126,13 +126,40 @@ export default class Account extends PureComponent {
       </Card>
     );
   }
-
-  // 简单搜索条件
-  renderSimpleForm() {
+  renderLeftBtn() {
     const {
       selectedRowKeys
     } = this.props.account;
 
+    return (
+      <div>
+        <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增用户</Button>
+        <Button icon="lock" type="normal" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(true)}>锁定</Button>
+        <Button icon="unlock" type="danger" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(false)}>解锁</Button>
+          {selectedRowKeys.length > 0 && (
+            <span>
+              <Popconfirm title="确定要删除所选用户吗?" placement="top" onConfirm={this.handleRemoveClick}>
+                <Button>删除用户</Button>
+              </Popconfirm>
+            </span>
+          )}
+        </div>
+    )
+  }
+  renderRightBtn() {
+    return (
+      <div>
+        <Button type="primary" htmlType="submit">
+          查询
+        </Button>
+        <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
+          重置
+        </Button>
+      </div>
+    )
+  }
+  // 简单搜索条件
+  renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
@@ -153,58 +180,10 @@ export default class Account extends PureComponent {
             </FormItem>
           </Col>
           </Row>
-          <Row>
-          <Col md={16}>
-            <Button
-              icon="plus"
-              type="primary"
-              onClick={() => this.handleModalVisible(true, 'create')}
-            >
-              新增用户
-            </Button>
-            <Button
-              icon="lock"
-              type="normal"
-              style={{ marginLeft: 8 }}
-              onClick={() => this.handleLockSwitch(true)}
-            >
-              锁定
-            </Button>
-            <Button
-              icon="unlock"
-              type="danger"
-              style={{ marginLeft: 8 }}
-              onClick={() => this.handleLockSwitch(false)}
-            >
-              解锁
-            </Button>
-            {selectedRowKeys.length > 0 && (
-              <span>
-                      <Popconfirm
-                        title="确定要删除所选用户吗?"
-                        placement="top"
-                        onConfirm={this.handleRemoveClick}
-                      >
-                        <Button>删除用户</Button>
-                      </Popconfirm>
-                    </span>
-            )}
-          </Col>
-          <Col md={8} sm={24}>
-            <span className={styles.submitButtons}>
-              <Button type="primary" htmlType="submit">
-                查询
-              </Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>
-                重置
-              </Button>
-            </span>
-          </Col>
-        </Row>
+          <Card bordered={false} className={styles.noPadding} title={this.renderLeftBtn()} extra={this.renderRightBtn()}/>
       </Form>
     );
   }
-
   // 渲染界面
   render() {
     const { dispatch } = this.props;
