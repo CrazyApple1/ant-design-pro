@@ -56,7 +56,8 @@ export default class Account extends PureComponent {
       }
     })
   };
-  // 删除事件
+
+  // 批量删除
   handleRemoveClick = () => {
     const { dispatch, account: { selectedRowKeys } } = this.props;
     if (!selectedRowKeys) return;

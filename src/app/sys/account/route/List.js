@@ -3,6 +3,7 @@ import { Table, Alert, Divider } from 'antd';
 import styles from './List.less';
 import { getValue } from 'core/utils/utils';
 import {connect} from "dva";
+import {message} from "antd/lib/index";
 // 部门管理列表
 @connect(({ loading }) => ({
   loading: loading.models.account,
@@ -22,15 +23,6 @@ export default class List extends PureComponent {
     });
   };
 
-  // 删除事件
-  handleDeleteClick = selectKey => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'account/remove',
-      payload: { key: [selectKey.key] },
-    });
-  };
-
   // 编辑事件
   handleEditClick = record => {
     const { dispatch } = this.props;
@@ -43,7 +35,18 @@ export default class List extends PureComponent {
       },
     });
   };
-
+  // 单条删除
+  handleDeleteClick = record => {
+    this.props.dispatch({
+      type: 'account/remove',
+      payload: {
+        param: [record.id],
+      },
+      callback: () => {
+        message.success('操作成功.');
+      },
+    });
+  };
   // 表格动作触发事件
   handleListChange = (pagination, filtersArg, sorter) => {
     const { dispatch, formValues } = this.props;
