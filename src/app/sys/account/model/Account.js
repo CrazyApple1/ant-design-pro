@@ -42,16 +42,6 @@ export default modelExtend(pageModel, {
         },
       });
     },
-    // 新增
-    *add({ payload, callback }, { call, put }) {
-     // const response = yield call(addGoods, payload);
-
-      yield put({
-        type: 'saveData',
-        payload: response,
-      });
-      if (callback) callback();
-    },
     // 切换锁定状态
     *lockSwitch({ payload }, { call, put }){
       const response = yield call(lockUser, payload);

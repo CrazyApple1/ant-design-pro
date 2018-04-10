@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import AccountList from './List';
-import Detail from './Detail';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 import Page from 'components/Page';
 import { getTreeNode } from  'core/utils/DataHelper';
 import styles from './Account.less';
+import AOEForm from "./AOEForm";
 
 const FormItem = Form.Item;
 const { TreeNode } = { ...Tree };
@@ -93,7 +93,7 @@ export default class Account extends PureComponent {
   handleModalVisible = () => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'account/showModal',
+      type: 'account/updateState',
       payload: {
         modalType: 'create',
         currentItem: {},
@@ -210,22 +210,11 @@ export default class Account extends PureComponent {
 
     const modalProps = {
       item: modalType === 'create' ? {} : currentItem,
+      modalType,
       visible: modalVisible,
+      dispatch,
       maskClosable: false,
-      title: `${modalType === 'create' ? '新增用户' : '编辑用户'}`,
-      wrapClassName: 'vertical-center-modal',
-      onOk(detailData) {
-        dispatch({
-          type: 'account/add',
-          payload: detailData,
-        });
-        message.success('添加成功');
-      },
-      onCancel() {
-        dispatch({
-          type: 'account/hideModal',
-        });
-      },
+      title: `${modalType === 'create' ? '新增用户' : '编辑用户'}`
     };
 
     return (
@@ -247,7 +236,7 @@ export default class Account extends PureComponent {
           </Col>
         </Row>
         {/* 新增窗口 */}
-        {modalVisible && <Detail {...modalProps} />}
+        {'' !== modalType && <AOEForm {...modalProps} />}
         </Page>
       </PageHeaderLayout>
     );
