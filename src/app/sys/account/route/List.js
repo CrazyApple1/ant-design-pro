@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Table, Alert, Divider } from 'antd';
+import { Table, Alert, Divider, Badge } from 'antd';
 import styles from './List.less';
 import { getValue } from 'core/utils/utils';
 import {connect} from "dva";
@@ -75,6 +75,8 @@ export default class List extends PureComponent {
 
   render() {
     const { list, selectedRowKeys, loading } = this.props;
+    const statusMap = { true: 'error', false: 'success' };
+    const status = { true: '已锁定', false: '正常' };
 
     const columns = [
       {
@@ -98,9 +100,12 @@ export default class List extends PureComponent {
         dataIndex: 'spec',
       },
       {
-        title: '备注',
-        dataIndex: 'qrcode',
+        title: '状态',
+        dataIndex: 'locked',
         sorter: true,
+        render: text => {
+          return <Badge status={statusMap[text]} text={status[text]} />;
+        },
       },
       {
         title: '最后登录时间',
@@ -157,6 +162,9 @@ export default class List extends PureComponent {
           dataSource={list}
           rowKey={record => record.id}
           rowSelection={rowSelectionProps}
+          rowClassName={record => {
+            return record.locked ? styles.disabled : styles.enabled;
+          }}
           columns={columns}
           onSelectRow={this.handleSelectRows}
           onChange={this.handleListChange}

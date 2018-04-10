@@ -117,7 +117,7 @@ export default class Account extends PureComponent {
   renderCategoryTree() {
     const { orgData } = this.props.account;
     return (
-      <Card bordered={false} className={styles.redBorder}>
+      <Card className={styles.leftTree}>
         <div className={styles.goodsInfoCategory}>
           <Icon type="tags" />归属部门
         </div>
@@ -230,7 +230,7 @@ export default class Account extends PureComponent {
 
     return (
       <PageHeaderLayout title="用户信息管理">
-        <Page inner className={styles.pageWrapper}>
+        <Page inner>
         <Row gutter={24} className={styles.flex_stretch}>
           {/* 左侧树 */}
           <Col xl={6} lg={6} md={6} sm={6} xs={6} className={styles.fullHeightCol}>
