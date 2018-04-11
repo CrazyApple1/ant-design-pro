@@ -1,11 +1,24 @@
 import { stringify } from 'qs';
 import request from 'core/utils/request';
+import { getNoUndefinedString } from 'core/utils/utils';
 
 // 查询用户列表
 export async function listUser(params) {
   return request(`/account/list?${stringify(params)}`);
 }
-
+// 根据id获取用户信息
+export async function getUser(params) {
+  return request(`/account/get/${getNoUndefinedString(params.id)}`);
+}
+//保存用户信息
+export async function saveUser(params) {
+  return request('/account/save', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
 // 根据ID删除用户
 export async function delUser(params) {
   return request('/account/del', {

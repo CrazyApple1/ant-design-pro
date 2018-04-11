@@ -196,7 +196,7 @@ export default class Account extends PureComponent {
       loading,
       data,
       selectedRowKeys,
-      modalVisible,
+      orgData,
       modalType,
       currentItem,
     } = this.props.account;
@@ -210,8 +210,8 @@ export default class Account extends PureComponent {
 
     const modalProps = {
       item: modalType === 'create' ? {} : currentItem,
+      orgData,
       modalType,
-      visible: modalVisible,
       dispatch,
       maskClosable: false,
       title: `${modalType === 'create' ? '新增用户' : '编辑用户'}`

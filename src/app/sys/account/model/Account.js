@@ -1,16 +1,15 @@
 import modelExtend from 'dva-model-extend';
-import { listUser, delUser, lockUser } from '../service/AccountService';
+import { listUser, delUser, lockUser, saveUser, getUser } from '../service/AccountService';
 import { listOrgByAttr } from '../../organization/service/Organization';
 import { pageModel } from 'core/common/BaseModel';
+import { message } from 'antd';
 
 export default modelExtend(pageModel, {
   namespace: 'account',
   state: {
     orgData: [],
     currentItem: {},
-    modalVisible: false,
-    modalType: 'create',
-    expandForm: false,
+    modalType: '',
     selectedRowKeys: [],
     formValues: {},
   },
@@ -26,6 +25,45 @@ export default modelExtend(pageModel, {
           },
         },
       });
+    },
+    // 编辑按钮
+    *edit({ payload }, { call, put }) {
+      const response = yield call(getUser, payload);
+      if (response && response.data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: 'edit',
+            currentItem: response.data,
+          },
+        });
+      }
+    },
+    // 保存提交
+    *save({ payload }, { call, put }) {
+      const response = yield call(saveUser, payload);
+      if (response && response.data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: '',
+            currentItem: {},
+            data: {
+              list: response.data
+            },
+          },
+        });
+        message.success('操作成功');
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: '',
+            currentItem: {},
+          },
+        });
+        message.success('操作失败');
+      }
     },
     // 查询
     *fetch({ payload }, { call, put }) {

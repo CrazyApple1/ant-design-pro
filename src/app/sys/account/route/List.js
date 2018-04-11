@@ -4,6 +4,7 @@ import styles from './List.less';
 import { getValue } from 'core/utils/utils';
 import {connect} from "dva";
 import {message} from "antd/lib/index";
+import {notification} from "antd/lib/index";
 // 部门管理列表
 @connect(({ loading }) => ({
   loading: loading.models.account,
@@ -23,17 +24,20 @@ export default class List extends PureComponent {
     });
   };
 
-  // 编辑事件
+  // 编辑
   handleEditClick = record => {
-    const { dispatch } = this.props;
-
-    dispatch({
-      type: 'account/showModal',
-      payload: {
-        modalType: 'update',
-        currentItem: record,
-      },
-    });
+    console.info(record);
+    if (record.id) {
+      this.props.dispatch({
+        type: 'account/edit',
+        payload: {
+          modalType: 'edit',
+          id: record.id,
+        },
+      });
+    } else {
+      notification.error('没有选择记录');
+    }
   };
   // 单条删除
   handleDeleteClick = record => {

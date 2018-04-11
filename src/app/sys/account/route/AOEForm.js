@@ -38,10 +38,41 @@ export default class AOEForm extends Component {
       });
     });
   };
+  // 渲染树节点
+  renderTreeNodes = data => {
+    return data
+      .map(item => {
+        if ('0001' === item.status) {
+          if (item.children) {
+            return (
+              <TreeNode
+                title={item.name}
+                pathname={item.pathname ? item.pathname : item.name}
+                key={item.id}
+                value={item.id}
+              >
+                {this.renderTreeNodes(item.children)}
+              </TreeNode>
+            );
+          }
+          return (
+            <Node
+              title={item.name}
+              pathname={item.pathname ? item.pathname : item.name}
+              key={item.id}
+              value={item.id}
+            />
+          );
+        } else {
+          return null;
+        }
+      })
+      .filter(item => (item ? item : false));
+  };
   // 渲染界面
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { modalType, item, data } = this.props;
+    const { modalType, item, orgData } = this.props;
     const cmView = modalType === 'view';
 
     const formItemLayout = {
@@ -115,6 +146,7 @@ export default class AOEForm extends Component {
                 treeNodeLabelProp="pathname"
                 placeholder="请选择所属部门节点"
               >
+                {this.renderTreeNodes(orgData)}
               </TreeSelect>
             )}
           </FormItem>
@@ -123,7 +155,7 @@ export default class AOEForm extends Component {
             <Col span={12}>
               <FormItem label="电话" hasFeedback {...formItemLayout}>
                 {getFieldDecorator('tel', {
-                  initialValue: item.orders,
+                  initialValue: item.tel,
                   rules: [
                     {
                       type: 'number',
@@ -136,7 +168,7 @@ export default class AOEForm extends Component {
             <Col span={12}>
               <FormItem label="邮箱" hasFeedback {...formItemLayout}>
                 {getFieldDecorator('email', {
-                  initialValue: item.orders,
+                  initialValue: item.email,
                   rules: [
                     {
                       type: 'email',
@@ -150,7 +182,7 @@ export default class AOEForm extends Component {
           <FormItem label="是否锁定" hasFeedback {...formRowOne}>
             {getFieldDecorator('locked', {
               valuePropName: 'checked',
-              initialValue: item.locked,
+              initialValue: !!item.locked,
             })(<Switch checkedChildren="启用" unCheckedChildren="锁定" />)}
           </FormItem>
           {/*第四行*/}
