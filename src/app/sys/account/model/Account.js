@@ -16,12 +16,18 @@ export default modelExtend(pageModel, {
   effects: {
     // 右侧按条件查询
     *fetchUser({ payload }, { call, put}){
-      const userData = yield call(listUser, payload);
+      const response = yield call(listUser, payload);
+      console.info(response);
+
       yield put({
         type: 'updateState',
         payload: {
           data: {
-            list: userData.data
+            list: response.data.data,
+            pagination:{
+              total: response.data.total,
+              current: response.data.current
+            }
           },
         },
       });
@@ -49,7 +55,11 @@ export default modelExtend(pageModel, {
             modalType: '',
             currentItem: {},
             data: {
-              list: response.data
+              list: response.data.data,
+              pagination:{
+                total: response.data.total,
+                current: response.data.current
+              }
             },
           },
         });
@@ -70,11 +80,16 @@ export default modelExtend(pageModel, {
       // 查询数据
       const userData = yield call(listUser, payload);
       const treeData = yield call(listOrgByAttr, {status:'0001'});
+      console.info(userData);
       yield put({
         type: 'updateState',
         payload: {
           data: {
-            list: userData.data
+            list: userData.data.data,
+            pagination:{
+              total: userData.data.total,
+              current: userData.data.current
+            }
           },
           orgData: treeData.data
         },
@@ -94,7 +109,11 @@ export default modelExtend(pageModel, {
           type: 'updateState',
           payload: {
             data: {
-              list:  response.data
+              list: response.data.data,
+              pagination:{
+                total: response.data.total,
+                current: response.data.current
+              }
             },
             selectedRowKeys: [],
           },
