@@ -78,7 +78,7 @@ export default class List extends PureComponent {
   };
 
   render() {
-    const { list, selectedRowKeys, loading } = this.props;
+    const { list, pagination, selectedRowKeys, loading } = this.props;
     const statusMap = { true: 'error', false: 'success' };
     const status = { true: '已锁定', false: '正常' };
 
@@ -136,6 +136,7 @@ export default class List extends PureComponent {
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
+      ...pagination,
     };
 
     const rowSelectionProps = {
@@ -169,6 +170,7 @@ export default class List extends PureComponent {
           rowClassName={record => {
             return record.locked ? styles.disabled : styles.enabled;
           }}
+          pagination={paginationProps}
           columns={columns}
           onSelectRow={this.handleSelectRows}
           onChange={this.handleListChange}

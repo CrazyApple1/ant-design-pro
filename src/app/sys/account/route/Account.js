@@ -205,6 +205,7 @@ export default class Account extends PureComponent {
       dispatch,
       loading,
       list: data.list,
+      pagination: data.pagination,
       selectedRowKeys,
     };
 
