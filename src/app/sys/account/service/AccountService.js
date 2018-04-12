@@ -10,6 +10,15 @@ export async function listUser(params) {
 export async function getUser(params) {
   return request(`/account/get/${getNoUndefinedString(params.id)}`);
 }
+// 校验编码唯一性
+export async function checkUnique(params) {
+  return request('/account/checkUnique', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
 //保存用户信息
 export async function saveUser(params) {
   return request('/account/save', {

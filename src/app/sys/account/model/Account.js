@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { listUser, delUser, lockUser, saveUser, getUser } from '../service/AccountService';
+import { listUser, delUser, lockUser, saveUser, getUser, checkUnique } from '../service/AccountService';
 import { listOrgByAttr } from '../../organization/service/Organization';
 import { pageModel } from 'core/common/BaseModel';
 import { message } from 'antd';
@@ -14,11 +14,14 @@ export default modelExtend(pageModel, {
     formValues: {},
   },
   effects: {
+    // 校验编码唯一性
+    *checkUnique({ payload }, { call }) {
+      return yield call(checkUnique, payload);
+    },
+
     // 右侧按条件查询
     *fetchUser({ payload }, { call, put}){
       const response = yield call(listUser, payload);
-      console.info(response);
-
       yield put({
         type: 'updateState',
         payload: {
