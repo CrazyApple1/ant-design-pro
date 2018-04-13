@@ -186,8 +186,8 @@ export default class DictDetail extends Component {
         </Row>
         <Form className={style.dict_form_item} layout="horizontal">
           <FormItem label="归属分类" {...formRowOne} style={{ marginBottom: 6 }}>
-            {getFieldDecorator('parentid', {
-              initialValue: currentItem.parentid,
+            {getFieldDecorator('parentId', {
+              initialValue: currentItem.parentId,
               rules: [
                 {
                   required: true,
@@ -195,7 +195,7 @@ export default class DictDetail extends Component {
                 },
               ],
             })(
-              <Select disabled={'' === operateType || currentItem.parentid === '0'}>
+              <Select disabled={'' === operateType || currentItem.parentId === '0'}>
                 {options}
               </Select>
             )}

@@ -168,12 +168,12 @@ export default class ModuleList extends Component {
         dataIndex: 'path'
       }, {
         title: '上级模块',
-        dataIndex: 'parentname',
+        dataIndex: 'parentName',
       }, {
         title: '排序',
         dataIndex: 'orders',
         render: (text, record) => {
-          const brother = getNodeBorther(this.props.data, record.parentid);
+          const brother = getNodeBorther(this.props.data, record.parentId);
           const size = brother.length;
           const index = brother.indexOf(record);
           return (

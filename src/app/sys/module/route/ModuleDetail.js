@@ -30,7 +30,7 @@ export default class ModuleDetail extends Component {
             return (
               <TreeNode
                 title={item.name}
-                pathname={item.pathname ? item.pathname : item.name}
+                pathName={item.pathName ? item.pathName : item.name}
                 key={item.id}
                 value={item.id}
               >
@@ -41,7 +41,7 @@ export default class ModuleDetail extends Component {
           return (
             <Node
               title={item.name}
-              pathname={item.pathname ? item.pathname : item.name}
+              pathName={item.pathName ? item.pathName : item.name}
               key={item.id}
               value={item.id}
             />
@@ -127,8 +127,8 @@ export default class ModuleDetail extends Component {
           </FormItem>
           {/*第二行*/}
           <FormItem label="上级节点" hasFeedback {...formRowOne}>
-            {getFieldDecorator('parentid', {
-              initialValue: currentItem.parentid,
+            {getFieldDecorator('parentId', {
+              initialValue: currentItem.parentId,
             })(
               <TreeSelect
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
@@ -136,10 +136,10 @@ export default class ModuleDetail extends Component {
                 allowClear
                 showSearch
                 treeNodeFilterProp="title"
-                treeNodeLabelProp="pathname"
+                treeNodeLabelProp="pathName"
                 placeholder="请选择上级节点"
               >
-                <Node title="根节点" pathname="根节点" key="0" value="0" />
+                <Node title="根节点" pathName="根节点" key="0" value="0" />
                 {this.renderTreeNodes(data)}
               </TreeSelect>
             )}

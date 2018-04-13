@@ -18,7 +18,7 @@ export default class DictGrid extends PureComponent {
   // 行点击事件
   handleOnRowClick = record => {
     // 根节点不加载
-    if (record.parentid === 0) {
+    if (record.parentId === 0) {
       return;
     }
     const { dispatch } = this.props;
@@ -70,7 +70,7 @@ export default class DictGrid extends PureComponent {
         title: '',
         render: (text, record) =>
           // 根分类不可进行删除
-          '0' === record.parentid ? (
+          '0' === record.parentId ? (
             ''
           ) : (
             <a onClick={e => this.handleDelete(record)}>
