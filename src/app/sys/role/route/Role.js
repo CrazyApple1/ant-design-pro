@@ -2,8 +2,7 @@ import React, { PureComponent } from 'react';
 import { Card } from 'antd';
 import { connect } from 'dva';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
-
-import RoleGrid from './RoleGrid';
+import List from './index';
 import RoleModule from './RoleModule';
 import RoleUser from './RoleUser';
 import RoleConfig from './RoleConfig';
@@ -26,12 +25,14 @@ export default class Role extends PureComponent {
 
   render() {
     const { dispatch, loading } = this.props;
-    const { data, operateType, currentItem, userData, moduleData, configData } = this.props.role;
+    const { data, operateType, currentItem, userData, moduleData, configData, selectedRowKeys } = this.props.role;
 
-    const roleGridProps = {
+   const listPops = {
       dispatch,
       loading,
-      data,
+      list: data.list,
+      pagination: data.pagination,
+      selectedRowKeys,
     };
 
     const modalProps = {
@@ -43,7 +44,7 @@ export default class Role extends PureComponent {
     return (
       <PageHeaderLayout title="角色授权管理">
         <Card>
-          <RoleGrid {...roleGridProps} />
+          <List {...listPops} />
         </Card>
         {operateType === 'Module' && (
           <RoleModule {...modalProps} data={moduleData} handleCancel={() => this.handleCancel()} />

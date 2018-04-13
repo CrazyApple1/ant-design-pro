@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { model } from 'core/common/BaseModel';
+import { pageModel } from 'core/common/BaseModel';
 import {
   list,
   listModulebyRoleId,
@@ -7,11 +7,12 @@ import {
   listUserByRoleId,
 } from '../service/RoleService';
 // 角色授权管理model
-export default modelExtend(model, {
+export default modelExtend(pageModel, {
   namespace: 'role',
   state: {
     currentItem: {},
     operateType: '',
+    selectedRowKeys: [],
     moduleData: {
       data: [],
       checked: [],
@@ -27,8 +28,16 @@ export default modelExtend(model, {
     *listRole({ payload }, { call, put }) {
       const response = yield call(list, payload);
       yield put({
-        type: 'saveData',
-        payload: response,
+        type: 'updateState',
+        payload: {
+          data: {
+            list: response.data.data,
+            pagination:{
+              total: response.data.total,
+              current: response.data.current
+            }
+          },
+        },
       });
     },
     // 加载模块授权列表

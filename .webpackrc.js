@@ -35,6 +35,10 @@ export default {
     "/account": {
       "target": "http://localhost/",
       "changeOrigin": true
+    },
+    "/role": {
+      "target": "http://localhost/",
+      "changeOrigin": true
     }
   },
   alias: {

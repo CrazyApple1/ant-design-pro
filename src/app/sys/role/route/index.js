@@ -23,21 +23,41 @@ export default class RoleGrid extends PureComponent {
     });
   };
 
-  render() {
-    const { data, loading } = this.props;
+  // 清除选择
+  cleanSelectedKeys = () => {
+    this.handleSelectRows([]);
+  };
+  // 行选事件
+  handleSelectRows = rows => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'account/updateState',
+      payload: { selectedRowKeys: rows },
+    });
+  };
 
+  render() {
+    const { list, pagination, selectedRowKeys, loading } = this.props;
+
+    const paginationProps = {
+      showSizeChanger: true,
+      showQuickJumper: true,
+      ...pagination,
+    };
+    const rowSelectionProps = {
+      selectedRowKeys,
+      onChange: selectedKeys => {
+        this.handleSelectRows(selectedKeys);
+      },
+    };
     const column = [
       {
         title: '角色名称',
-        dataIndex: 'roleName',
+        dataIndex: 'name',
       },
       {
         title: '角色编码',
-        dataIndex: 'roleCode',
-      },
-      {
-        title: '上级角色',
-        dataIndex: 'parentName',
+        dataIndex: 'code',
       },
       {
         title: '模块授权',
@@ -76,7 +96,14 @@ export default class RoleGrid extends PureComponent {
 
     return (
       <div>
-        <Table dataSource={data} columns={column} loading={loading} rowKey={record => record.id} />
+        <Table  pagination={paginationProps}
+                bordered
+                rowKey={record => record.id}
+                rowSelection={rowSelectionProps}
+                dataSource={list}
+                columns={column}
+                loading={loading}
+                rowKey={record => record.id} />
       </div>
     );
   }

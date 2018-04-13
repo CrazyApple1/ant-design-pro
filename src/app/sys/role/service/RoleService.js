@@ -3,7 +3,7 @@ import request from 'core/utils/request';
 
 // 查询权限列表
 export async function list(params) {
-  return request(`/role/listRole?${stringify(params)}`);
+  return request(`/role/list?${stringify(params)}`);
 }
 // 查询授权菜单列表
 export async function listModulebyRoleId(params) {
