@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Tree, Row, Col, Card, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
+import { Tree, Row, Col, Card, Form, Input, Icon, Button, Popconfirm } from 'antd';
 import AccountList from './List';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 import Page from 'components/Page';
@@ -48,7 +48,6 @@ export default class Account extends PureComponent {
   // 解锁/锁定
   handleLockSwitch = (status) => {
     const {  account: { selectedRowKeys } } = this.props;
-    console.info(selectedRowKeys);
     this.props.dispatch({
       type: 'account/lockSwitch',
       payload: {

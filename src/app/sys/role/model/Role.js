@@ -2,10 +2,16 @@ import modelExtend from 'dva-model-extend';
 import { pageModel } from 'core/common/BaseModel';
 import {
   list,
+  saveRole,
+  delRole,
+  lockRole,
+  checkUnique,
+  getRole,
   listModulebyRoleId,
   getDictItemByRoleId,
   listUserByRoleId,
 } from '../service/RoleService';
+import {message} from "antd/lib/index";
 // 角色授权管理model
 export default modelExtend(pageModel, {
   namespace: 'role',
@@ -25,9 +31,14 @@ export default modelExtend(pageModel, {
     configData: [],
   },
   effects: {
+    // 校验编码唯一性
+    *checkUnique({ payload }, { call }) {
+      return yield call(checkUnique, payload);
+    },
     // 加载权限列表
     *listRole({ payload }, { call, put }) {
       const response = yield call(list, payload);
+      console.info(response);
       yield put({
         type: 'updateState',
         payload: {
@@ -40,6 +51,55 @@ export default modelExtend(pageModel, {
           },
         },
       });
+    },
+    // 切换锁定状态
+    *lockSwitch({ payload }, { call }){
+      const response = yield call(lockRole, payload);
+      if (response && response.success) {
+      }
+    },
+    // 编辑按钮
+    *edit({ payload }, { call, put }) {
+      const response = yield call(getRole, payload);
+      if (response && response.data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: 'edit',
+            currentItem: response.data,
+          },
+        });
+      }
+    },
+    // 保存提交
+    *save({ payload }, { call, put }) {
+      const response = yield call(saveRole, payload);
+      if (response && response.data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: '',
+            currentItem: {},
+            data: {
+              list: response.data.data,
+              pagination:{
+                total: response.data.total,
+                current: response.data.current
+              }
+            },
+          },
+        });
+        message.success('操作成功');
+      } else {
+        yield put({
+          type: 'updateState',
+          payload: {
+            modalType: '',
+            currentItem: {},
+          },
+        });
+        message.success('操作失败');
+      }
     },
     // 加载模块授权列表
     *listModule({ payload }, { call, put }) {
@@ -77,5 +137,26 @@ export default modelExtend(pageModel, {
         },
       });
     },
+    // 删除
+    *remove({ payload, callback }, { call, put }) {
+      const response = yield call(delRole, payload);
+      if (response && response.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            data: {
+              list: response.data.data,
+              pagination:{
+                total: response.data.total,
+                current: response.data.current
+              }
+            },
+            selectedRowKeys: [],
+          },
+        });
+      }
+      if (callback) callback();
+    },
+    // -- end
   },
 });

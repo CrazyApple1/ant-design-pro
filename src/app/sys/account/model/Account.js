@@ -18,7 +18,6 @@ export default modelExtend(pageModel, {
     *checkUnique({ payload }, { call }) {
       return yield call(checkUnique, payload);
     },
-
     // 右侧按条件查询
     *fetchUser({ payload }, { call, put}){
       const response = yield call(listUser, payload);

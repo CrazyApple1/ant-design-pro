@@ -14,12 +14,13 @@ export default class AOEForm extends Component {
   // 校验角色编码唯一性
   checkCode = (rule, value, callback) => {
     const { getFieldValue } = this.props.form;
-    const account = getFieldValue('code');
+    const code = getFieldValue('code');
     const { item } = this.props;
+
     if(item && item.id && value === item.code){
       return callback();
     } else {
-      const data = {account};
+      const data = {code};
       this.props.dispatch({
         type: 'role/checkUnique',
         payload: data,
