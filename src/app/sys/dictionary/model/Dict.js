@@ -67,7 +67,6 @@ export default modelExtend(model, {
     // 新增/编辑字典项
     *editDictItem({ payload }, { call, put }) {
       const response = yield call(editDictItem, payload);
-      console.info(response);
       if (response && response.data) {
         yield put({
           type: 'updateDictItem',

@@ -10,9 +10,7 @@ export default modelExtend(model, {
   effects: {
     // 保存采购入库单
     *saveInstock({ payload }, { call, put }) {
-      console.info('  ---- > ');
       const response = yield call(saveInstock, payload);
-      console.info(response);
       yield put({
         type: 'saveData',
         payload: response.data,

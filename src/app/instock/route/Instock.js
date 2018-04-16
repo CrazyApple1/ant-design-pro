@@ -34,7 +34,6 @@ export default class Instock extends PureComponent {
         type: 'instock/saveInstock',
         payload:  data
       });
-      console.info(data);
     });
   };
   // 表单保存

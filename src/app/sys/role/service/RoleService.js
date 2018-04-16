@@ -11,8 +11,8 @@ export async function list(params) {
   return request(`/role/list?${stringify(params)}`);
 }
 // 查询授权菜单列表
-export async function listModulebyRoleId(params) {
-  return request(`/role/listModulebyRoleId?${stringify(params)}`);
+export async function listModule(params) {
+  return request(`/role/listModule?${stringify(params)}`);
 }
 // 获取所有授权参数
 export async function getDictItemByRoleId(params) {

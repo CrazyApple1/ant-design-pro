@@ -26,7 +26,6 @@ export default class List extends PureComponent {
 
   // 编辑
   handleEditClick = record => {
-    console.info(record);
     if (record.id) {
       this.props.dispatch({
         type: 'account/edit',

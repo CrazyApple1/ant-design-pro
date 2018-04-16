@@ -7,7 +7,7 @@ import {
   lockRole,
   checkUnique,
   getRole,
-  listModulebyRoleId,
+  listModule,
   getDictItemByRoleId,
   listUserByRoleId,
 } from '../service/RoleService';
@@ -103,12 +103,15 @@ export default modelExtend(pageModel, {
     },
     // 加载模块授权列表
     *listModule({ payload }, { call, put }) {
-      const response = yield call(listModulebyRoleId, payload);
+      const response = yield call(listModule, payload);
+      console.info(response);
       yield put({
         type: 'updateState',
         payload: {
-          currentItem: payload.currentItem,
-          moduleData: { ...response },
+          moduleData: {
+            data: response.data.modules,
+            checked: response.data.roleModules,
+          },
           operateType: payload.operateType,
         },
       });

@@ -82,7 +82,6 @@ export default modelExtend(pageModel, {
       // 查询数据
       const userData = yield call(listUser, payload);
       const treeData = yield call(listOrgByAttr, {status:'0001'});
-      console.info(userData);
       yield put({
         type: 'updateState',
         payload: {

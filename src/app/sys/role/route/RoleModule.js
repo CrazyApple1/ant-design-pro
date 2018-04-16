@@ -3,23 +3,30 @@ import { Modal, Tree } from 'antd';
 const Node = Tree.TreeNode;
 //  授权模块窗口
 export default class RoleModule extends PureComponent {
+  // 初始化加载数据
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'role/listModule',
+    });
+  }
   // 渲染树节点
   renderTreeNodes = data => {
     return data.map(item => {
       if (item.children) {
         return (
-          <Node title={item.title} key={item.id} dataRef={item}>
+          <Node title={item.name} key={item.id} dataRef={item}>
             {this.renderTreeNodes(item.children)}
           </Node>
         );
       }
-      return <Node title={item.title} key={item.id} />;
+      return <Node title={item.name} key={item.id} />;
     });
   };
 
   render() {
     const { operateType } = this.props;
-    const { data, checked } = this.props.data;
+    const { data, checked } = {...this.props.data};
 
     return (
       <Modal

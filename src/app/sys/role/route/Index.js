@@ -136,7 +136,7 @@ export default class Role extends PureComponent {
   }
   render() {
     const { dispatch, loading } = this.props;
-    const { modalType, data, operateType, currentItem, userData, moduleData, configData, selectedRowKeys } = this.props.role;
+    const { modalType, data, operateType, moduleData, currentItem, selectedRowKeys } = this.props.role;
 
    const listPops = {
       dispatch,
@@ -166,13 +166,13 @@ export default class Role extends PureComponent {
           <List {...listPops} />
         </Card>
         {operateType === 'Module' && (
-          <RoleModule {...modalProps} data={moduleData} handleCancel={() => this.handleCancel()} />
+          <RoleModule {...modalProps} data={ moduleData } handleCancel={() => this.handleCancel()} />
         )}
         {operateType === 'User' && (
-          <RoleUser {...modalProps} data={userData} handleCancel={() => this.handleCancel()} />
+          <RoleUser {...modalProps} handleCancel={() => this.handleCancel()} />
         )}
         {operateType === 'Config' && (
-          <RoleConfig {...modalProps} data={configData} handleCancel={() => this.handleCancel()} />
+          <RoleConfig {...modalProps} handleCancel={() => this.handleCancel()} />
         )}
         {/* 新增窗口 */}
         {'' !== modalType && <AOEForm {...AOEProps} />}
