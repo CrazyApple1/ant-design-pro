@@ -2,10 +2,11 @@ import React, { PureComponent } from 'react';
 import { Card } from 'antd';
 import { connect } from 'dva';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
-import List from './index';
+import List from './List';
 import RoleModule from './RoleModule';
 import RoleUser from './RoleUser';
 import RoleConfig from './RoleConfig';
+import AOEForm from "./AOEForm";
 
 @connect(({ role, loading }) => ({
   role,
@@ -25,7 +26,7 @@ export default class Role extends PureComponent {
 
   render() {
     const { dispatch, loading } = this.props;
-    const { data, operateType, currentItem, userData, moduleData, configData, selectedRowKeys } = this.props.role;
+    const { modalType, data, operateType, currentItem, userData, moduleData, configData, selectedRowKeys } = this.props.role;
 
    const listPops = {
       dispatch,
@@ -55,6 +56,8 @@ export default class Role extends PureComponent {
         {operateType === 'Config' && (
           <RoleConfig {...modalProps} data={configData} handleCancel={() => this.handleCancel()} />
         )}
+        {/* 新增窗口 */}
+        {'' !== modalType && <AOEForm {...modalProps} />}
       </PageHeaderLayout>
     );
   }

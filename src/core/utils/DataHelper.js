@@ -50,6 +50,7 @@ export function getNodeBorther(data, targetPid) {
  * @param parentAuthority
  */
 export function moudleFormatter(data, parentPath = '/', parentAuthority) {
+  console.info(data);
   return data.map((item) => {
     let {path} = item;
     if (!isUrl(path)) {

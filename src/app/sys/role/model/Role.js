@@ -11,6 +11,7 @@ export default modelExtend(pageModel, {
   namespace: 'role',
   state: {
     currentItem: {},
+    modalType: '',
     operateType: '',
     selectedRowKeys: [],
     moduleData: {

@@ -125,7 +125,7 @@ export default function getConfig(app) {
     '/sys/role': {
       name: '角色授权管理',
       component: dynamicWrapper(app, ['app/sys/role/model/Role'], () =>
-        import('../../app/sys/role/route/Role')
+        import('../../app/sys/role/route/Index')
       ),
     },
     '/sys/dictionary': {

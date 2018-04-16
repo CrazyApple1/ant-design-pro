@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Modal, Table } from 'antd';
-import styles from './Role.less';
+import styles from './Index.less';
 // 授权用户窗口
 export default class RoleUser extends PureComponent {
   render() {

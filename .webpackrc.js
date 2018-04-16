@@ -39,7 +39,7 @@ export default {
     "/role": {
       "target": "http://localhost/",
       "changeOrigin": true
-    }
+    },
   },
   alias: {
     core: path.resolve(__dirname, 'src/core'),

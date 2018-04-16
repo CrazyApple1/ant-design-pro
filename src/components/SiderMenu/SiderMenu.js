@@ -131,7 +131,7 @@ export default class SiderMenu extends PureComponent {
                 item.name
               )
             }
-            key={item.path}
+            key={item.id}
           >
             {childrenItems}
           </SubMenu>
@@ -139,7 +139,7 @@ export default class SiderMenu extends PureComponent {
       }
       return null;
     } else {
-      return <Menu.Item key={item.path}>{this.getMenuItemPath(item)}</Menu.Item>;
+      return <Menu.Item key={item.id}>{this.getMenuItemPath(item)}</Menu.Item>;
     }
   };
   /**
