@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Modal, Tree } from 'antd';
 const Node = Tree.TreeNode;
 //  授权模块窗口
-export default class RoleModule extends Component {
+export default class RoleModule extends PureComponent {
   // 渲染树节点
   renderTreeNodes = data => {
     return data.map(item => {

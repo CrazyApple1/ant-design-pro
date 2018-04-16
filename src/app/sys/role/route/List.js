@@ -111,7 +111,7 @@ export default class RoleGrid extends PureComponent {
         title: '角色名称',
         dataIndex: 'name',
         render: (text, record) => {
-          return <Badge status={statusMap[record.locked]} text={{text}}/>;
+          return <Badge status={statusMap[record.locked]} text={text}/>;
         },
       },{
         title: '角色编码',

@@ -14,10 +14,10 @@
  - [react router入门] (http://www.ruanyifeng.com/blog/2016/05/react_router.html?utm_source=tool.lu)
  - [saga入门] (https://www.jianshu.com/p/89ed2a01a3db)
 ---
-目录说明
-component  自定义组件
- |- App： 高阶组件
- |- Page： 内页包装器
+目录说明   
+component  自定义组件   
+ |- App： 高阶组件   
+ |- Page： 内页包装器    
 
 TIP: - 代码里针对namespace和model文件名进行了忽略大小写的处理
      - reducer名字和effects名字不要重复,否在再调用得时候会出现混乱(优先effects>reducer)
