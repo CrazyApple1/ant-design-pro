@@ -2,15 +2,16 @@ import modelExtend from 'dva-model-extend';
 import { pageModel } from 'core/common/BaseModel';
 import {
   list,
+  listUser,
+  listModule,
+  getRole,
+  saveUser,
   saveRole,
   saveModule,
   delRole,
   lockRole,
   checkUnique,
-  getRole,
-  listModule,
   getDictItemByRoleId,
-  listUserByRoleId,
 } from '../service/RoleService';
 import {message} from "antd/lib/index";
 // 角色授权管理model
@@ -104,15 +105,7 @@ export default modelExtend(pageModel, {
     // 保存模块关系表
     *saveModule({ payload }, { call, put }) {
       const response = yield call(saveModule, payload);
-      if (response && response.data) {
-        yield put({
-          type: 'updateState',
-          payload: {
-            moduleData: {
-              checked: payload.param,
-            }
-          },
-        });
+      if (response && response.success) {
         message.success('操作成功');
       } else {
         message.success('操作失败');
@@ -127,9 +120,9 @@ export default modelExtend(pageModel, {
           currentItem: payload.currentItem,
           moduleData: {
             data: response.data.modules,
-            checked: response.data.roleModules,
+            checked: response.data.checked,
           },
-          operateType: payload.operateType,
+          operateType: 'Module',
         },
       });
     },
@@ -141,21 +134,39 @@ export default modelExtend(pageModel, {
         payload: {
           currentItem: payload.currentItem,
           configData: response,
-          operateType: payload.operateType,
+          operateType: 'Config',
         },
       });
     },
     // 获取所有用户
     *listUser({ payload }, { call, put }) {
-      const response = yield call(listUserByRoleId, payload);
+      const response = yield call(listUser, payload);
       yield put({
         type: 'updateState',
         payload: {
           currentItem: payload.currentItem,
-          userData: { ...response },
-          operateType: payload.operateType,
+          userData: {
+            data: {
+              list: response.data.users.data,
+                pagination:{
+                total: response.data.users.total,
+                  current: response.data.users.current
+              }
+            },
+            checked: response.data.checked,
+          },
+          operateType: 'User',
         },
       });
+    },
+    // 保存模块关系表
+    *saveUser({ payload }, { call }) {
+      const response = yield call(saveUser, payload);
+      if (response && response.success) {
+          message.success('操作成功');
+      } else {
+        message.success('操作失败');
+      }
     },
     // 删除
     *remove({ payload, callback }, { call, put }) {

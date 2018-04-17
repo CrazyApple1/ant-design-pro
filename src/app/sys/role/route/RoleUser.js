@@ -3,66 +3,117 @@ import { Modal, Table } from 'antd';
 import styles from './Index.less';
 // 授权用户窗口
 export default class RoleUser extends PureComponent {
+  componentDidMount() {
+    console.info("load role user");
+  }
+  // 保存模块关系
+  handleSubmit = ()  => {
+    const { currentItem } = this.props;
+    const { checked } = {...this.props.data};
+
+    const users = checked.map(item => {
+      return { userId: item};
+    });
+
+    this.props.dispatch({
+      type: 'role/saveUser',
+      payload: {
+        id: currentItem.id,
+        users
+      }
+    });
+
+  };
+  // 保存已选
+  handleSelectRows = (checkedKeys) => {
+    const { data } = {...this.props.data};
+    this.props.dispatch({
+      type: 'role/updateState',
+      payload: {
+        userData: {
+          data,
+          checked: checkedKeys,
+        }
+      }
+    });
+  };
+  // 表格动作触发事件
+  handleListChange = (pagination, filtersArg, sorter) => {
+    const { dispatch, formValues } = this.props;
+
+    const filters = Object.keys(filtersArg).reduce((obj, key) => {
+      const newObj = { ...obj };
+      newObj[key] = getValue(filtersArg[key]);
+      return newObj;
+    }, {});
+
+    const params = {
+      page: pagination.current,
+      pageSize: pagination.pageSize,
+      ...formValues,
+      ...filters,
+    };
+    if (sorter.field) {
+      params.sorter = `${sorter.field}_${sorter.order}`;
+    }
+
+    dispatch({
+      type: 'role/listUser',
+      payload: params,
+    });
+  };
   render() {
-    const { operateType, loading } = this.props;
-    const { checked, data } = this.props.data;
+    const { operateType } = this.props;
+    const { data: {list, pagination}, checked } = {...this.props.data};
 
     const column = [
       {
-        title: '用户名',
-        dataIndex: 'loginName',
-      },
-      {
         title: '姓名',
-        dataIndex: 'username',
+        dataIndex: 'name',
       },
       {
-        title: '性别',
-        dataIndex: 'sex',
-      },
-      {
-        title: '身份证号',
-        dataIndex: 'idCard',
+        title: '用户名',
+        dataIndex: 'account',
       },
       {
         title: '所属部门',
-        dataIndex: 'department',
-      },
-      {
-        title: '是否锁定',
-        dataIndex: 'lock',
-      },
+        dataIndex: 'deptId',
+      }
     ];
 
     const rowSelection = {
-      fixed: true,
       selectedRowKeys: checked,
       onChange: selectedKeys => {
-        // this.handleSelectRows(selectedKeys);
+        this.handleSelectRows(selectedKeys);
       },
     };
+    const paginationProps = {
+      showSizeChanger: true,
+      showQuickJumper: true,
+      ...pagination,
+    };
     return (
+
       <Modal
         visible={operateType === 'User'}
         title="选择授权用户  "
         okText="保存"
         cancelText="取消"
+        onOk = {() => this.handleSubmit()}
         onCancel={() => this.props.handleCancel()}
         width={750}
         bodyStyle={{ maxHeight: 500, overflowY: 'auto', overflowX: 'auto' }}
       >
         {/*左侧部门树列表*/}
         {/*右侧列表*/}
-        {/*列表过滤条件*/}
         <Table
-          dataSource={data}
+          dataSource={list}
           columns={column}
-          loading={loading}
+          pagination={paginationProps}
           rowKey={record => record.id}
           rowSelection={rowSelection}
-          rowClassName={record => {
-            return record.lock ? styles.disabled : styles.enabled;
-          }}
+          onSelectRow={this.handleSelectRows}
+          onChange={this.handleListChange}
         />
       </Modal>
     );

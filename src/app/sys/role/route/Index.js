@@ -136,7 +136,7 @@ export default class Role extends PureComponent {
   }
   render() {
     const { dispatch, loading } = this.props;
-    const { modalType, data, operateType, moduleData, currentItem, selectedRowKeys } = this.props.role;
+    const { modalType, data, operateType, moduleData, userData, currentItem, selectedRowKeys } = this.props.role;
 
    const listPops = {
       dispatch,
@@ -169,7 +169,7 @@ export default class Role extends PureComponent {
           <RoleModule {...modalProps} data={ moduleData } handleCancel={() => this.handleCancel()} />
         )}
         {operateType === 'User' && (
-          <RoleUser {...modalProps} handleCancel={() => this.handleCancel()} />
+          <RoleUser {...modalProps} data={ userData } handleCancel={() => this.handleCancel()} />
         )}
         {operateType === 'Config' && (
           <RoleConfig {...modalProps} handleCancel={() => this.handleCancel()} />

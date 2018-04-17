@@ -53,8 +53,6 @@ export default class RoleModule extends PureComponent {
   render() {
     const { operateType } = this.props;
     const { data, checked } = {...this.props.data};
-    console.info("checked");
-    console.info(checked);
     return (
       <Modal
         title="选择授权模块"

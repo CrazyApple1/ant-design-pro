@@ -19,8 +19,8 @@ export async function getDictItemByRoleId(params) {
   return request(`/role/getDictItemByRoleId?${stringify(params)}`);
 }
 // 获取授权角色列表
-export async function listUserByRoleId(params) {
-  return request(`/role/listUserByRoleId?${stringify(params)}`);
+export async function listUser(params) {
+  return request(`/role/listUser?${stringify(params)}`);
 }
 // 校验编码唯一性
 export async function checkUnique(params) {
@@ -34,6 +34,15 @@ export async function checkUnique(params) {
 // 保存角色信息
 export async function saveRole(params) {
   return request('/role/save', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+// 保存用户关系
+export async function saveUser(params) {
+  return request('/role/saveUser', {
     method: 'POST',
     body: {
       ...params,
