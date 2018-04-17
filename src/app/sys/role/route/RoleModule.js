@@ -5,11 +5,37 @@ const Node = Tree.TreeNode;
 export default class RoleModule extends PureComponent {
   // 初始化加载数据
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'role/listModule',
-    });
+    console.info("load role module");
   }
+  // 保存模块关系
+  handleSubmit = ()  => {
+    const { currentItem } = this.props;
+    const { checked } = {...this.props.data};
+    const modules = checked.map(item => {
+      return { moduleId: item};
+    });
+
+    this.props.dispatch({
+      type: 'role/saveModule',
+      payload: {
+        id: currentItem.id,
+        modules
+      }
+    });
+  };
+  // 保存已选
+  onCheck = (checkedKeys, info) => {
+    const { data } = {...this.props.data};
+    this.props.dispatch({
+      type: 'role/updateState',
+      payload: {
+        moduleData: {
+          data,
+          checked: checkedKeys,
+        }
+      }
+    });
+  };
   // 渲染树节点
   renderTreeNodes = data => {
     return data.map(item => {
@@ -27,18 +53,20 @@ export default class RoleModule extends PureComponent {
   render() {
     const { operateType } = this.props;
     const { data, checked } = {...this.props.data};
-
+    console.info("checked");
+    console.info(checked);
     return (
       <Modal
         title="选择授权模块"
         okText="保存"
         cancelText="取消"
+        onOk = {() => this.handleSubmit()}
         onCancel={() => this.props.handleCancel()}
         visible={operateType === 'Module'}
         width={360}
         bodyStyle={{ height: 480, overflowY: 'auto', overflowX: 'auto' }}
       >
-        <Tree checkable checkedKeys={checked}>
+        <Tree checkable onCheck={this.onCheck} checkedKeys={checked}>
           {this.renderTreeNodes(data)}
         </Tree>
       </Modal>

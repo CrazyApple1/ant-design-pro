@@ -20,7 +20,7 @@ export default class RoleGrid extends PureComponent {
     dispatch({
       type: `role/list${operate}`,
       payload: {
-        id: record.id,
+        roleId: record.id,
         currentItem: record,
         operateType: operate,
       },

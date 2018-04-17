@@ -3,6 +3,7 @@ import { pageModel } from 'core/common/BaseModel';
 import {
   list,
   saveRole,
+  saveModule,
   delRole,
   lockRole,
   checkUnique,
@@ -38,7 +39,6 @@ export default modelExtend(pageModel, {
     // 加载权限列表
     *listRole({ payload }, { call, put }) {
       const response = yield call(list, payload);
-      console.info(response);
       yield put({
         type: 'updateState',
         payload: {
@@ -101,13 +101,30 @@ export default modelExtend(pageModel, {
         message.success('操作失败');
       }
     },
+    // 保存模块关系表
+    *saveModule({ payload }, { call, put }) {
+      const response = yield call(saveModule, payload);
+      if (response && response.data) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            moduleData: {
+              checked: payload.param,
+            }
+          },
+        });
+        message.success('操作成功');
+      } else {
+        message.success('操作失败');
+      }
+    },
     // 加载模块授权列表
     *listModule({ payload }, { call, put }) {
       const response = yield call(listModule, payload);
-      console.info(response);
       yield put({
         type: 'updateState',
         payload: {
+          currentItem: payload.currentItem,
           moduleData: {
             data: response.data.modules,
             checked: response.data.roleModules,

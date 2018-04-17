@@ -31,9 +31,18 @@ export async function checkUnique(params) {
     },
   });
 }
-//保存角色信息
+// 保存角色信息
 export async function saveRole(params) {
   return request('/role/save', {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+// 保存模块关系
+export async function saveModule(params) {
+  return request('/role/saveModule', {
     method: 'POST',
     body: {
       ...params,
