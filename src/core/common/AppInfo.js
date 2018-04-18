@@ -1,7 +1,7 @@
 module.exports = {
   url: 'http://localhost',
   copyRight: '2018 PKAQ',
-  title: 'PKAQ Design',
+  title: 'Eva',
   description: 'Power by PKAQ',
   icons: ["question-circle-o","plus-square","info-circle-o","exclamation-circle","check-circle","warning",
     "clock-circle","clock-circle-o","area-chart","lock","unlock","pie-chart","bar-chart","dot-chart",

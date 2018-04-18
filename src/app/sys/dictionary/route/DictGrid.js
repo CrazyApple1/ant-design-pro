@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Card, Table, Icon, Popconfirm, Tooltip } from 'antd';
-import style from './Dict.less';
+import style from './Index.less';
 import { connect } from 'dva';
 import { message } from 'antd/lib/index';
 // 字典管理左侧列表树

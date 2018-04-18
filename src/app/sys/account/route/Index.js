@@ -5,7 +5,7 @@ import AccountList from './List';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 import Page from 'components/Page';
 import { getTreeNode } from  'core/utils/DataHelper';
-import styles from './Account.less';
+import styles from './Index.less';
 import AOEForm from "./AOEForm";
 
 const FormItem = Form.Item;

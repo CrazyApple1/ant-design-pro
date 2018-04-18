@@ -14,7 +14,7 @@ import {
   notification,
 } from 'antd';
 import { hasChildren, getNodeBorther } from 'core/utils/DataHelper';
-import styles from './Organization.less';
+import styles from './Index.less';
 import tableStyle from 'core/style/Table.less';
 import { connect } from 'dva';
 import BizIcon from 'components/BizIcon';

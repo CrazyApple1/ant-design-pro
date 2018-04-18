@@ -107,19 +107,19 @@ export default function getConfig(app) {
     '/sys/organization': {
       name: '组织管理',
       component: dynamicWrapper(app, ['app/sys/organization/model/Organization'], () =>
-        import('../../app/sys/organization/route/Organization')
+        import('../../app/sys/organization/route/Index')
       ),
     },
     '/sys/module': {
       name: '模块管理',
       component: dynamicWrapper(app, ['app/sys/module/model/Module'], () =>
-        import('../../app/sys/module/route/Module')
+        import('../../app/sys/module/route/Index')
       ),
     },
     '/sys/account': {
       name: '用户管理',
       component: dynamicWrapper(app, ['app/sys/account/model/Account'], () =>
-        import('../../app/sys/account/route/Account')
+        import('../../app/sys/account/route/Index')
       ),
     },
     '/sys/role': {
@@ -131,7 +131,7 @@ export default function getConfig(app) {
     '/sys/dictionary': {
       name: '字典管理',
       component: dynamicWrapper(app, ['app/sys/dictionary/model/Dict'], () =>
-        import('../../app/sys/dictionary/route/Dict')
+        import('../../app/sys/dictionary/route/Index')
       ),
     },
     '/form/basic-form': {

@@ -111,9 +111,9 @@ export default class BasicLayout extends React.Component {
   getPageTitle() {
     const { routerData, location } = this.props;
     const { pathname } = location;
-    let title = 'Ant Design Pro';
+    let title = AppInfo.title;
     if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - Ant Design Pro`;
+      title = `${routerData[pathname].name} - ${AppInfo.title}`;
     }
     return title;
   }
@@ -279,21 +279,21 @@ export default class BasicLayout extends React.Component {
             <GlobalFooter
               links={[
                 {
-                  key: 'Pro 首页',
-                  title: 'Pro 首页',
-                  href: 'http://pro.ant.design',
+                  key: 'PKAQ',
+                  title: 'PKAQ',
+                  href: 'http://pkaq.org',
                   blankTarget: true,
                 },
                 {
                   key: 'github',
                   title: <Icon type="github" />,
-                  href: 'https://github.com/ant-design/ant-design-pro',
+                  href: 'https://github.com/pkaq/eva-ui',
                   blankTarget: true,
                 },
                 {
-                  key: 'Ant Design',
-                  title: 'Ant Design',
-                  href: 'http://ant.design',
+                  key: 'PKAQ Design',
+                  title: 'PKAQ Design',
+                  href: 'http://pkaq.org',
                   blankTarget: true,
                 },
               ]}

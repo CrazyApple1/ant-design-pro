@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Input, Badge, Button, Table, Form, Row, Col, Select, Divider, Icon } from 'antd';
-import style from './Dict.less';
+import style from './Index.less';
 import { connect } from 'dva';
 
 import DictItem from './DictItem';
