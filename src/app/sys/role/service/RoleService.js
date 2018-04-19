@@ -1,6 +1,6 @@
 import { stringify } from 'qs';
 import request from 'core/utils/request';
-import { getNoUndefinedString } from "core/utils/utils";
+import { getNoUndefinedString } from 'core/utils/utils';
 
 // 根据id获取角色信息
 export async function getRole(params) {

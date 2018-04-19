@@ -120,9 +120,11 @@ export default class ModuleDetail extends Component {
           <FormItem label="icon" hasFeedback {...formRowOne}>
             {getFieldDecorator('icon', {
               initialValue: currentItem.icon,
-              rules: [{
+              rules: [
+                {
                   message: '模块图标',
-                }],
+                },
+              ],
             })(<Input />)}
           </FormItem>
           {/*第二行*/}

@@ -6,7 +6,7 @@ import List from './List';
 import RoleModule from './RoleModule';
 import RoleUser from './RoleUser';
 import RoleConfig from './RoleConfig';
-import AOEForm from "./AOEForm";
+import AOEForm from './AOEForm';
 import styles from './Index.less';
 
 const FormItem = Form.Item;
@@ -39,15 +39,15 @@ export default class Role extends PureComponent {
     });
   };
   // 解锁/锁定
-  handleLockSwitch = (status) => {
-    const {  role: { selectedRowKeys } } = this.props;
+  handleLockSwitch = status => {
+    const { role: { selectedRowKeys } } = this.props;
     this.props.dispatch({
       type: 'role/lockSwitch',
       payload: {
         param: selectedRowKeys,
-        status
-      }
-    })
+        status,
+      },
+    });
   };
   // 重置事件
   handleFormReset = () => {
@@ -78,28 +78,48 @@ export default class Role extends PureComponent {
     });
   };
   renderLeftBtn() {
-    const {
-      selectedRowKeys
-    } = this.props.role;
+    const { selectedRowKeys } = this.props.role;
 
     return (
       <div>
-        <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增角色</Button>
+        <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>
+          新增角色
+        </Button>
         {selectedRowKeys.length > 0 && (
-          <Button icon="lock" type="normal" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(1)}>锁定</Button>
+          <Button
+            icon="lock"
+            type="normal"
+            style={{ marginLeft: 8 }}
+            onClick={() => this.handleLockSwitch(1)}
+          >
+            锁定
+          </Button>
         )}
         {selectedRowKeys.length > 0 && (
-          <Button icon="unlock" type="danger" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(0)}>解锁</Button>
+          <Button
+            icon="unlock"
+            type="danger"
+            style={{ marginLeft: 8 }}
+            onClick={() => this.handleLockSwitch(0)}
+          >
+            解锁
+          </Button>
         )}
         {selectedRowKeys.length > 0 && (
           <span>
-              <Popconfirm title="确定要删除所选角色吗?" placement="top" onConfirm={this.handleRemoveClick}>
-                <Button style={{ marginLeft: 8 }} type="danger" icon="remove">删除角色</Button>
-              </Popconfirm>
-            </span>
+            <Popconfirm
+              title="确定要删除所选角色吗?"
+              placement="top"
+              onConfirm={this.handleRemoveClick}
+            >
+              <Button style={{ marginLeft: 8 }} type="danger" icon="remove">
+                删除角色
+              </Button>
+            </Popconfirm>
+          </span>
         )}
       </div>
-    )
+    );
   }
   renderRightBtn() {
     return (
@@ -111,7 +131,7 @@ export default class Role extends PureComponent {
           重置
         </Button>
       </div>
-    )
+    );
   }
   // 简单搜索条件
   renderSimpleForm() {
@@ -130,15 +150,28 @@ export default class Role extends PureComponent {
             </FormItem>
           </Col>
         </Row>
-        <Card bordered={false} className={styles.noPadding} title={this.renderLeftBtn()} extra={this.renderRightBtn()}/>
+        <Card
+          bordered={false}
+          className={styles.noPadding}
+          title={this.renderLeftBtn()}
+          extra={this.renderRightBtn()}
+        />
       </Form>
     );
   }
   render() {
     const { dispatch, loading } = this.props;
-    const { modalType, data, operateType, moduleData, userData, currentItem, selectedRowKeys } = this.props.role;
+    const {
+      modalType,
+      data,
+      operateType,
+      moduleData,
+      userData,
+      currentItem,
+      selectedRowKeys,
+    } = this.props.role;
 
-   const listPops = {
+    const listPops = {
       dispatch,
       loading,
       list: data.list,
@@ -157,7 +190,7 @@ export default class Role extends PureComponent {
       modalType,
       dispatch,
       maskClosable: false,
-      title: `${modalType === 'create' ? '新增角色' : '编辑角色'}`
+      title: `${modalType === 'create' ? '新增角色' : '编辑角色'}`,
     };
     return (
       <PageHeaderLayout title="角色授权管理">
@@ -166,10 +199,10 @@ export default class Role extends PureComponent {
           <List {...listPops} />
         </Card>
         {operateType === 'Module' && (
-          <RoleModule {...modalProps} data={ moduleData } handleCancel={() => this.handleCancel()} />
+          <RoleModule {...modalProps} data={moduleData} handleCancel={() => this.handleCancel()} />
         )}
         {operateType === 'User' && (
-          <RoleUser {...modalProps} data={ userData } handleCancel={() => this.handleCancel()} />
+          <RoleUser {...modalProps} data={userData} handleCancel={() => this.handleCancel()} />
         )}
         {operateType === 'Config' && (
           <RoleConfig {...modalProps} handleCancel={() => this.handleCancel()} />

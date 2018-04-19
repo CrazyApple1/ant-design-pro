@@ -105,7 +105,7 @@ export default class BasicLayout extends React.Component {
       type: 'user/fetchCurrent',
     });
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     unenquireScreen(this.enquireHandler);
   }
   getPageTitle() {

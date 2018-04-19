@@ -5,35 +5,35 @@ const Node = Tree.TreeNode;
 export default class RoleModule extends PureComponent {
   // 初始化加载数据
   componentDidMount() {
-    console.info("load role module");
+    console.info('load role module');
   }
   // 保存模块关系
-  handleSubmit = ()  => {
+  handleSubmit = () => {
     const { currentItem } = this.props;
-    const { checked } = {...this.props.data};
+    const { checked } = { ...this.props.data };
     const modules = checked.map(item => {
-      return { moduleId: item};
+      return { moduleId: item };
     });
 
     this.props.dispatch({
       type: 'role/saveModule',
       payload: {
         id: currentItem.id,
-        modules
-      }
+        modules,
+      },
     });
   };
   // 保存已选
   onCheck = (checkedKeys, info) => {
-    const { data } = {...this.props.data};
+    const { data } = { ...this.props.data };
     this.props.dispatch({
       type: 'role/updateState',
       payload: {
         moduleData: {
           data,
           checked: checkedKeys,
-        }
-      }
+        },
+      },
     });
   };
   // 渲染树节点
@@ -52,13 +52,13 @@ export default class RoleModule extends PureComponent {
 
   render() {
     const { operateType } = this.props;
-    const { data, checked } = {...this.props.data};
+    const { data, checked } = { ...this.props.data };
     return (
       <Modal
         title="选择授权模块"
         okText="保存"
         cancelText="取消"
-        onOk = {() => this.handleSubmit()}
+        onOk={() => this.handleSubmit()}
         onCancel={() => this.props.handleCancel()}
         visible={operateType === 'Module'}
         width={360}

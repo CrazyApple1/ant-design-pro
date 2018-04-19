@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { model } from 'core/common/BaseModel';
-import { saveInstock } from "../service/Instock";
+import { saveInstock } from '../service/Instock';
 
 export default modelExtend(model, {
   namespace: 'instock',
@@ -15,6 +15,6 @@ export default modelExtend(model, {
         type: 'saveData',
         payload: response.data,
       });
-    }
+    },
   },
 });

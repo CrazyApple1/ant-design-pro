@@ -2,15 +2,14 @@ import React, { PureComponent } from 'react';
 import { Table, Alert, Divider, Badge } from 'antd';
 import styles from './List.less';
 import { getValue } from 'core/utils/utils';
-import {connect} from "dva";
-import {message} from "antd/lib/index";
-import {notification} from "antd/lib/index";
+import { connect } from 'dva';
+import { message } from 'antd/lib/index';
+import { notification } from 'antd/lib/index';
 // 部门管理列表
 @connect(({ loading }) => ({
   loading: loading.models.account,
 }))
 export default class List extends PureComponent {
-
   // 清除选择
   cleanSelectedKeys = () => {
     this.handleSelectRows([]);
@@ -86,19 +85,23 @@ export default class List extends PureComponent {
         title: '编码',
         dataIndex: 'code',
         sorter: true,
-      },{
+      },
+      {
         title: '姓名',
         dataIndex: 'name',
         sorter: true,
-      },{
+      },
+      {
         title: '帐号',
         dataIndex: 'account',
         render: val => <div style={{ textAlign: 'center' }}>{val}</div>,
-      },{
+      },
+      {
         title: '手机',
         dataIndex: 'tel',
         render: val => <div style={{ textAlign: 'center' }}>{val}</div>,
-      },{
+      },
+      {
         title: '性别',
         dataIndex: 'spec',
       },

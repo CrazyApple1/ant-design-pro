@@ -7,7 +7,6 @@ const TreeNode = TreeSelect.TreeNode;
 
 @Form.create()
 export default class AOEForm extends Component {
-
   componentDidMount() {
     console.info('load role detail');
   }
@@ -17,20 +16,22 @@ export default class AOEForm extends Component {
     const code = getFieldValue('code');
     const { item } = this.props;
 
-    if(item && item.id && value === item.code){
+    if (item && item.id && value === item.code) {
       return callback();
     } else {
-      const data = {code};
-      this.props.dispatch({
-        type: 'role/checkUnique',
-        payload: data,
-      }).then((r) => {
-        if (r.success){
-          return callback();
-        } else{
-          return callback("编码已存在");
-        }
-      });
+      const data = { code };
+      this.props
+        .dispatch({
+          type: 'role/checkUnique',
+          payload: data,
+        })
+        .then(r => {
+          if (r.success) {
+            return callback();
+          } else {
+            return callback('编码已存在');
+          }
+        });
     }
   };
   // 关闭窗口
@@ -81,7 +82,9 @@ export default class AOEForm extends Component {
         width={600}
         onOk={() => this.handleSaveClick()}
         title={
-          modalType === 'create'? '新增角色信息': modalType === 'edit' ? '编辑角色信息' : '查看角色信息'
+          modalType === 'create'
+            ? '新增角色信息'
+            : modalType === 'edit' ? '编辑角色信息' : '查看角色信息'
         }
       >
         <Form>
@@ -100,8 +103,7 @@ export default class AOEForm extends Component {
                 {getFieldDecorator('code', {
                   initialValue: item.code,
                   validateTrigger: 'onBlur',
-                  rules: [{message: '请输入角色编码',},
-                          { validator: this.checkCode }],
+                  rules: [{ message: '请输入角色编码' }, { validator: this.checkCode }],
                 })(<Input />)}
               </FormItem>
             </Col>

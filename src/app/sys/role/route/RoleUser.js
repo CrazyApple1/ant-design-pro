@@ -4,37 +4,36 @@ import styles from './Index.less';
 // 授权用户窗口
 export default class RoleUser extends PureComponent {
   componentDidMount() {
-    console.info("load role user");
+    console.info('load role user');
   }
   // 保存模块关系
-  handleSubmit = ()  => {
+  handleSubmit = () => {
     const { currentItem } = this.props;
-    const { checked } = {...this.props.data};
+    const { checked } = { ...this.props.data };
 
     const users = checked.map(item => {
-      return { userId: item};
+      return { userId: item };
     });
 
     this.props.dispatch({
       type: 'role/saveUser',
       payload: {
         id: currentItem.id,
-        users
-      }
+        users,
+      },
     });
-
   };
   // 保存已选
-  handleSelectRows = (checkedKeys) => {
-    const { data } = {...this.props.data};
+  handleSelectRows = checkedKeys => {
+    const { data } = { ...this.props.data };
     this.props.dispatch({
       type: 'role/updateState',
       payload: {
         userData: {
           data,
           checked: checkedKeys,
-        }
-      }
+        },
+      },
     });
   };
   // 表格动作触发事件
@@ -64,7 +63,7 @@ export default class RoleUser extends PureComponent {
   };
   render() {
     const { operateType } = this.props;
-    const { data: {list, pagination}, checked } = {...this.props.data};
+    const { data: { list, pagination }, checked } = { ...this.props.data };
 
     const column = [
       {
@@ -78,7 +77,7 @@ export default class RoleUser extends PureComponent {
       {
         title: '所属部门',
         dataIndex: 'deptId',
-      }
+      },
     ];
 
     const rowSelection = {
@@ -93,13 +92,12 @@ export default class RoleUser extends PureComponent {
       ...pagination,
     };
     return (
-
       <Modal
         visible={operateType === 'User'}
         title="选择授权用户  "
         okText="保存"
         cancelText="取消"
-        onOk = {() => this.handleSubmit()}
+        onOk={() => this.handleSubmit()}
         onCancel={() => this.props.handleCancel()}
         width={750}
         bodyStyle={{ maxHeight: 500, overflowY: 'auto', overflowX: 'auto' }}

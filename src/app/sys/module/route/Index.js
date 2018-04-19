@@ -1,9 +1,9 @@
 import React from 'react';
 import Page from 'components/Page';
-import {connect} from "dva";
+import { connect } from 'dva';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
-import ModuleList from "./ModuleList";
-import ModuleDetail from "./ModuleDetail";
+import ModuleList from './ModuleList';
+import ModuleDetail from './ModuleDetail';
 
 @connect(state => ({
   module: state.module,

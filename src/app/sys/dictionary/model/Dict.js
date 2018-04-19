@@ -71,7 +71,7 @@ export default modelExtend(model, {
         yield put({
           type: 'updateDictItem',
           payload: {
-            formItem : response.data,
+            formItem: response.data,
             itemOperateType: '',
           },
         });
@@ -119,7 +119,7 @@ export default modelExtend(model, {
       let currentItem = state.currentItem;
       // 更新/新增字典项列表
       const exist = currentItem.items.find((v, i, array) => {
-        if (v.id === action.payload.formItem.id){
+        if (v.id === action.payload.formItem.id) {
           array[i] = action.payload.formItem;
           return true;
         } else {
@@ -127,15 +127,15 @@ export default modelExtend(model, {
         }
       });
 
-      if(!exist) {
+      if (!exist) {
         currentItem.items.push(action.payload.formItem);
       }
 
       return {
         ...state,
         itemOperateType: action.payload.itemOperateType,
-        currentItem:  currentItem,
-        itemValues: {}
+        currentItem: currentItem,
+        itemValues: {},
       };
     },
     // 移除已删除得数据项

@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { Table, Icon, Alert, Divider } from 'antd';
 import styles from './Index.less';
-import {message} from "antd/lib/index";
-import {notification} from "antd/lib/index";
-import {Badge} from "antd";
+import { message } from 'antd/lib/index';
+import { notification } from 'antd/lib/index';
+import { Badge } from 'antd';
 
 export default class RoleGrid extends PureComponent {
   // 初始化加载数据
@@ -26,7 +26,7 @@ export default class RoleGrid extends PureComponent {
       },
     });
   };
-// 表格动作触发事件
+  // 表格动作触发事件
   handleListChange = (pagination, filtersArg, sorter) => {
     const { dispatch, formValues } = this.props;
 
@@ -107,16 +107,19 @@ export default class RoleGrid extends PureComponent {
     };
     const statusMap = { true: 'error', false: 'success' };
 
-    const column = [{
+    const column = [
+      {
         title: '角色名称',
         dataIndex: 'name',
         render: (text, record) => {
-          return <Badge status={statusMap[record.locked]} text={text}/>;
+          return <Badge status={statusMap[record.locked]} text={text} />;
         },
-      },{
+      },
+      {
         title: '角色编码',
         dataIndex: 'code',
-      },{
+      },
+      {
         title: '模块授权',
         render: (text, record) => (
           <div>
@@ -126,7 +129,8 @@ export default class RoleGrid extends PureComponent {
             </a>
           </div>
         ),
-      },{
+      },
+      {
         title: '用户授权',
         render: (text, record) => (
           <div>
@@ -136,7 +140,8 @@ export default class RoleGrid extends PureComponent {
             </a>
           </div>
         ),
-      },{
+      },
+      {
         title: '配置授权',
         render: (text, record) => (
           <div>
@@ -146,7 +151,8 @@ export default class RoleGrid extends PureComponent {
             </a>
           </div>
         ),
-      },{
+      },
+      {
         title: '操作',
         render: (text, record) => (
           <div>
@@ -171,18 +177,20 @@ export default class RoleGrid extends PureComponent {
           type="info"
           showIcon
         />
-        <Table  pagination={paginationProps}
-                bordered
-                rowSelection={rowSelectionProps}
-                rowClassName={record => {
-                  return record.locked ? styles.disabled : styles.enabled;
-                }}
-                onSelectRow={this.handleSelectRows}
-                onChange={this.handleListChange}
-                dataSource={list}
-                columns={column}
-                loading={loading}
-                rowKey={record => record.id} />
+        <Table
+          pagination={paginationProps}
+          bordered
+          rowSelection={rowSelectionProps}
+          rowClassName={record => {
+            return record.locked ? styles.disabled : styles.enabled;
+          }}
+          onSelectRow={this.handleSelectRows}
+          onChange={this.handleListChange}
+          dataSource={list}
+          columns={column}
+          loading={loading}
+          rowKey={record => record.id}
+        />
       </div>
     );
   }

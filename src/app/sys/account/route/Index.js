@@ -4,9 +4,9 @@ import { Tree, Row, Col, Card, Form, Input, Icon, Button, Popconfirm } from 'ant
 import AccountList from './List';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
 import Page from 'components/Page';
-import { getTreeNode } from  'core/utils/DataHelper';
+import { getTreeNode } from 'core/utils/DataHelper';
 import styles from './Index.less';
-import AOEForm from "./AOEForm";
+import AOEForm from './AOEForm';
 
 const FormItem = Form.Item;
 const { TreeNode } = { ...Tree };
@@ -46,15 +46,15 @@ export default class Account extends PureComponent {
     });
   };
   // 解锁/锁定
-  handleLockSwitch = (status) => {
-    const {  account: { selectedRowKeys } } = this.props;
+  handleLockSwitch = status => {
+    const { account: { selectedRowKeys } } = this.props;
     this.props.dispatch({
       type: 'account/lockSwitch',
       payload: {
         param: selectedRowKeys,
-        status
-      }
-    })
+        status,
+      },
+    });
   };
 
   // 批量删除
@@ -66,7 +66,7 @@ export default class Account extends PureComponent {
       type: 'account/remove',
       payload: {
         param: selectedRowKeys,
-      }
+      },
     });
   };
   // 搜索事件
@@ -101,16 +101,16 @@ export default class Account extends PureComponent {
   };
   // 渲染树节点
   renderTreeNodes(data) {
-   return data.map(item => {
+    return data.map(item => {
       if (item.children) {
         return (
-          <TreeNode title={item.name} key={item.id} value={item.id} >
+          <TreeNode title={item.name} key={item.id} value={item.id}>
             {this.renderTreeNodes(item.children)}
           </TreeNode>
         );
       }
-      return ( <TreeNode title={item.name} key={item.id} value={item.id} /> );
-    })
+      return <TreeNode title={item.name} key={item.id} value={item.id} />;
+    });
   }
   // 左侧树
   renderCategoryTree() {
@@ -127,28 +127,48 @@ export default class Account extends PureComponent {
     );
   }
   renderLeftBtn() {
-    const {
-      selectedRowKeys
-    } = this.props.account;
+    const { selectedRowKeys } = this.props.account;
 
     return (
       <div>
-        <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>新增用户</Button>
-          {selectedRowKeys.length > 0 && (
-              <Button icon="lock" type="normal" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(1)}>锁定</Button>
-          )}
-          {selectedRowKeys.length > 0 && (
-              <Button icon="unlock" type="danger" style={{ marginLeft: 8 }} onClick={() => this.handleLockSwitch(0)}>解锁</Button>
-          )}
-          {selectedRowKeys.length > 0 && (
-            <span>
-              <Popconfirm title="确定要删除所选用户吗?" placement="top" onConfirm={this.handleRemoveClick}>
-                <Button style={{ marginLeft: 8 }} type="danger" icon="remove">删除用户</Button>
-              </Popconfirm>
-            </span>
-          )}
-        </div>
-    )
+        <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true, 'create')}>
+          新增用户
+        </Button>
+        {selectedRowKeys.length > 0 && (
+          <Button
+            icon="lock"
+            type="normal"
+            style={{ marginLeft: 8 }}
+            onClick={() => this.handleLockSwitch(1)}
+          >
+            锁定
+          </Button>
+        )}
+        {selectedRowKeys.length > 0 && (
+          <Button
+            icon="unlock"
+            type="danger"
+            style={{ marginLeft: 8 }}
+            onClick={() => this.handleLockSwitch(0)}
+          >
+            解锁
+          </Button>
+        )}
+        {selectedRowKeys.length > 0 && (
+          <span>
+            <Popconfirm
+              title="确定要删除所选用户吗?"
+              placement="top"
+              onConfirm={this.handleRemoveClick}
+            >
+              <Button style={{ marginLeft: 8 }} type="danger" icon="remove">
+                删除用户
+              </Button>
+            </Popconfirm>
+          </span>
+        )}
+      </div>
+    );
   }
   renderRightBtn() {
     return (
@@ -160,7 +180,7 @@ export default class Account extends PureComponent {
           重置
         </Button>
       </div>
-    )
+    );
   }
   // 简单搜索条件
   renderSimpleForm() {
@@ -183,22 +203,20 @@ export default class Account extends PureComponent {
               {getFieldDecorator('tel')(<Input placeholder="输入手机号搜索" />)}
             </FormItem>
           </Col>
-          </Row>
-          <Card bordered={false} className={styles.noPadding} title={this.renderLeftBtn()} extra={this.renderRightBtn()}/>
+        </Row>
+        <Card
+          bordered={false}
+          className={styles.noPadding}
+          title={this.renderLeftBtn()}
+          extra={this.renderRightBtn()}
+        />
       </Form>
     );
   }
   // 渲染界面
   render() {
     const { dispatch } = this.props;
-    const {
-      loading,
-      data,
-      selectedRowKeys,
-      orgData,
-      modalType,
-      currentItem,
-    } = this.props.account;
+    const { loading, data, selectedRowKeys, orgData, modalType, currentItem } = this.props.account;
 
     const listPops = {
       dispatch,
@@ -214,29 +232,29 @@ export default class Account extends PureComponent {
       modalType,
       dispatch,
       maskClosable: false,
-      title: `${modalType === 'create' ? '新增用户' : '编辑用户'}`
+      title: `${modalType === 'create' ? '新增用户' : '编辑用户'}`,
     };
 
     return (
       <PageHeaderLayout title="用户信息管理">
         <Page inner>
-        <Row gutter={24} className={styles.flex_stretch}>
-          {/* 左侧树 */}
-          <Col xl={6} lg={6} md={6} sm={6} xs={6} className={styles.fullHeightCol}>
-            {this.renderCategoryTree()}
-          </Col>
-          {/* 右侧列表 */}
-          <Col xl={18} lg={18} md={18} sm={18} xs={18}>
-            <Card bordered={false}>
-              <div className={styles.goodsInfoList}>
-                <div className={styles.goodsInfoListForm}>{this.renderSimpleForm()}</div>
-                <AccountList {...listPops} />
-              </div>
-            </Card>
-          </Col>
-        </Row>
-        {/* 新增窗口 */}
-        {'' !== modalType && <AOEForm {...modalProps} />}
+          <Row gutter={24} className={styles.flex_stretch}>
+            {/* 左侧树 */}
+            <Col xl={6} lg={6} md={6} sm={6} xs={6} className={styles.fullHeightCol}>
+              {this.renderCategoryTree()}
+            </Col>
+            {/* 右侧列表 */}
+            <Col xl={18} lg={18} md={18} sm={18} xs={18}>
+              <Card bordered={false}>
+                <div className={styles.goodsInfoList}>
+                  <div className={styles.goodsInfoListForm}>{this.renderSimpleForm()}</div>
+                  <AccountList {...listPops} />
+                </div>
+              </Card>
+            </Col>
+          </Row>
+          {/* 新增窗口 */}
+          {'' !== modalType && <AOEForm {...modalProps} />}
         </Page>
       </PageHeaderLayout>
     );

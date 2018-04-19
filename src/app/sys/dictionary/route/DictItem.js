@@ -73,7 +73,7 @@ export default class DictItem extends React.PureComponent {
             {getFieldDecorator('keyName', {
               initialValue: itemValues.keyName,
               validateTrigger: 'onBlur',
-              rules: [{ required: true, message: '请输入Key' }, {validator: this.checkUnique},],
+              rules: [{ required: true, message: '请输入Key' }, { validator: this.checkUnique }],
             })(<Input />)}
           </FormItem>
           <FormItem label="字典值" {...formRowOne} style={{ marginBottom: 5 }}>

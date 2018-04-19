@@ -13,7 +13,7 @@ import {
   checkUnique,
   getDictItemByRoleId,
 } from '../service/RoleService';
-import {message} from "antd/lib/index";
+import { message } from 'antd/lib/index';
 // 角色授权管理model
 export default modelExtend(pageModel, {
   namespace: 'role',
@@ -45,16 +45,16 @@ export default modelExtend(pageModel, {
         payload: {
           data: {
             list: response.data.data,
-            pagination:{
+            pagination: {
               total: response.data.total,
-              current: response.data.current
-            }
+              current: response.data.current,
+            },
           },
         },
       });
     },
     // 切换锁定状态
-    *lockSwitch({ payload }, { call }){
+    *lockSwitch({ payload }, { call }) {
       const response = yield call(lockRole, payload);
       if (response && response.success) {
       }
@@ -83,10 +83,10 @@ export default modelExtend(pageModel, {
             currentItem: {},
             data: {
               list: response.data.data,
-              pagination:{
+              pagination: {
                 total: response.data.total,
-                current: response.data.current
-              }
+                current: response.data.current,
+              },
             },
           },
         });
@@ -148,10 +148,10 @@ export default modelExtend(pageModel, {
           userData: {
             data: {
               list: response.data.users.data,
-                pagination:{
+              pagination: {
                 total: response.data.users.total,
-                  current: response.data.users.current
-              }
+                current: response.data.users.current,
+              },
             },
             checked: response.data.checked,
           },
@@ -163,7 +163,7 @@ export default modelExtend(pageModel, {
     *saveUser({ payload }, { call }) {
       const response = yield call(saveUser, payload);
       if (response && response.success) {
-          message.success('操作成功');
+        message.success('操作成功');
       } else {
         message.success('操作失败');
       }
@@ -177,10 +177,10 @@ export default modelExtend(pageModel, {
           payload: {
             data: {
               list: response.data.data,
-              pagination:{
+              pagination: {
                 total: response.data.total,
-                current: response.data.current
-              }
+                current: response.data.current,
+              },
             },
             selectedRowKeys: [],
           },

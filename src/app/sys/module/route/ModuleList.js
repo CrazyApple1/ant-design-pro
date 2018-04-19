@@ -156,19 +156,21 @@ export default class ModuleList extends Component {
       {
         title: '模块名称',
         dataIndex: 'name',
-      }, {
+      },
+      {
         title: '图标',
         dataIndex: 'icon',
-        render: (text, record) => (
-          <Icon type={text} />
-        )
-      },{
+        render: (text, record) => <Icon type={text} />,
+      },
+      {
         title: 'Path',
-        dataIndex: 'path'
-      }, {
+        dataIndex: 'path',
+      },
+      {
         title: '上级模块',
         dataIndex: 'parentName',
-      }, {
+      },
+      {
         title: '排序',
         dataIndex: 'orders',
         render: (text, record) => {
@@ -200,13 +202,15 @@ export default class ModuleList extends Component {
             </div>
           );
         },
-      }, {
+      },
+      {
         title: '状态',
         dataIndex: 'status',
         render: text => {
           return <Badge status={statusMap[text]} text={status[text]} />;
         },
-      }, {
+      },
+      {
         title: '操作',
         render: (text, record) => (
           <div>
@@ -215,7 +219,8 @@ export default class ModuleList extends Component {
             <a onClick={e => this.handleAdd(record)}>添加下级</a>
           </div>
         ),
-      }, {
+      },
+      {
         title: '是否启用',
         width: 150,
         render: (text, record) => (

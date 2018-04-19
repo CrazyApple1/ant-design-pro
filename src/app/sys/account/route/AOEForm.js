@@ -7,7 +7,6 @@ const TreeNode = TreeSelect.TreeNode;
 
 @Form.create()
 export default class AOEForm extends Component {
-
   componentDidMount() {
     console.info('load org detail');
   }
@@ -16,41 +15,45 @@ export default class AOEForm extends Component {
     const { getFieldValue } = this.props.form;
     const account = getFieldValue('account');
     const { item } = this.props;
-    if(item && item.id && value === item.account){
+    if (item && item.id && value === item.account) {
       return callback();
     } else {
-      const data = {account};
-      this.props.dispatch({
-        type: 'account/checkUnique',
-        payload: data,
-      }).then((r) => {
-        if (r.success){
-          return callback();
-        } else{
-          return callback("编码已存在");
-        }
-      });
+      const data = { account };
+      this.props
+        .dispatch({
+          type: 'account/checkUnique',
+          payload: data,
+        })
+        .then(r => {
+          if (r.success) {
+            return callback();
+          } else {
+            return callback('编码已存在');
+          }
+        });
     }
   };
   // 校验编码唯一性
-  checkCode  = (rule, value, callback) => {
+  checkCode = (rule, value, callback) => {
     const { getFieldValue } = this.props.form;
     const code = getFieldValue('code');
     const { item } = this.props;
-    if(item && item.id && value === item.code){
+    if (item && item.id && value === item.code) {
       return callback();
     } else {
-      const data = {code};
-      this.props.dispatch({
-        type: 'account/checkUnique',
-        payload: data,
-      }).then((r) => {
-        if (r.success){
-          callback();
-        } else{
-          callback("编码已存在");
-        }
-      });
+      const data = { code };
+      this.props
+        .dispatch({
+          type: 'account/checkUnique',
+          payload: data,
+        })
+        .then(r => {
+          if (r.success) {
+            callback();
+          } else {
+            callback('编码已存在');
+          }
+        });
     }
   };
   // 关闭窗口
@@ -132,7 +135,9 @@ export default class AOEForm extends Component {
         width={600}
         onOk={() => this.handleSaveClick()}
         title={
-          modalType === 'create'? '新增用户信息': modalType === 'edit' ? '编辑用户信息' : '查看用户信息'
+          modalType === 'create'
+            ? '新增用户信息'
+            : modalType === 'edit' ? '编辑用户信息' : '查看用户信息'
         }
       >
         <Form>
@@ -150,7 +155,7 @@ export default class AOEForm extends Component {
               <FormItem label="昵称" hasFeedback {...formItemLayout}>
                 {getFieldDecorator('nickName', {
                   initialValue: item.nickName,
-                  rules: [{message: '请输入昵称',}],
+                  rules: [{ message: '请输入昵称' }],
                 })(<Input />)}
               </FormItem>
             </Col>
@@ -162,9 +167,9 @@ export default class AOEForm extends Component {
                   initialValue: item.account,
                   validateTrigger: 'onBlur',
                   rules: [
-                      { required: true, message: '请输入用户帐号' },
-                      { validator: this.checkAccount }
-                   ],
+                    { required: true, message: '请输入用户帐号' },
+                    { validator: this.checkAccount },
+                  ],
                 })(<Input />)}
               </FormItem>
             </Col>
@@ -174,8 +179,8 @@ export default class AOEForm extends Component {
                   initialValue: item.code,
                   validateTrigger: 'onBlur',
                   rules: [
-                      { required: true,message: '请输入用户编码' },
-                      { validator: this.checkCode }
+                    { required: true, message: '请输入用户编码' },
+                    { validator: this.checkCode },
                   ],
                 })(<Input />)}
               </FormItem>

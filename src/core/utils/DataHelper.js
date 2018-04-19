@@ -1,5 +1,5 @@
 // 判断是否存在子节点
-import {isUrl} from "./utils";
+import { isUrl } from './utils';
 
 export function hasChildren(data, idArray) {
   let itemArray = [];
@@ -50,8 +50,8 @@ export function getNodeBorther(data, targetPid) {
  * @param parentAuthority
  */
 export function moudleFormatter(data, parentPath = '/', parentAuthority) {
-  return data.map((item) => {
-    let {path} = item;
+  return data.map(item => {
+    let { path } = item;
     if (!isUrl(path)) {
       path = parentPath + item.path;
     }
@@ -61,7 +61,11 @@ export function moudleFormatter(data, parentPath = '/', parentAuthority) {
       authority: item.authority || parentAuthority,
     };
     if (item.children) {
-      result.children = moudleFormatter(item.children, `${parentPath}${item.path}/`, item.authority);
+      result.children = moudleFormatter(
+        item.children,
+        `${parentPath}${item.path}/`,
+        item.authority
+      );
     }
     return result;
   });

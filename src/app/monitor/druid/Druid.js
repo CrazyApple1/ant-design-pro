@@ -1,7 +1,7 @@
 import React from 'react';
 import ExtPage from 'components/ExtPage';
 import PageHeaderLayout from 'core/layouts/PageHeaderLayout';
-import {url} from 'core/common/AppInfo';
+import { url } from 'core/common/AppInfo';
 const Druid = () => {
   return (
     <PageHeaderLayout title="Druid执行监控">
